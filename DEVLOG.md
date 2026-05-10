@@ -27,6 +27,19 @@
 
 **What I learned:** components and features structuring 
 
-**Blockers / what I'm stuck on:** logo rendering issues, the old image was rendering for some reason
+**Blockers / what I'm stuck on:** logo rendering issues
+
+**Plan for tomorrow:** make form page and results page
+
+
+## Day 4 — 2026-05-10
+
+**Hours worked:** 1
+
+**What I did:** made audit and result page
+
+**What I learned:** separating the features within different pages
+
+**Blockers / what I'm stuck on:** 
 
 **Plan for tomorrow:** 

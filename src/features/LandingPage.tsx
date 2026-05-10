@@ -134,7 +134,7 @@ function HeroSection() {
 
         <div id="audit" className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <a
-            href="#how-it-works"
+            href="/audit"
             className="group bg-gray-950 hover:bg-[#fc742b] text-white font-bold px-8 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-200 hover:scale-105 active:scale-95 flex items-center gap-2.5"
           >
             Audit my stack — it&apos;s free
@@ -284,7 +284,7 @@ function CTASection() {
           Free. No credit card. Results in under 3 minutes.
         </p>
         <a
-          href="#audit"
+          href="/audit"
           className="inline-flex items-center gap-2.5 bg-[#fc742b] hover:bg-[#e5601a] text-white font-bold px-10 py-4 rounded-full text-base transition-all duration-200 shadow-xl shadow-orange-900/30 hover:scale-105 active:scale-95"
         >
           Start my free audit

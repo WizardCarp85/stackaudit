@@ -33,7 +33,7 @@ export default function NavBar() {
 
         {/* Links */}
         <nav className="hidden md:flex items-center gap-1 bg-gray-50/50 px-2 py-1.5 rounded-full border border-gray-100/50">
-          {[["How it works", "#how-it-works"], ["Features", "#features"]].map(([label, href]) => (
+          {[["How it works", "#how-it-works"], ["Features", "#features"], ["Audit", "/audit"], ["Results", "/result"]].map(([label, href]) => (
             <a
               key={label}
               href={href}
@@ -46,7 +46,7 @@ export default function NavBar() {
 
         {/* CTA */}
         <a
-          href="#audit"
+          href="/audit"
           className="group relative overflow-hidden bg-[#fc742b] hover:bg-[#e86520] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(252,116,43,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
         >
           <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
