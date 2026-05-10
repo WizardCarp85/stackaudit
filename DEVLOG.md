@@ -21,11 +21,11 @@
 
 ## Day 3 — 2026-05-09
 
-**Hours worked:** 2
+**Hours worked:** 3
 
 **What I did:** Added logo and created the landing page
 
-**What I learned:** better ui designs 
+**What I learned:** components and features structuring 
 
 **Blockers / what I'm stuck on:** logo rendering issues, the old image was rendering for some reason
 

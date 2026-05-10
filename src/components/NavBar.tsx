@@ -22,9 +22,9 @@ export default function NavBar() {
         }`}
       >
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5 group">
+        <a href="/" className="flex items-center gap-2.5 group">
           <div className="relative overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-transform duration-300 group-hover:scale-105">
-            <Image src="/stackauditlogo.png" alt="StackAudit logo" width={34} height={34} />
+            <Image src="/auditlogo.png" alt="StackAudit logo" width={34} height={34}/>
           </div>
           <span className="text-xl font-extrabold text-gray-900 tracking-tight">
             Stack<span className="text-[#fc742b]">Audit</span>
