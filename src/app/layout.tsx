@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "StackAudit — Find Out If You're Overpaying for AI Tools",
+  title: "StackAudit",
   description:
-    "StackAudit is the free AI spend auditor for startups. Benchmark your Cursor, Claude, ChatGPT, and other AI tool costs against companies like yours — and find savings in minutes.",
+    "Free AI spend auditor for startups. Benchmark your stack and find savings in minutes.",
   openGraph: {
-    title: "StackAudit — The Mint for AI Tool Spend",
+    title: "StackAudit",
     description:
-      "Stop overpaying for AI tools. Get a free audit of your stack in under 5 minutes.",
+      "Free AI spend auditor for startups. Benchmark your stack and find savings in minutes.",
     type: "website",
   },
 };

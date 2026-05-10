@@ -34,12 +34,12 @@
 
 ## Day 4 — 2026-05-10
 
-**Hours worked:** 1
+**Hours worked:** 2
 
-**What I did:** made audit and result page
+**What I did:** made audit and result page and updated readme
 
-**What I learned:** separating the features within different pages
+**What I learned:** better understand of folder structuring in nextjs
 
-**Blockers / what I'm stuck on:** 
+**Blockers / what I'm stuck on:** logic creation for audit form
 
 **Plan for tomorrow:** 

@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -33,7 +35,10 @@ export default function NavBar() {
 
         {/* Links */}
         <nav className="hidden md:flex items-center gap-1 bg-gray-50/50 px-2 py-1.5 rounded-full border border-gray-100/50">
-          {[["How it works", "#how-it-works"], ["Features", "#features"], ["Audit", "/audit"], ["Results", "/result"]].map(([label, href]) => (
+          {(pathname === "/"
+            ? [["How it works", "#how-it-works"], ["Features", "#features"]]
+            : [["Audit", "/audit"], ["Results", "/result"]]
+          ).map(([label, href]) => (
             <a
               key={label}
               href={href}
