@@ -35,13 +35,13 @@ export default function AuditFormPage() {
         <div className="max-w-3xl mx-auto">
           {/* ── Page header ── */}
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-1.5 text-sm font-medium text-[#fc742b] mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#fc742b] animate-pulse" />
+            <span className="inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-1.5 text-sm font-medium text-[#20714b] mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
               Free AI spend audit
             </span>
             <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight mb-4">
               What&apos;s in your{" "}
-              <span className="text-[#fc742b]">AI stack?</span>
+              <span className="text-[#20714b]">AI stack?</span>
             </h1>
             <p className="text-gray-500 text-lg font-light max-w-xl mx-auto">
               Toggle the tools your team uses, fill in your current spend, and we&apos;ll
@@ -97,7 +97,7 @@ export default function AuditFormPage() {
                     placeholder="e.g. 12"
                     value={form.teamSize}
                     onChange={(e) => setTopLevel("teamSize", e.target.value)}
-                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
                   />
                 </div>
 
@@ -116,7 +116,7 @@ export default function AuditFormPage() {
                     placeholder="Acme Inc."
                     value={form.companyName}
                     onChange={(e) => setTopLevel("companyName", e.target.value)}
-                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
                   />
                 </div>
 
@@ -137,7 +137,7 @@ export default function AuditFormPage() {
                     placeholder="you@acme.com"
                     value={form.email}
                     onChange={(e) => setTopLevel("email", e.target.value)}
-                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
                   />
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function AuditFormPage() {
                 type="submit"
                 id="run-audit-btn"
                 disabled={enabledTools.length === 0}
-                className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2.5 bg-[#fc742b] hover:bg-[#e5601a] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-bold px-10 py-4 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-orange-200 hover:scale-105 active:scale-95 text-base"
+                className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2.5 bg-[#20714b] hover:bg-[#185e3e] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-bold px-10 py-4 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-[#20714b]/20 hover:scale-105 active:scale-95 text-base"
               >
                 Run my audit
                 <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-200" />

@@ -97,7 +97,7 @@ export default function AuditResultPage({ id }: Props) {
               id="share-result-btn"
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-[#fc742b] transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-[#20714b] transition-colors"
             >
               <FaShare className="text-xs" />
               {copied ? "Link copied!" : "Share result"}
@@ -106,8 +106,8 @@ export default function AuditResultPage({ id }: Props) {
 
           {/* ── Page title ── */}
           <div>
-            <span className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-1.5 text-sm font-medium text-[#fc742b] mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#fc742b]" />
+            <span className="inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-1.5 text-sm font-medium text-[#20714b] mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#20714b]" />
               Audit complete
             </span>
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 tracking-tight leading-tight">
@@ -178,7 +178,7 @@ export default function AuditResultPage({ id }: Props) {
             <span className="hidden sm:block text-gray-200">·</span>
             <Link
               href="/audit"
-              className="text-sm text-gray-400 hover:text-[#fc742b] transition-colors font-medium"
+              className="text-sm text-gray-400 hover:text-[#20714b] transition-colors font-medium"
             >
               Run a new audit →
             </Link>

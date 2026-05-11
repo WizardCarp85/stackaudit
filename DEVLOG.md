@@ -34,12 +34,25 @@
 
 ## Day 4 — 2026-05-10
 
-**Hours worked:** 2
+**Hours worked:** 4
 
-**What I did:** made audit and result page and updated readme
+**What I did:** made audit and result page and updated readme and understanding code
 
 **What I learned:** better understand of folder structuring in nextjs
 
 **Blockers / what I'm stuck on:** logic creation for audit form
+
+**Plan for tomorrow:** work on logic
+
+
+## Day 5 — 2026-05-11
+
+**Hours worked:** 3
+
+**What I did:** working on logic, updated the theme to match actual credex website theme
+
+**What I learned:** importance of deciding proper theme
+
+**Blockers / what I'm stuck on:** how logic will work
 
 **Plan for tomorrow:** 

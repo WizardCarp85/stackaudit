@@ -2,7 +2,7 @@
 
 **StackAudit is the free AI spend auditor for startups.** You tell us which AI tools your team uses (Cursor, Claude, ChatGPT, Copilot, and more) and how much you pay. We surface where you're overpaying, recommend smarter alternatives, and generate an AI-powered summary of your stack — in under 3 minutes.
 
-Built as part of the [Credex](https://credex.ai) ecosystem.
+Built as part of the [Credex](https://credex.rocks/) ecosystem.
 
 ---
 
@@ -27,7 +27,7 @@ Built as part of the [Credex](https://credex.ai) ecosystem.
 ### Install & run locally
 
 ```bash
-git clone https://github.com/your-org/stackaudit.git
+git clone https://github.com/WizardCarp85/stackaudit.git
 cd stackaudit
 npm install
 npm run dev
@@ -60,7 +60,7 @@ The project is a standard Next.js app. Recommended: **Vercel** (zero-config).
 npx vercel
 ```
 
-> Deployed URL: _TBD — will be added after first production deploy._
+> Deployed URL: https://stackaudit-one.vercel.app/
 
 ---
 
@@ -148,7 +148,3 @@ The project uses Tailwind v4's new CSS-first config (no `tailwind.config.js`). T
 - PDF export of audit report
 
 ---
-
-## License
-
-MIT © 2026 StackAudit / Credex

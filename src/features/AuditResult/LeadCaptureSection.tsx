@@ -36,9 +36,9 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
   if (showCredex) {
     return (
       <div className="relative bg-gray-950 rounded-2xl overflow-hidden px-6 py-8 md:px-10">
-        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "radial-gradient(circle, #fc742b 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "radial-gradient(circle, #20714b 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
         <div className="relative">
-          <span className="text-[#fc742b] text-xs font-bold uppercase tracking-widest">
+          <span className="text-[#20714b] text-xs font-bold uppercase tracking-widest">
             Capture more savings
           </span>
           <h3 className="text-white font-extrabold text-2xl mt-2 mb-2 leading-tight">
@@ -57,12 +57,12 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
               placeholder={companyName ? `you@${companyName.toLowerCase().replace(/\s+/g, "")}.com` : "you@company.com"}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-white/10 border border-white/20 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#fc742b]/50 focus:border-[#fc742b] transition-all"
+              className="flex-1 bg-white/10 border border-white/20 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#20714b]/50 focus:border-[#20714b] transition-all"
             />
             <button
               id="credex-cta-btn"
               type="submit"
-              className="group inline-flex items-center gap-2 bg-[#fc742b] hover:bg-[#e5601a] text-white font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 hover:scale-105 active:scale-95"
+              className="group inline-flex items-center gap-2 bg-[#20714b] hover:bg-[#185e3e] text-white font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 hover:scale-105 active:scale-95"
             >
               Connect me
               <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
@@ -77,8 +77,8 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl px-6 py-8">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center">
-          <FaBell className="text-[#fc742b] text-sm" />
+        <div className="w-9 h-9 rounded-xl bg-[#20714b]/10 border border-[#20714b]/20 flex items-center justify-center">
+          <FaBell className="text-[#20714b] text-sm" />
         </div>
         <div>
           <p className="text-sm font-bold text-gray-900">Stay in the loop</p>
@@ -95,7 +95,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
           placeholder="you@company.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+          className="flex-1 bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
         />
         <button
           id="notify-btn"

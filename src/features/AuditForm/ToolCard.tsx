@@ -23,7 +23,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
     <div
       className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
         entry.enabled
-          ? "border-[#fc742b]/40 bg-orange-50/30 shadow-md shadow-orange-100/60"
+          ? "border-[#20714b]/40 bg-[#20714b]/5 shadow-md shadow-[#20714b]/10"
           : "border-gray-200 bg-white hover:border-gray-300"
       }`}
     >
@@ -50,7 +50,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
         {/* Toggle pill */}
         <div
           className={`relative w-11 h-6 rounded-full transition-colors duration-300 flex-shrink-0 ${
-            entry.enabled ? "bg-[#fc742b]" : "bg-gray-200"
+            entry.enabled ? "bg-[#20714b]" : "bg-gray-200"
           }`}
         >
           <span
@@ -63,7 +63,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
 
       {/* ── Expanded fields ── */}
       {entry.enabled && (
-        <div className="px-5 pb-5 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-orange-100/60">
+        <div className="px-5 pb-5 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#20714b]/15">
           {/* Plan */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -73,7 +73,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
               id={`tool-plan-${config.id}`}
               value={entry.plan}
               onChange={(e) => onField(config.id, "plan", e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
             >
               {config.plans.map((p) => (
                 <option key={p.value} value={p.value}>
@@ -100,7 +100,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
                 placeholder="0"
                 value={entry.monthlySpend}
                 onChange={(e) => onField(config.id, "monthlySpend", e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-xl pl-7 pr-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+                className="w-full bg-white border border-gray-200 rounded-xl pl-7 pr-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
               placeholder="1"
               value={entry.seats}
               onChange={(e) => onField(config.id, "seats", e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
               onChange={(e) =>
                 onField(config.id, "useCase", e.target.value as ToolEntry["useCase"])
               }
-              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fc742b]/30 focus:border-[#fc742b] transition-all"
+              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
             >
               <option value="">Select use case…</option>
               {USE_CASES.map((u) => (

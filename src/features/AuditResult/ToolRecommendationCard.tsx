@@ -17,7 +17,7 @@ export default function ToolRecommendationCard({ rec, index }: Props) {
     <div
       className={`relative bg-white rounded-2xl border transition-all duration-300 overflow-hidden group hover:shadow-lg ${
         hasSaving
-          ? "border-orange-200 hover:border-[#fc742b]/40"
+          ? "border-[#20714b]/20 hover:border-[#20714b]/40"
           : "border-gray-200 hover:border-gray-300"
       }`}
       style={{ animationDelay: `${index * 60}ms` }}
@@ -25,7 +25,7 @@ export default function ToolRecommendationCard({ rec, index }: Props) {
       {/* Color accent bar */}
       <div
         className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
-        style={{ background: config?.color ?? "#fc742b" }}
+        style={{ background: config?.color ?? "#20714b" }}
       />
 
       <div className="pl-6 pr-5 py-5">
@@ -34,7 +34,7 @@ export default function ToolRecommendationCard({ rec, index }: Props) {
           <div className="flex items-center gap-3">
             <span
               className="w-3 h-3 rounded-full flex-shrink-0 mt-0.5"
-              style={{ background: config?.color ?? "#fc742b" }}
+              style={{ background: config?.color ?? "#20714b" }}
             />
             <div>
               <h3 className="text-sm font-bold text-gray-900">{config?.name ?? rec.toolId}</h3>
@@ -46,7 +46,7 @@ export default function ToolRecommendationCard({ rec, index }: Props) {
 
           {hasSaving ? (
             <div className="flex-shrink-0 text-right">
-              <p className="text-[#fc742b] font-extrabold text-base leading-none">
+              <p className="text-[#20714b] font-extrabold text-base leading-none">
                 −${rec.potentialSaving.toLocaleString()}
               </p>
               <p className="text-xs text-gray-400 mt-0.5">/ month</p>
@@ -65,7 +65,7 @@ export default function ToolRecommendationCard({ rec, index }: Props) {
         {/* Recommended action */}
         <div className="flex items-start gap-3">
           {hasSaving ? (
-            <FaExclamationTriangle className="text-[#fc742b] text-sm mt-0.5 flex-shrink-0" />
+            <FaExclamationTriangle className="text-[#20714b] text-sm mt-0.5 flex-shrink-0" />
           ) : (
             <FaCheckCircle className="text-green-500 text-sm mt-0.5 flex-shrink-0" />
           )}

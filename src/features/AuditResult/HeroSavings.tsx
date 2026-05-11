@@ -22,12 +22,12 @@ export default function HeroSavings({
   return (
     <div className="relative bg-gray-950 rounded-3xl overflow-hidden px-8 py-10 md:px-14 md:py-14">
       {/* Background glow */}
-      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #fc742b 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-[#fc742b]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #20714b 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-[#20714b]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative">
         {/* Label */}
-        <p className="text-[#fc742b] text-xs font-bold uppercase tracking-[0.18em] mb-6">
+        <p className="text-[#20714b] text-xs font-bold uppercase tracking-[0.18em] mb-6">
           {isOptimised ? "Your stack looks good" : "Potential savings found"}
         </p>
 
@@ -44,7 +44,7 @@ export default function HeroSavings({
           {/* Annual */}
           <div>
             <p className="text-gray-500 text-sm mb-1">Annual savings</p>
-            <p className="text-[#fc742b] font-extrabold text-4xl md:text-5xl tracking-tight leading-none">
+            <p className="text-[#20714b] font-extrabold text-4xl md:text-5xl tracking-tight leading-none">
               ${totalAnnualSaving.toLocaleString("en-US", { maximumFractionDigits: 0 })}
               <span className="text-xl text-gray-500 font-semibold ml-1">/yr</span>
             </p>
@@ -65,9 +65,9 @@ export default function HeroSavings({
         </div>
 
         {isBig && (
-          <div className="mt-8 inline-flex items-center gap-2 bg-[#fc742b]/10 border border-[#fc742b]/30 rounded-full px-4 py-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#fc742b] animate-pulse" />
-            <span className="text-[#fc742b] text-xs font-semibold">
+          <div className="mt-8 inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
+            <span className="text-[#20714b] text-xs font-semibold">
               Credex can help you capture even more of this saving →
             </span>
           </div>

@@ -27,11 +27,11 @@ function AuditCard({
   });
 
   return (
-    <div className="group relative bg-white border border-gray-200 rounded-2xl hover:border-[#fc742b]/40 hover:shadow-lg hover:shadow-orange-50 transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-white border border-gray-200 rounded-2xl hover:border-[#20714b]/40 hover:shadow-lg hover:shadow-[#20714b]/5 transition-all duration-300 overflow-hidden">
       {/* Saving accent strip */}
       <div
         className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl transition-colors duration-300 ${
-          hasSavings ? "bg-[#fc742b]" : "bg-green-400"
+          hasSavings ? "bg-[#20714b]" : "bg-green-400"
         }`}
       />
 
@@ -57,7 +57,7 @@ function AuditCard({
           <div className="flex-shrink-0 text-right">
             {hasSavings ? (
               <>
-                <p className="text-[#fc742b] font-extrabold text-lg leading-none">
+                <p className="text-[#20714b] font-extrabold text-lg leading-none">
                   −${audit.totalMonthlySaving.toLocaleString()}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">/mo potential</p>
@@ -93,7 +93,7 @@ function AuditCard({
             {/* View */}
             <Link
               href={`/result/${audit.id}`}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#fc742b] hover:text-[#e5601a] transition-colors group/link"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#20714b] hover:text-[#185e3e] transition-colors group/link"
             >
               View
               <FaArrowRight className="text-[10px] group-hover/link:translate-x-0.5 transition-transform" />
@@ -117,13 +117,13 @@ export default function AuditHistoryPage() {
           {/* Header */}
           <div className="flex items-end justify-between mb-10 gap-4">
             <div>
-              <span className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-1.5 text-sm font-medium text-[#fc742b] mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#fc742b] animate-pulse" />
+              <span className="inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-1.5 text-sm font-medium text-[#20714b] mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
                 Audit history
               </span>
               <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight">
                 Your{" "}
-                <span className="text-[#fc742b]">past audits</span>
+                <span className="text-[#20714b]">past audits</span>
               </h1>
               {hydrated && history.length > 0 && (
                 <p className="text-gray-400 text-sm mt-2">
@@ -134,7 +134,7 @@ export default function AuditHistoryPage() {
             <Link
               href="/audit"
               id="new-audit-btn"
-              className="flex-shrink-0 inline-flex items-center gap-2 bg-[#fc742b] hover:bg-[#e5601a] text-white font-bold px-5 py-3 rounded-full text-sm transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-orange-200"
+              className="flex-shrink-0 inline-flex items-center gap-2 bg-[#20714b] hover:bg-[#185e3e] text-white font-bold px-5 py-3 rounded-full text-sm transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-[#20714b]/20"
             >
               <FaPlus className="text-xs" />
               New audit
@@ -154,7 +154,7 @@ export default function AuditHistoryPage() {
             </div>
           ) : history.length === 0 ? (
             <div className="bg-white border-2 border-dashed border-gray-200 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-orange-50 border border-orange-200 flex items-center justify-center text-3xl text-orange-400">
+              <div className="w-16 h-16 rounded-2xl bg-[#20714b]/10 border border-[#20714b]/20 flex items-center justify-center text-3xl text-[#20714b]">
                 <FaClipboardList />
               </div>
               <div>
@@ -166,7 +166,7 @@ export default function AuditHistoryPage() {
               <Link
                 href="/audit"
                 id="empty-history-cta"
-                className="inline-flex items-center gap-2.5 bg-[#fc742b] hover:bg-[#e5601a] text-white font-bold px-8 py-4 rounded-full text-sm transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-orange-200"
+                className="inline-flex items-center gap-2.5 bg-[#20714b] hover:bg-[#185e3e] text-white font-bold px-8 py-4 rounded-full text-sm transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-[#20714b]/20"
               >
                 Start my free audit →
               </Link>

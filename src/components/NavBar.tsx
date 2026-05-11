@@ -19,17 +19,17 @@ export default function NavBar() {
       <div
         className={`pointer-events-auto flex items-center justify-between w-full max-w-5xl px-5 py-3 rounded-full transition-all duration-500 ${
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/40 shadow-[#fc742b]/5"
+            ? "bg-white/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/40 shadow-[#20714b]/5"
             : "bg-transparent border border-transparent"
         }`}
       >
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5 group">
           <div className="relative overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-transform duration-300 group-hover:scale-105">
-            <Image src="/auditlogo.png" alt="StackAudit logo" width={34} height={34}/>
+            <Image src="/stackaudit.png" alt="StackAudit logo" width={34} height={34}/>
           </div>
           <span className="text-xl font-extrabold text-gray-900 tracking-tight">
-            Stack<span className="text-[#fc742b]">Audit</span>
+            Stack<span className="text-[#20714b]">Audit</span>
           </span>
         </a>
 
@@ -42,7 +42,7 @@ export default function NavBar() {
             <a
               key={label}
               href={href}
-              className="text-sm font-semibold text-gray-600 hover:text-[#fc742b] hover:bg-orange-50 border border-transparent hover:border-orange-100 px-4 py-1.5 rounded-full transition-all duration-200 shadow-sm shadow-transparent hover:shadow-[0_2px_10px_rgba(252,116,43,0.08)]"
+              className="text-sm font-semibold text-gray-600 hover:text-[#20714b] hover:bg-[#20714b]/5 border border-transparent hover:border-[#20714b]/15 px-4 py-1.5 rounded-full transition-all duration-200 shadow-sm shadow-transparent hover:shadow-[0_2px_10px_rgba(32,113,75,0.08)]"
             >
               {label}
             </a>
@@ -52,7 +52,7 @@ export default function NavBar() {
         {/* CTA */}
         <a
           href="/audit"
-          className="group relative overflow-hidden bg-[#fc742b] hover:bg-[#e86520] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(252,116,43,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
+          className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
         >
           <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
           <span className="relative z-10">Free audit</span>

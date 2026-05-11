@@ -101,7 +101,7 @@ function HeroSection() {
       <div
         className="absolute inset-0 opacity-[0.5]"
         style={{
-          backgroundImage: "radial-gradient(circle, #e2d9d0 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, #d0ddd8 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -109,17 +109,17 @@ function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-[#fafaf8]/80 via-transparent to-[#fafaf8]/80 pointer-events-none" />
 
       <div className="relative max-w-4xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-1.5 text-sm font-medium text-[#fc742b] mb-14">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#fc742b] animate-pulse" />
+        <div className="inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-1.5 text-sm font-medium text-[#20714b] mb-14">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
           Free audit — no credit card required
         </div>
 
         <h1 className="text-5xl md:text-[4.5rem] font-extrabold text-gray-950 leading-[1.06] tracking-[-0.02em] mb-8">
           Your AI tools are costing<br />
-          <span className="relative inline-block text-[#fc742b]">
+          <span className="relative inline-block text-[#20714b]">
             more than they should.
             <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 580 10" fill="none">
-              <path d="M2 8 Q145 2 290 7 Q435 12 578 3" stroke="#fc742b" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.35" />
+              <path d="M2 8 Q145 2 290 7 Q435 12 578 3" stroke="#20714b" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.35" />
             </svg>
           </span>
         </h1>
@@ -129,13 +129,13 @@ function HeroSection() {
         </p>
         <p className="text-xl md:text-2xl text-gray-800 font-semibold max-w-2xl mx-auto mb-12">
           StackAudit is the{" "}
-          <span className="text-[#fc742b]">&ldquo;Mint for AI spend.&rdquo;</span>
+          <span className="text-[#20714b]">&ldquo;Mint for AI spend.&rdquo;</span>
         </p>
 
         <div id="audit" className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <a
             href="/audit"
-            className="group bg-gray-950 hover:bg-[#fc742b] text-white font-bold px-8 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-orange-200 hover:scale-105 active:scale-95 flex items-center gap-2.5"
+            className="group bg-gray-950 hover:bg-[#20714b] text-white font-bold px-8 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#20714b]/20 hover:scale-105 active:scale-95 flex items-center gap-2.5"
           >
             Audit my stack — it&apos;s free
             <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-200" />
@@ -151,7 +151,7 @@ function HeroSection() {
             {TOOLS.map((t) => (
               <div
                 key={t.name}
-                className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-full px-3.5 py-1.5 text-sm text-gray-600 font-medium hover:border-orange-300 hover:bg-orange-50 hover:text-[#fc742b] transition-all duration-200 shadow-sm"
+                className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-full px-3.5 py-1.5 text-sm text-gray-600 font-medium hover:border-[#20714b]/40 hover:bg-[#20714b]/5 hover:text-[#20714b] transition-all duration-200 shadow-sm"
               >
                 <span className="text-xs">{t.icon}</span>
                 {t.name}
@@ -174,7 +174,7 @@ function ProblemSection() {
 
       <div className="relative max-w-5xl mx-auto">
         <div className="text-center mb-14">
-          <span className="text-[#fc742b] font-semibold text-xs uppercase tracking-[0.15em]">The problem</span>
+          <span className="text-[#20714b] font-semibold text-xs uppercase tracking-[0.15em]">The problem</span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 leading-tight tracking-tight">
             You look at the bill.<br />You sigh. You pay it.
           </h2>
@@ -187,9 +187,9 @@ function ProblemSection() {
           {PROBLEMS.map((card) => (
             <div
               key={card.title}
-              className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:border-orange-500/40 hover:bg-white/[0.07] transition-all duration-300 group"
+              className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:border-[#20714b]/40 hover:bg-white/[0.07] transition-all duration-300 group"
             >
-              <div className="text-[#fc742b] text-3xl mb-5 opacity-80 group-hover:opacity-100 transition-opacity">{card.icon}</div>
+              <div className="text-[#20714b] text-3xl mb-5 opacity-80 group-hover:opacity-100 transition-opacity">{card.icon}</div>
               <h3 className="text-base font-bold text-white mb-2">{card.title}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">{card.desc}</p>
             </div>
@@ -205,20 +205,20 @@ function HowItWorksSection() {
     <section id="how-it-works" className="bg-white py-24 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-[#fc742b] font-semibold text-xs uppercase tracking-[0.15em]">How it works</span>
+          <span className="text-[#20714b] font-semibold text-xs uppercase tracking-[0.15em]">How it works</span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 mt-4 tracking-tight">
             Three steps.{" "}
-            <span className="text-[#fc742b]">Under five minutes.</span>
+            <span className="text-[#20714b]">Under five minutes.</span>
           </h2>
         </div>
 
         <div className="relative grid md:grid-cols-3 gap-10">
-          <div className="hidden md:block absolute top-7 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-gradient-to-r from-orange-100 via-orange-300 to-orange-100 z-0" />
+          <div className="hidden md:block absolute top-7 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-gradient-to-r from-[#20714b]/10 via-[#20714b]/40 to-[#20714b]/10 z-0" />
 
           {STEPS.map((step, i) => (
             <div key={step.num} className="flex flex-col items-center text-center group relative z-10">
               <div className="relative mb-7">
-                <div className="w-14 h-14 bg-orange-50 border-2 border-orange-200 group-hover:bg-[#fc742b] group-hover:border-[#fc742b] rounded-full flex items-center justify-center text-xl text-[#fc742b] group-hover:text-white transition-all duration-300 relative z-10">
+                <div className="w-14 h-14 bg-[#20714b]/10 border-2 border-[#20714b]/30 group-hover:bg-[#20714b] group-hover:border-[#20714b] rounded-full flex items-center justify-center text-xl text-[#20714b] group-hover:text-white transition-all duration-300 relative z-10">
                   {step.icon}
                 </div>
                 <span className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-gray-950 text-white text-[11px] font-bold rounded-full flex items-center justify-center z-20 border-2 border-white">
@@ -241,7 +241,7 @@ function FeaturesSection() {
     <section id="features" className="bg-[#fafaf8] py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-[#fc742b] font-semibold text-xs uppercase tracking-[0.15em]">Features</span>
+          <span className="text-[#20714b] font-semibold text-xs uppercase tracking-[0.15em]">Features</span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-950 mt-4 tracking-tight">
             Built to stop the bleed.
           </h2>
@@ -254,9 +254,9 @@ function FeaturesSection() {
           {FEATURES.map((f, i) => (
             <div
               key={f.title}
-              className={`bg-white rounded-2xl p-7 border transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-orange-50 hover:border-orange-200 ${i === 0 ? "border-orange-200" : "border-gray-200"}`}
+              className="bg-white rounded-2xl p-7 border border-gray-200 transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-[#20714b]/5 hover:border-[#20714b]/30"
             >
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl mb-5 transition-all duration-300 group-hover:scale-110 ${i === 0 ? "bg-[#fc742b] text-white" : "bg-orange-50 text-[#fc742b] group-hover:bg-[#fc742b] group-hover:text-white"}`}>
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl mb-5 transition-all duration-300 group-hover:scale-110 bg-[#20714b]/10 text-[#20714b] group-hover:bg-[#20714b] group-hover:text-white">
                 {f.icon}
               </div>
               <h3 className="text-[15px] font-bold text-gray-900 mb-2">{f.title}</h3>
@@ -272,11 +272,11 @@ function FeaturesSection() {
 function CTASection() {
   return (
     <section className="bg-gray-950 py-24 px-6 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #fc742b 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-[#fc742b]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #20714b 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-[#20714b]/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-3xl mx-auto text-center">
-        <span className="text-[#fc742b] font-semibold text-xs uppercase tracking-[0.15em]">Get started free</span>
+        <span className="text-[#20714b] font-semibold text-xs uppercase tracking-[0.15em]">Get started free</span>
         <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-4 mb-5 leading-tight tracking-tight">
           Know what you&apos;re actually<br />spending on AI.
         </h2>
@@ -285,7 +285,7 @@ function CTASection() {
         </p>
         <a
           href="/audit"
-          className="inline-flex items-center gap-2.5 bg-[#fc742b] hover:bg-[#e5601a] text-white font-bold px-10 py-4 rounded-full text-base transition-all duration-200 shadow-xl shadow-orange-900/30 hover:scale-105 active:scale-95"
+          className="inline-flex items-center gap-2.5 bg-[#20714b] hover:bg-[#185e3e] text-white font-bold px-10 py-4 rounded-full text-base transition-all duration-200 shadow-xl shadow-[#20714b]/30 hover:scale-105 active:scale-95"
         >
           Start my free audit
           <FaArrowRight className="text-sm" />
