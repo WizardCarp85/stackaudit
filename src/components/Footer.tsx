@@ -19,7 +19,7 @@ export default function Footer() {
             </p>
             <div className="inline-flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-full px-4 py-2 text-xs text-gray-400">
               <span>Powered by</span>
-              <a href="https://credex.ai" target="_blank" rel="noopener noreferrer" className="text-[#20714b] font-semibold hover:text-[#2a9463] transition-colors flex items-center gap-1">
+              <a href="https://credex.rocks" target="_blank" rel="noopener noreferrer" className="text-[#20714b] font-semibold hover:text-[#2a9463] transition-colors flex items-center gap-1">
                 Credex
               </a>
             </div>
@@ -39,7 +39,7 @@ export default function Footer() {
             <div>
               <h4 className="text-gray-100 font-semibold mb-4 text-sm">Company</h4>
               <ul className="space-y-3 text-sm text-gray-500">
-                <li><a href="https://credex.ai" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">About Credex</a></li>
+                <li><a href="https://credex.rocks" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">About Credex</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
               </ul>

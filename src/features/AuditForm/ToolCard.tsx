@@ -63,7 +63,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
 
       {/* ── Expanded fields ── */}
       {entry.enabled && (
-        <div className="px-5 pb-5 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#20714b]/15">
+        <div className="px-5 pt-6 pb-6 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 border-t border-[#20714b]/15">
           {/* Plan */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">

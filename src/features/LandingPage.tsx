@@ -96,7 +96,7 @@ const PROBLEMS = [
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-28 overflow-hidden bg-[#fafaf8]">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-40 pb-28 overflow-hidden bg-[#fafaf8]">
       <div
         className="absolute inset-0 opacity-[0.5]"
         style={{

@@ -65,12 +65,17 @@ export default function HeroSavings({
         </div>
 
         {isBig && (
-          <div className="mt-8 inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-2">
+          <a
+            href="https://credex.rocks"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-2 bg-[#20714b]/10 border border-[#20714b]/30 rounded-full px-4 py-2 hover:bg-[#20714b]/20 transition-colors"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
             <span className="text-[#20714b] text-xs font-semibold">
               Credex can help you capture even more of this saving →
             </span>
-          </div>
+          </a>
         )}
       </div>
     </div>

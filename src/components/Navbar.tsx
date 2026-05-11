@@ -15,17 +15,17 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-2 md:pt-3 px-4 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-2 md:pt-3 px-4 pointer-events-none mt-2">
       <div
-        className={`pointer-events-auto flex items-center justify-between w-full max-w-5xl px-5 py-3 rounded-full transition-all duration-500 ${
+        className={`pointer-events-auto flex items-center justify-between w-full max-w-5xl px-5 py-3 rounded-full transition-all duration-500 border ${
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/40 shadow-[#20714b]/5"
-            : "bg-transparent border border-transparent"
+            ? "bg-white/90 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[#20714b]/30 shadow-[#20714b]/5"
+            : "bg-white/50 backdrop-blur-md border-[#20714b]/20 shadow-sm"
         }`}
       >
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2.5 group">
-          <div className="relative overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-transform duration-300 group-hover:scale-105">
+        <a href="/" className="flex items-center gap-0.5 group">
+          <div className="relative overflow-hidden rounded-xl transition-transform duration-300 group-hover:scale-105">
             <Image src="/stackaudit.png" alt="StackAudit logo" width={34} height={34}/>
           </div>
           <span className="text-xl font-extrabold text-gray-900 tracking-tight">
@@ -34,30 +34,50 @@ export default function Navbar() {
         </a>
 
         {/* Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-gray-50/50 px-2 py-1.5 rounded-full border border-gray-100/50">
+        <nav className="hidden md:flex items-center gap-1 bg-gray-50/50 px-2 py-1.5 rounded-full border border-gray-100">
           {(pathname === "/"
             ? [["How it works", "#how-it-works"], ["Features", "#features"]]
             : [["Audit", "/audit"], ["Results", "/result"]]
-          ).map(([label, href]) => (
-            <a
-              key={label}
-              href={href}
-              className="text-sm font-semibold text-gray-600 hover:text-[#20714b] hover:bg-[#20714b]/5 border border-transparent hover:border-[#20714b]/15 px-4 py-1.5 rounded-full transition-all duration-200 shadow-sm shadow-transparent hover:shadow-[0_2px_10px_rgba(32,113,75,0.08)]"
-            >
-              {label}
-            </a>
-          ))}
+          ).map(([label, href]) => {
+            const isActive = href.startsWith("/") && pathname.startsWith(href);
+            return (
+              <a
+                key={label}
+                href={href}
+                className={`text-sm font-semibold px-4 py-1.5 rounded-full border transition-all duration-200 shadow-sm ${
+                  isActive
+                    ? "text-[#20714b] bg-[#20714b]/10 border-[#20714b]/20 shadow-[0_2px_10px_rgba(32,113,75,0.08)]"
+                    : "text-gray-600 border-transparent shadow-transparent hover:text-[#20714b] hover:bg-[#20714b]/5 hover:border-[#20714b]/15 hover:shadow-[0_2px_10px_rgba(32,113,75,0.08)]"
+                }`}
+              >
+                {label}
+              </a>
+            );
+          })}
         </nav>
 
         {/* CTA */}
-        <a
-          href="/audit"
-          className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
-        >
-          <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
-          <span className="relative z-10">Free audit</span>
-          <span className="relative z-10 transition-transform duration-200 ease-out group-hover:translate-x-1">→</span>
-        </a>
+        {pathname === "/" ? (
+          <a
+            href="/audit"
+            className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
+          >
+            <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
+            <span className="relative z-10">Free audit</span>
+            <span className="relative z-10 transition-transform duration-200 ease-out group-hover:translate-x-1">→</span>
+          </a>
+        ) : (
+          <a
+            href="https://credex.rocks"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
+          >
+            <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
+            <span className="relative z-10">Credex Deals</span>
+            <span className="relative z-10 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
+          </a>
+        )}
       </div>
     </header>
   );

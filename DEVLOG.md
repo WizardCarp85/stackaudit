@@ -53,7 +53,7 @@
 
 **What I learned:** importance of deciding proper theme
 
-**Blockers / what I'm stuck on:** how logic will work, navbar naming consistency issue
+**Blockers / what I'm stuck on:** how logic will work, navbar naming issue
 
 **Plan for tomorrow:** 
 

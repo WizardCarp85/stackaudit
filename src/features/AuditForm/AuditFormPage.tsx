@@ -80,7 +80,7 @@ export default function AuditFormPage() {
               <h2 className="text-base font-bold text-gray-900 uppercase tracking-widest mb-4">
                 Team context
               </h2>
-              <div className="bg-white border border-gray-200 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
                 {/* Team size */}
                 <div className="flex flex-col gap-1.5">
                   <label
