@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSavings from "./HeroSavings";
 import ToolRecommendationCard from "./ToolRecommendationCard";

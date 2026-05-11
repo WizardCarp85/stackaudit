@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-export default function NavBar() {
+export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 

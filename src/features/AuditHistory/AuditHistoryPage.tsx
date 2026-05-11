@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useAuditHistory } from "@/hooks/useAuditHistory";
 import { TOOLS_MAP } from "@/lib/tools-config";
@@ -30,9 +30,8 @@ function AuditCard({
     <div className="group relative bg-white border border-gray-200 rounded-2xl hover:border-[#20714b]/40 hover:shadow-lg hover:shadow-[#20714b]/5 transition-all duration-300 overflow-hidden">
       {/* Saving accent strip */}
       <div
-        className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl transition-colors duration-300 ${
-          hasSavings ? "bg-[#20714b]" : "bg-green-400"
-        }`}
+        className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl transition-colors duration-300 ${hasSavings ? "bg-[#20714b]" : "bg-green-400"
+          }`}
       />
 
       <div className="pl-6 pr-5 py-5">

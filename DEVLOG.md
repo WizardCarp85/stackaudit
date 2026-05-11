@@ -49,10 +49,23 @@
 
 **Hours worked:** 3
 
-**What I did:** working on logic, updated the theme to match actual credex website theme
+**What I did:** working on logic, updated the theme to match actual credex website theme, also updated logo
 
 **What I learned:** importance of deciding proper theme
 
 **Blockers / what I'm stuck on:** how logic will work
+
+**Plan for tomorrow:** 
+
+
+## Day 6 — 2026-05-12
+
+**Hours worked:** 
+
+**What I did:** 
+
+**What I learned:** 
+
+**Blockers / what I'm stuck on:** 
 
 **Plan for tomorrow:** 

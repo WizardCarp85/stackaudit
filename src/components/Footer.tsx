@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand & Credex */}
           <div className="max-w-xs">
             <div className="flex items-center gap-2.5 mb-4">
-              <Image src="/stackauditlogo.png" alt="StackAudit logo" width={32} height={32} className="rounded-md opacity-90" />
+              <Image src="/stackaudit.png" alt="StackAudit logo" width={32} height={32} className="rounded-md opacity-90" />
               <span className="text-gray-200 font-bold text-lg tracking-tight">
                 Stack<span className="text-[#20714b]">Audit</span>
               </span>

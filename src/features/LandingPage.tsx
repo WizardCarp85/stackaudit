@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import NavBar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
   FaKeyboard, FaRobot, FaCommentDots, FaGithub, FaPalette, FaFileAlt,
@@ -218,7 +217,7 @@ function HowItWorksSection() {
           {STEPS.map((step, i) => (
             <div key={step.num} className="flex flex-col items-center text-center group relative z-10">
               <div className="relative mb-7">
-                <div className="w-14 h-14 bg-[#20714b]/10 border-2 border-[#20714b]/30 group-hover:bg-[#20714b] group-hover:border-[#20714b] rounded-full flex items-center justify-center text-xl text-[#20714b] group-hover:text-white transition-all duration-300 relative z-10">
+                <div className="w-14 h-14 bg-[#f0f7f4] border-2 border-[#20714b]/30 group-hover:bg-[#20714b] group-hover:border-[#20714b] rounded-full flex items-center justify-center text-xl text-[#20714b] group-hover:text-white transition-all duration-300 relative z-10">
                   {step.icon}
                 </div>
                 <span className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-gray-950 text-white text-[11px] font-bold rounded-full flex items-center justify-center z-20 border-2 border-white">
@@ -300,7 +299,7 @@ function CTASection() {
 export default function LandingPage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      <NavBar />
+      <Navbar />
       <main>
         <HeroSection />
         <ProblemSection />
