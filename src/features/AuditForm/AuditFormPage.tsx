@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FaArrowRight, FaUndo } from "react-icons/fa";
-import NavBar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToolCard from "./ToolCard";
 import { useAuditForm } from "@/hooks/useAuditForm";
@@ -29,7 +29,7 @@ export default function AuditFormPage() {
 
   return (
     <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
-      <NavBar />
+      <Navbar />
 
       <main className="pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto">

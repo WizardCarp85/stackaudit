@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import NavBar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useAuditHistory } from "@/hooks/useAuditHistory";
 import { TOOLS_MAP } from "@/lib/tools-config";
@@ -109,7 +109,7 @@ export default function AuditHistoryPage() {
 
   return (
     <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
-      <NavBar />
+      <Navbar />
 
       <main className="pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto">

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import NavBar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSavings from "./HeroSavings";
 import ToolRecommendationCard from "./ToolRecommendationCard";
@@ -42,7 +42,7 @@ export default function AuditResultPage({ id }: Props) {
   if (notFound) {
     return (
       <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
-        <NavBar />
+        <Navbar />
         <main className="pt-28 pb-24 px-4">
           <div className="max-w-3xl mx-auto">
             <div className="bg-white border-2 border-dashed border-gray-200 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
@@ -78,7 +78,7 @@ export default function AuditResultPage({ id }: Props) {
 
   return (
     <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
-      <NavBar />
+      <Navbar />
 
       <main className="pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto space-y-8">
