@@ -47,7 +47,7 @@
 
 ## Day 5 — 2026-05-11
 
-**Hours worked:** 3
+**Hours worked:** 5
 
 **What I did:** working on logic, updated the theme to match actual credex website theme, also updated logo
 
@@ -55,12 +55,12 @@
 
 **Blockers / what I'm stuck on:** how logic will work, navbar naming issue
 
-**Plan for tomorrow:** 
+**Plan for tomorrow:** work on logic
 
 
 ## Day 6 — 2026-05-12
 
-**Hours worked:** 
+**Hours worked:** 1
 
 **What I did:** 
 
