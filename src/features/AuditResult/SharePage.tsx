@@ -75,9 +75,9 @@ export default function SharePage({ id }: Props) {
   const enabledCount = data.recommendations.length;
 
   return (
-    <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
       <Navbar />
-      <main className="pt-28 pb-24 px-4">
+      <main className="flex-1 pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto space-y-8">
           
           <div className="flex flex-col items-center text-center space-y-4 mb-8">

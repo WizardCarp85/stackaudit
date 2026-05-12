@@ -108,10 +108,10 @@ export default function AuditHistoryPage() {
   const { history, hydrated, deleteAudit } = useAuditHistory();
 
   return (
-    <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
       <Navbar />
 
-      <main className="pt-28 pb-24 px-4">
+      <main className="flex-1 pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="flex items-end justify-between mb-10 gap-4">

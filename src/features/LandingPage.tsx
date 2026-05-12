@@ -298,9 +298,9 @@ function CTASection() {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen font-sans antialiased">
+    <div className="min-h-screen flex flex-col font-sans antialiased">
       <Navbar />
-      <main>
+      <main className="flex-1">
         <HeroSection />
         <ProblemSection />
         <HowItWorksSection />

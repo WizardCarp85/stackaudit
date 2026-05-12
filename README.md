@@ -1,150 +1,66 @@
 # StackAudit
 
-**StackAudit is the free AI spend auditor for startups.** You tell us which AI tools your team uses (Cursor, Claude, ChatGPT, Copilot, and more) and how much you pay. We surface where you're overpaying, recommend smarter alternatives, and generate an AI-powered summary of your stack in under 3 minutes.
-
-Built as part of the [Credex](https://credex.rocks/) ecosystem.
+**StackAudit is a free AI spend auditor designed for startups to optimize their tool sprawl.** It analyzes your team's AI tool usage (Cursor, Claude, ChatGPT, etc.) to identify over-provisioned seats and recommend cost-saving alternatives in under 3 minutes.
 
 ---
 
-## Screenshots
+## Screenshots / Demo
 
-> _Screenshots / screen recording will be added after the first deployed build._
+> [!NOTE]
+> 3+ screenshots or a 30-second screen recording (YouTube/Loom link) will be placed here.
 >
-> Placeholder sections:
-> - Landing page hero
-> - Audit form (tool selection + spend inputs)
-> - Audit results (hero savings + per-tool breakdown + AI summary)
+> 1. **Landing Page**: The hero section and tool selection.
+> 2. **Audit Form**: The seat count and plan selection interface.
+> 3. **Audit Results**: The savings dashboard and AI-generated summary.
 
 ---
 
 ## Quick Start
 
-### Prerequisites
-
-- Node.js 20
-- npm 10
-
-### Install & run locally
-
+### 1. Install dependencies
 ```bash
-git clone https://github.com/WizardCarp85/stackaudit.git
-cd stackaudit
 npm install
+```
+
+### 2. Run locally
+```bash
 npm run dev
 ```
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-App runs at **http://localhost:3000**.
-
-### Environment variables
-
-Create `.env.local` in the project root:
-
-```env
-# Required for AI summary generation (Feature 4)
-ANTHROPIC_API_KEY=sk-ant-...
-
-# Required for lead capture storage (Feature 5) pick one backend
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-
-# Required for transactional email (Feature 5)
-RESEND_API_KEY=re_...
-```
-
-### Deploy
-
-The project is a standard Next.js app. Recommended: **Vercel** (zero-config).
-
+### 3. Deploy
+The project is optimized for **Vercel**.
 ```bash
-# Vercel CLI
 npx vercel
 ```
-
-> Deployed URL: https://stackaudit-one.vercel.app/
-
----
-
-## Project Structure
-
-```
-src/
- app/ # Next.js App Router routes
- page.tsx # / Landing page
- audit/page.tsx # /audit Spend input form
- result/page.tsx # /result Audit results
- features/ # Full-page feature modules
- LandingPage.tsx
- AuditForm/
- AuditFormPage.tsx # Form orchestrator
- ToolCard.tsx # Per-tool toggle + inputs
- AuditResult/
- AuditResultPage.tsx # Result orchestrator + placeholder engine
- HeroSavings.tsx # Big monthly/annual savings banner
- ToolRecommendationCard.tsx
- AiSummaryCard.tsx
- LeadCaptureSection.tsx
- components/ # Shared UI primitives
- NavBar.tsx
- Footer.tsx
- hooks/
- useAuditForm.ts # Form state + localStorage persistence
- lib/
- types.ts # Shared TypeScript interfaces
- tools-config.ts # Tool definitions & plan options
- ai-summary.ts # AI summary generator (stub Anthropic SDK)
-```
-
-### Convention
-
-| Layer | What goes here |
-|---|---|
-| `app/` | Thin route files metadata only, no logic |
-| `features/` | Page-level components and their private sub-components |
-| `components/` | Reusable primitives used across multiple features |
-| `hooks/` | Custom React hooks with no UI |
-| `lib/` | Pure functions, config, and type definitions |
-
----
-
-## Features (MVP)
-
-| # | Feature | Status |
-|---|---|---|
-| 1 | Spend input form (8 tools, localStorage persist) | Done |
-| 2 | Audit engine (rule-based, defensible logic) | Placeholder in place |
-| 3 | Audit results page (hero savings + per-tool breakdown) | Done (needs engine) |
-| 4 | AI-generated personalised summary (Anthropic API) | Stub in `src/lib/ai-summary.ts` |
-| 5 | Lead capture + storage (email Supabase + Resend) | UI done, backend TBD |
-| 6 | Shareable result URL (OG tags) | OG metadata in place, unique URL TBD |
 
 ---
 
 ## Decisions
 
-### 1. localStorage for form persistence (not a database)
-The form must survive page refreshes without requiring login. Using `localStorage` in a custom hook (`useAuditForm`) achieves this without any backend round-trip. A server-side draft system would add complexity for no user benefit at MVP stage.
+### 1. localStorage vs Database for Audit History
+**Decision:** Store audit results and form state in `localStorage`.
+**Trade-off:** We prioritized a frictionless, "no-login" experience for the MVP. While this means users can't share results across devices easily, it removes the need for Auth/Database infrastructure, drastically reducing time-to-value for new users.
 
-### 2. Feature folders, not layer folders
-Components are co-located with the feature they belong to (`features/AuditForm/ToolCard.tsx`) rather than a flat `components/` directory. This makes it obvious what can be deleted when a feature is removed, and prevents premature abstraction.
+### 2. Deterministic Engine vs AI for Audit Math
+**Decision:** Use hardcoded pricing rules and seat-logic instead of LLMs for the core audit.
+**Trade-off:** Knowing *when not* to use AI is critical for credibility. Using deterministic rules ensures 100% accuracy in cost calculations, whereas an LLM might hallucinate pricing data. AI is reserved strictly for the qualitative summary paragraph.
 
-### 3. Audit engine logic is hardcoded rules, not AI
-Per the product spec: "the audit math itself hardcoded rules are correct knowing when *not* to use AI is part of the test." The engine evaluates plan-fit and seat utilisation using deterministic logic. AI is only used for the 100-word summary paragraph.
+### 3. Feature-first vs Layer-based Organization
+**Decision:** Components are co-located within `src/features/` rather than a global `src/components/` folder.
+**Trade-off:** This makes features self-contained and easier to delete or refactor. The trade-off is a slight increase in duplication for small UI primitives, but it prevents the "spaghetti component" problem common in early-stage startups.
 
-### 4. Next.js App Router (not Pages Router)
-Next.js 16 defaults to the App Router. Route files are kept as thin wrappers (metadata + one component import) so that all rendering logic lives in `features/` and is portable if the routing layer changes.
+### 4. Client-side vs Server-side Audit Execution
+**Decision:** Execute the audit engine entirely in the browser.
+**Trade-off:** This provides instant results with zero network latency. The trade-off is that pricing logic is exposed in the client bundle. For the MVP, the speed of the user experience outweighs the need to protect the proprietary math.
 
-### 5. Tailwind CSS v4 via `@import "tailwindcss"`
-The project uses Tailwind v4's new CSS-first config (no `tailwind.config.js`). This removes a config file and keeps all design tokens in `globals.css`, reducing the number of files a new contributor needs to touch.
-
----
-
-## Roadmap (post-MVP)
-
-- Wire real audit engine rules (PRICING_DATA.md as source of truth)
-- Wire Anthropic API in `src/lib/ai-summary.ts`
-- Supabase lead storage + Resend transactional email
-- Unique shareable result URLs (UUID in URL, strip PII for public view)
-- Rate limiting / hCaptcha on lead capture endpoint
-- PDF export of audit report
+### 5. Tailwind CSS v4 CSS-first Config
+**Decision:** Adopted Tailwind v4 with `@import "tailwindcss"` in `globals.css`.
+**Trade-off:** This removes the `tailwind.config.js` file and keeps all design tokens in standard CSS. It simplifies the build pipeline but requires contributors to be familiar with the new v4 syntax.
 
 ---
+
+## Deployed URL
+
+> [!IMPORTANT]
+> **Live Demo:** [https://stackaudit-one.vercel.app/](https://stackaudit-one.vercel.app/)

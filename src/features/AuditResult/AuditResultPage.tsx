@@ -120,9 +120,9 @@ export default function AuditResultPage({ id }: Props) {
   // ── Not found state ──
   if (notFound) {
     return (
-      <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
+      <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
         <Navbar />
-        <main className="pt-28 pb-24 px-4">
+        <main className="flex-1 pt-28 pb-24 px-4">
           <div className="max-w-3xl mx-auto">
             <div className="bg-white border-2 border-dashed border-gray-200 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
               <div className="w-16 h-16 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center text-3xl text-gray-400">
@@ -156,10 +156,10 @@ export default function AuditResultPage({ id }: Props) {
   const enabledCount = result.recommendations.length;
 
   return (
-    <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
       <Navbar />
 
-      <main className="pt-28 pb-24 px-4">
+      <main className="flex-1 pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto space-y-8">
 
           {/* ── Back + Share bar ── */}

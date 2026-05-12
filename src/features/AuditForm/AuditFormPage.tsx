@@ -28,10 +28,10 @@ export default function AuditFormPage() {
   }, 0);
 
   return (
-    <div className="min-h-screen font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
       <Navbar />
 
-      <main className="pt-28 pb-24 px-4">
+      <main className="flex-1 pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto">
           {/* ── Page header ── */}
           <div className="text-center mb-12">
