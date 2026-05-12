@@ -12,7 +12,7 @@ import { saveAuditToHistory } from "@/lib/audit-history";
 
 export default function AuditFormPage() {
   const router = useRouter();
-  const { form, enabledTools, setTopLevel, setToolField, toggleTool, resetForm } =
+  const { form, enabledTools, setToolField, toggleTool, resetForm } =
     useAuditForm();
 
   function handleSubmit(e: React.FormEvent) {

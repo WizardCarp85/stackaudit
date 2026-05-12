@@ -7,15 +7,24 @@ import HeroSavings from "./HeroSavings";
 import ToolRecommendationCard from "./ToolRecommendationCard";
 import AiSummaryCard from "./AiSummaryCard";
 import { supabase } from "@/lib/supabase";
-import { FaArrowLeft, FaRegChartBar } from "react-icons/fa";
+import { FaRegChartBar } from "react-icons/fa";
 import Link from "next/link";
+import { ToolRecommendation } from "@/lib/types";
+
+interface AuditRow {
+  recommendations: ToolRecommendation[];
+  total_monthly_spend: number;
+  total_monthly_saving: number;
+  total_annual_saving: number;
+  ai_summary: string;
+}
 
 interface Props {
   id: string;
 }
 
 export default function SharePage({ id }: Props) {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<AuditRow | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -97,7 +106,7 @@ export default function SharePage({ id }: Props) {
               Recommendations
             </h2>
             <div className="flex flex-col gap-4">
-              {data.recommendations.map((rec: any, i: number) => (
+              {data.recommendations.map((rec: ToolRecommendation, i: number) => (
                 <ToolRecommendationCard key={rec.toolId} rec={rec} index={i} />
               ))}
             </div>

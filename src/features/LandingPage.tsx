@@ -3,7 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "../components/Footer";
 import {
-  FaKeyboard, FaRobot, FaCommentDots, FaGithub, FaPalette, FaFileAlt,
+  FaKeyboard, FaRobot, FaCommentDots, FaGithub,
   FaPlug, FaChartBar, FaMoneyBillWave,
   FaSearch, FaBolt, FaChartLine, FaLock, FaFileInvoiceDollar, FaHandshake,
   FaQuestionCircle, FaEyeSlash, FaArrowRight, FaCode, FaStar
@@ -250,7 +250,7 @@ function FeaturesSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {FEATURES.map((f, i) => (
+          {FEATURES.map((f) => (
             <div
               key={f.title}
               className="bg-white rounded-2xl p-7 border border-gray-200 transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-[#20714b]/5 hover:border-[#20714b]/30"

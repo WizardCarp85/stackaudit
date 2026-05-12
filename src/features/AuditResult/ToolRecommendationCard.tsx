@@ -2,7 +2,7 @@
 
 import type { ToolRecommendation } from "@/lib/types";
 import { TOOLS_MAP } from "@/lib/tools-config";
-import { FaArrowRight, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 
 interface Props {
   rec: ToolRecommendation;

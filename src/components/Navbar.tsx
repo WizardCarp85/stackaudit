@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -24,14 +25,14 @@ export default function Navbar() {
         }`}
       >
         {/* Logo */}
-        <a href="/" className="flex items-center gap-0.5 group">
+        <Link href="/" className="flex items-center gap-0.5 group">
           <div className="relative overflow-hidden rounded-xl transition-transform duration-300 group-hover:scale-105">
             <Image src="/stackaudit.png" alt="StackAudit logo" width={34} height={34}/>
           </div>
           <span className="text-xl font-extrabold text-gray-900 tracking-tight">
             Stack<span className="text-[#20714b]">Audit</span>
           </span>
-        </a>
+        </Link>
 
         {/* Links */}
         <nav className="hidden md:flex items-center gap-1 bg-gray-50/50 px-2 py-1.5 rounded-full border border-gray-100">
@@ -41,7 +42,7 @@ export default function Navbar() {
           ).map(([label, href]) => {
             const isActive = href.startsWith("/") && pathname.startsWith(href);
             return (
-              <a
+              <Link
                 key={label}
                 href={href}
                 className={`text-sm font-semibold px-4 py-1.5 rounded-full border transition-all duration-200 shadow-sm ${
@@ -51,27 +52,27 @@ export default function Navbar() {
                 }`}
               >
                 {label}
-              </a>
+              </Link>
             );
           })}
         </nav>
 
         {/* CTA */}
         {pathname === "/" ? (
-          <a
+          <Link
             href="/audit"
             className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
           >
             <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
             <span className="relative z-10">Free audit</span>
             <span className="relative z-10 transition-transform duration-200 ease-out group-hover:translate-x-1">→</span>
-          </a>
+          </Link>
         ) : (
           <a
             href="https://credex.rocks"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
+            className="group relative overflow-hidden bg-[#20714b] hover:bg-[#185e3e] text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-[0_0_20_rgba(32,113,75,0.4)] hover:-translate-y-px active:translate-y-px active:scale-95 flex items-center gap-1.5"
           >
             <div className="absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] transition-transform duration-700 ease-out pointer-events-none" />
             <span className="relative z-10">Credex Deals</span>

@@ -10,7 +10,7 @@ import AiSummaryCard from "./AiSummaryCard";
 import LeadCaptureSection from "./LeadCaptureSection";
 import { getAuditById, saveAuditToHistory } from "@/lib/audit-history";
 import type { AuditResult } from "@/lib/types";
-import { FaArrowLeft, FaShare, FaSearch, FaRegChartBar, FaCheckCircle } from "react-icons/fa";
+import { FaArrowLeft, FaShare, FaSearch, FaCheckCircle } from "react-icons/fa";
 
 interface Props {
   /** The audit ID from the URL — e.g. /result/[id] */
@@ -29,9 +29,10 @@ export default function AuditResultPage({ id }: Props) {
   useEffect(() => {
     const audit = getAuditById(id);
     if (audit) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setResult(audit);
       // If it doesn't have a cached AI summary yet, start loading immediately
-      if ((audit as any).aiSummarySource !== "ai") {
+      if ((audit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
         setSummaryLoading(true);
       }
     } else {
@@ -50,6 +51,7 @@ export default function AuditResultPage({ id }: Props) {
       return;
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSummaryLoading(true);
 
     fetch("/api/ai-summary", {

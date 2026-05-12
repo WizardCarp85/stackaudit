@@ -13,7 +13,7 @@
  */
 
 import type { AuditFormState, AuditResult, ToolEntry, ToolRecommendation } from "./types";
-import { TOOLS_MAP } from "./tools-config";
+
 
 function generateId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
@@ -326,7 +326,7 @@ function auditOpenAiApi(entry: ToolEntry): Omit<ToolRecommendation, "toolId"> {
   };
 }
 
-function auditGemini(entry: ToolEntry, teamSize: number): Omit<ToolRecommendation, "toolId"> {
+function auditGemini(entry: ToolEntry): Omit<ToolRecommendation, "toolId"> {
   const spend = parseFloat(entry.monthlySpend || "0") || 0;
   const seats = parseInt(entry.seats || "1", 10) || 1;
   const plan = entry.plan;
@@ -472,7 +472,7 @@ export function runAudit(form: AuditFormState): AuditResult {
         result = auditOpenAiApi(entry);
         break;
       case "gemini":
-        result = auditGemini(entry, teamSize);
+        result = auditGemini(entry);
         break;
       case "windsurf":
         result = auditWindsurf(entry, teamSize, otherActiveTools);

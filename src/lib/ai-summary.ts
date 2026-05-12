@@ -128,10 +128,11 @@ export async function generateAiSummary(result: AuditResult): Promise<{ summary:
     // Empty response — fall through to template
     console.warn("[ai-summary] Empty response from Gemini, using fallback template.");
     return { summary: buildTemplateSummary(result), source: "template" };
-  } catch (err: any) {
+  } catch (err: unknown) {
     // Log more specific error details
-    const status = err?.status || "unknown status";
-    const message = err?.message || "unknown error";
+    const error = err as { status?: string; message?: string };
+    const status = error?.status || "unknown status";
+    const message = error?.message || "unknown error";
     console.error(`[ai-summary] Gemini API failed (${status}): ${message}`);
     
     if (message.includes("API_KEY_INVALID")) {
