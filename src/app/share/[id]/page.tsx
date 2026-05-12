@@ -20,17 +20,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : "thousands";
 
   return {
-    title: `AI Stack Audit — Potential Savings Found`,
-    description: `We found ${savings} in potential annual AI savings. See the full breakdown on StackAudit.`,
+    title: `AI Stack Audit — We Found ${savings} in Potential Annual Savings`,
+    description: `Stop overpaying for AI! Our audit found ${savings} in potential annual savings for this stack. Run your own free 3-minute audit to optimize your team's spend.`,
     openGraph: {
-      title: `AI Stack Audit — Potential Savings Found`,
-      description: `We found ${savings} in potential annual AI savings. See the full breakdown on StackAudit.`,
+      title: `AI Stack Audit — We Found ${savings} in Potential Annual Savings`,
+      description: `Stop overpaying for AI! Our audit found ${savings} in potential annual savings for this stack. Run your own free 3-minute audit to optimize your team's spend.`,
       images: [{ url: "/og-image.png" }],
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `AI Stack Audit — Potential Savings Found`,
-      description: `We found ${savings} in potential annual AI savings. See the full breakdown on StackAudit.`,
+      title: `AI Stack Audit — We Found ${savings} in Potential Annual Savings`,
+      description: `Stop overpaying for AI! Our audit found ${savings} in potential annual savings for this stack. Run your own free 3-minute audit to optimize your team's spend.`,
     },
   };
 }
