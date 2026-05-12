@@ -1,6 +1,6 @@
 # StackAudit
 
-**StackAudit is the free AI spend auditor for startups.** You tell us which AI tools your team uses (Cursor, Claude, ChatGPT, Copilot, and more) and how much you pay. We surface where you're overpaying, recommend smarter alternatives, and generate an AI-powered summary of your stack — in under 3 minutes.
+**StackAudit is the free AI spend auditor for startups.** You tell us which AI tools your team uses (Cursor, Claude, ChatGPT, Copilot, and more) and how much you pay. We surface where you're overpaying, recommend smarter alternatives, and generate an AI-powered summary of your stack in under 3 minutes.
 
 Built as part of the [Credex](https://credex.rocks/) ecosystem.
 
@@ -21,8 +21,8 @@ Built as part of the [Credex](https://credex.rocks/) ecosystem.
 
 ### Prerequisites
 
-- Node.js ≥ 20
-- npm ≥ 10
+- Node.js 20
+- npm 10
 
 ### Install & run locally
 
@@ -43,7 +43,7 @@ Create `.env.local` in the project root:
 # Required for AI summary generation (Feature 4)
 ANTHROPIC_API_KEY=sk-ant-...
 
-# Required for lead capture storage (Feature 5) — pick one backend
+# Required for lead capture storage (Feature 5) pick one backend
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
@@ -68,37 +68,37 @@ npx vercel
 
 ```
 src/
-├── app/                  # Next.js App Router routes
-│   ├── page.tsx          # / — Landing page
-│   ├── audit/page.tsx    # /audit — Spend input form
-│   └── result/page.tsx   # /result — Audit results
-├── features/             # Full-page feature modules
-│   ├── LandingPage.tsx
-│   ├── AuditForm/
-│   │   ├── AuditFormPage.tsx   # Form orchestrator
-│   │   └── ToolCard.tsx        # Per-tool toggle + inputs
-│   └── AuditResult/
-│       ├── AuditResultPage.tsx  # Result orchestrator + placeholder engine
-│       ├── HeroSavings.tsx      # Big monthly/annual savings banner
-│       ├── ToolRecommendationCard.tsx
-│       ├── AiSummaryCard.tsx
-│       └── LeadCaptureSection.tsx
-├── components/           # Shared UI primitives
-│   ├── NavBar.tsx
-│   └── Footer.tsx
-├── hooks/
-│   └── useAuditForm.ts   # Form state + localStorage persistence
-└── lib/
-    ├── types.ts           # Shared TypeScript interfaces
-    ├── tools-config.ts    # Tool definitions & plan options
-    └── ai-summary.ts      # AI summary generator (stub → Anthropic SDK)
+ app/ # Next.js App Router routes
+ page.tsx # / Landing page
+ audit/page.tsx # /audit Spend input form
+ result/page.tsx # /result Audit results
+ features/ # Full-page feature modules
+ LandingPage.tsx
+ AuditForm/
+ AuditFormPage.tsx # Form orchestrator
+ ToolCard.tsx # Per-tool toggle + inputs
+ AuditResult/
+ AuditResultPage.tsx # Result orchestrator + placeholder engine
+ HeroSavings.tsx # Big monthly/annual savings banner
+ ToolRecommendationCard.tsx
+ AiSummaryCard.tsx
+ LeadCaptureSection.tsx
+ components/ # Shared UI primitives
+ NavBar.tsx
+ Footer.tsx
+ hooks/
+ useAuditForm.ts # Form state + localStorage persistence
+ lib/
+ types.ts # Shared TypeScript interfaces
+ tools-config.ts # Tool definitions & plan options
+ ai-summary.ts # AI summary generator (stub Anthropic SDK)
 ```
 
 ### Convention
 
 | Layer | What goes here |
 |---|---|
-| `app/` | Thin route files — metadata only, no logic |
+| `app/` | Thin route files metadata only, no logic |
 | `features/` | Page-level components and their private sub-components |
 | `components/` | Reusable primitives used across multiple features |
 | `hooks/` | Custom React hooks with no UI |
@@ -110,12 +110,12 @@ src/
 
 | # | Feature | Status |
 |---|---|---|
-| 1 | Spend input form (8 tools, localStorage persist) | ✅ Done |
-| 2 | Audit engine (rule-based, defensible logic) | 🔲 Placeholder in place |
-| 3 | Audit results page (hero savings + per-tool breakdown) | ✅ Done (needs engine) |
-| 4 | AI-generated personalised summary (Anthropic API) | 🔲 Stub in `src/lib/ai-summary.ts` |
-| 5 | Lead capture + storage (email → Supabase + Resend) | 🔲 UI done, backend TBD |
-| 6 | Shareable result URL (OG tags) | 🔲 OG metadata in place, unique URL TBD |
+| 1 | Spend input form (8 tools, localStorage persist) | Done |
+| 2 | Audit engine (rule-based, defensible logic) | Placeholder in place |
+| 3 | Audit results page (hero savings + per-tool breakdown) | Done (needs engine) |
+| 4 | AI-generated personalised summary (Anthropic API) | Stub in `src/lib/ai-summary.ts` |
+| 5 | Lead capture + storage (email Supabase + Resend) | UI done, backend TBD |
+| 6 | Shareable result URL (OG tags) | OG metadata in place, unique URL TBD |
 
 ---
 
@@ -128,7 +128,7 @@ The form must survive page refreshes without requiring login. Using `localStorag
 Components are co-located with the feature they belong to (`features/AuditForm/ToolCard.tsx`) rather than a flat `components/` directory. This makes it obvious what can be deleted when a feature is removed, and prevents premature abstraction.
 
 ### 3. Audit engine logic is hardcoded rules, not AI
-Per the product spec: "the audit math itself — hardcoded rules are correct — knowing when *not* to use AI is part of the test." The engine evaluates plan-fit and seat utilisation using deterministic logic. AI is only used for the 100-word summary paragraph.
+Per the product spec: "the audit math itself hardcoded rules are correct knowing when *not* to use AI is part of the test." The engine evaluates plan-fit and seat utilisation using deterministic logic. AI is only used for the 100-word summary paragraph.
 
 ### 4. Next.js App Router (not Pages Router)
 Next.js 16 defaults to the App Router. Route files are kept as thin wrappers (metadata + one component import) so that all rendering logic lives in `features/` and is portable if the routing layer changes.
