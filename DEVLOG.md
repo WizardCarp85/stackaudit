@@ -1,9 +1,13 @@
 ## Day 1 – 2026-05-07
-**Hours worked:** 0
+**Hours worked:** 0 (Took a day off because of preparation for next day college exam and assignments)
 
-**Why I took a day off:** Because of my college exam preparation and completing assignments
+**What I did:** N/A - Day off
 
-**Plan for tomorrow:** Setup Proper folder stucture with necessary initial files and content and do some reasearch
+**What I learned:** N/A
+
+**Blockers / what I'm stuck on:** N/A
+
+**Plan for tomorrow:** Setup proper folder structure with necessary initial files and content and do some research
 
 
 ## Day 2 – 2026-05-08
@@ -75,8 +79,8 @@
 
 **Hours worked:** 3
 
-**What I did:** worked on tests and linting
+**What I did:** worked on tests and documentation
 
-**What I learned:** how to write test and linting
+**What I learned:** how to write tests and document things properly
 
-**Blockers / what I'm stuck on:** the open graph sharing result issue
+**Blockers / what I'm stuck on:** the open graph sharing result issue 
