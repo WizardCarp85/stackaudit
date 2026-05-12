@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `AI Stack Audit — We Found ${savings} in Potential Annual Savings`,
       description: `Stop overpaying for AI! Our audit found ${savings} in potential annual savings for this stack. Run your own free 3-minute audit to optimize your team's spend.`,
-      images: [{ url: "/newogimage.png" }],
+      images: [{ url: "/og-image-new.png" }],
       type: "website",
     },
     twitter: {
