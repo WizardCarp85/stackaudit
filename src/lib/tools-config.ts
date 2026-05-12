@@ -35,7 +35,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
     vendor: "GitHub / Microsoft",
     color: "#24292e",
     plans: [
-      { value: "individual", label: "Individual ($10/mo)", pricePerSeat: 10 },
+      { value: "pro", label: "Pro ($10/mo)", pricePerSeat: 10 },
       { value: "business", label: "Business ($19/mo)", pricePerSeat: 19 },
       { value: "enterprise", label: "Enterprise ($39/mo)", pricePerSeat: 39 },
     ],
@@ -48,10 +48,9 @@ export const TOOLS_CONFIG: ToolConfig[] = [
     plans: [
       { value: "free", label: "Free", pricePerSeat: 0 },
       { value: "pro", label: "Pro ($20/mo)", pricePerSeat: 20 },
-      { value: "max", label: "Max ($100/mo)", pricePerSeat: 100 },
-      { value: "team", label: "Team ($30/mo)", pricePerSeat: 30 },
-      { value: "enterprise", label: "Enterprise (custom)", pricePerSeat: null },
-      { value: "api_direct", label: "API Direct (usage-based)", pricePerSeat: null },
+      { value: "team_standard", label: "Team Standard ($25/mo)", pricePerSeat: 25 },
+      { value: "team_premium", label: "Team Premium ($125/mo)", pricePerSeat: 125 },
+      { value: "enterprise", label: "Enterprise ($20/mo + API usage)", pricePerSeat: 20 },
     ],
   },
   {
@@ -63,7 +62,6 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       { value: "plus", label: "Plus ($20/mo)", pricePerSeat: 20 },
       { value: "team", label: "Team ($30/mo)", pricePerSeat: 30 },
       { value: "enterprise", label: "Enterprise (custom)", pricePerSeat: null },
-      { value: "api_direct", label: "API Direct (usage-based)", pricePerSeat: null },
     ],
   },
   {
@@ -72,8 +70,9 @@ export const TOOLS_CONFIG: ToolConfig[] = [
     vendor: "Anthropic",
     color: "#c2410c",
     plans: [
-      { value: "pay_as_you_go", label: "Pay-as-you-go", pricePerSeat: null },
-      { value: "committed", label: "Committed (discounted)", pricePerSeat: null },
+      { value: "sonnet_4_6", label: "Claude Sonnet 4.6 ($3/$15 per 1M tokens)", pricePerSeat: null },
+      { value: "opus_4_7", label: "Claude Opus 4.7 ($5/$25 per 1M tokens)", pricePerSeat: null },
+      { value: "haiku_4_5", label: "Claude Haiku 4.5 ($1/$5 per 1M tokens)", pricePerSeat: null },
     ],
   },
   {
@@ -82,8 +81,9 @@ export const TOOLS_CONFIG: ToolConfig[] = [
     vendor: "OpenAI",
     color: "#059669",
     plans: [
-      { value: "pay_as_you_go", label: "Pay-as-you-go", pricePerSeat: null },
-      { value: "committed", label: "Committed (discounted)", pricePerSeat: null },
+      { value: "gpt_5_5", label: "GPT-5.5 ($5/$30 per 1M tokens)", pricePerSeat: null },
+      { value: "gpt_5_4", label: "GPT-5.4 ($2.50/$15 per 1M tokens)", pricePerSeat: null },
+      { value: "gpt_5_4_mini", label: "GPT-5.4 mini ($0.75/$4.50 per 1M tokens)", pricePerSeat: null },
     ],
   },
   {
@@ -92,20 +92,21 @@ export const TOOLS_CONFIG: ToolConfig[] = [
     vendor: "Google",
     color: "#4285f4",
     plans: [
-      { value: "pro", label: "Gemini Advanced / Pro ($20/mo)", pricePerSeat: 20 },
-      { value: "ultra", label: "Ultra / One AI Premium ($20/mo)", pricePerSeat: 20 },
-      { value: "api", label: "API (usage-based)", pricePerSeat: null },
+      { value: "pro", label: "Pro ($19.99/mo)", pricePerSeat: 19.99 },
+      { value: "ultra", label: "Ultra ($249.99/mo)", pricePerSeat: 249.99 },
+      { value: "api_pro", label: "Gemini 3.1 Pro ($2/$12 per 1M tokens)", pricePerSeat: null },
+      { value: "api_flash", label: "Gemini 3.1 Flash ($0.25/$1.50 per 1M tokens)", pricePerSeat: null },
     ],
   },
   {
     id: "windsurf",
-    name: "Windsurf / v0",
-    vendor: "Codeium / Vercel",
+    name: "Windsurf",
+    vendor: "Codeium",
     color: "#7c3aed",
     plans: [
       { value: "free", label: "Free", pricePerSeat: 0 },
-      { value: "pro", label: "Pro ($15/mo)", pricePerSeat: 15 },
-      { value: "teams", label: "Teams ($35/mo)", pricePerSeat: 35 },
+      { value: "pro", label: "Pro ($20/mo)", pricePerSeat: 20 },
+      { value: "teams", label: "Teams ($40/mo)", pricePerSeat: 40 },
       { value: "enterprise", label: "Enterprise (custom)", pricePerSeat: null },
     ],
   },
