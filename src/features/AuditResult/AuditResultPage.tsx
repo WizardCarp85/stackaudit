@@ -21,8 +21,10 @@ export default function AuditResultPage({ id }: Props) {
   const [result, setResult] = useState<AuditResult | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [shareId, setShareId] = useState<string | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
   const summaryFetched = useRef(false);
+  const savedToCloud = useRef(false);
 
   useEffect(() => {
     const audit = getAuditById(id);
@@ -84,8 +86,30 @@ export default function AuditResultPage({ id }: Props) {
       });
   }, [result]);
 
+  // Save anonymous version to Supabase for public sharing
+  useEffect(() => {
+    if (!result || savedToCloud.current) return;
+    savedToCloud.current = true;
+
+    fetch("/api/audits", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(result),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.id) setShareId(data.id);
+      })
+      .catch((err) => console.error("[AuditResultPage] Failed to save for sharing:", err));
+  }, [result]);
+
   function handleShare() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
+    const baseUrl = window.location.origin;
+    const shareUrl = shareId 
+      ? `${baseUrl}/share/${shareId}` 
+      : window.location.href;
+
+    navigator.clipboard.writeText(shareUrl).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });

@@ -60,7 +60,20 @@
 
 ## Day 6 — 2026-05-12
 
-**Hours worked:** 1
+**Hours worked:** 8
+
+**What I did:** added logic, added ai summary, updated pricing_data.md
+
+**What I learned:** integrating gemini api and using supabase, resend, honeypot
+
+**Blockers / what I'm stuck on:** api response display issue, still confused about logic
+
+**Plan for tomorrow:** complete the log files
+
+
+## Day 7 — 2026-05-13
+
+**Hours worked:** 
 
 **What I did:** 
 
