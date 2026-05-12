@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,7 +8,7 @@ import HeroSavings from "./HeroSavings";
 import ToolRecommendationCard from "./ToolRecommendationCard";
 import AiSummaryCard from "./AiSummaryCard";
 import LeadCaptureSection from "./LeadCaptureSection";
-import { getAuditById } from "@/lib/audit-history";
+import { getAuditById, saveAuditToHistory } from "@/lib/audit-history";
 import type { AuditResult } from "@/lib/types";
 import { FaArrowLeft, FaShare, FaSearch, FaRegChartBar, FaCheckCircle } from "react-icons/fa";
 
@@ -21,15 +21,68 @@ export default function AuditResultPage({ id }: Props) {
   const [result, setResult] = useState<AuditResult | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  const summaryFetched = useRef(false);
 
   useEffect(() => {
     const audit = getAuditById(id);
     if (audit) {
       setResult(audit);
+      // If it doesn't have a cached AI summary yet, start loading immediately
+      if ((audit as any).aiSummarySource !== "ai") {
+        setSummaryLoading(true);
+      }
     } else {
       setNotFound(true);
     }
   }, [id]);
+
+  // Fetch AI-generated summary asynchronously after audit loads
+  useEffect(() => {
+    if (!result || summaryFetched.current) return;
+    summaryFetched.current = true;
+
+    // Check if this audit already has an AI-generated summary cached
+    // (aiSummarySource is set when we successfully get an AI summary)
+    if ((result as AuditResult & { aiSummarySource?: string }).aiSummarySource === "ai") {
+      return;
+    }
+
+    setSummaryLoading(true);
+
+    fetch("/api/ai-summary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(result),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`API returned ${res.status}`);
+        return res.json();
+      })
+      .then((data: { summary: string; source: "ai" | "template" }) => {
+        if (data.summary) {
+          const updated = {
+            ...result,
+            aiSummary: data.summary,
+            aiSummarySource: data.source, // 'ai' or 'template'
+          };
+          setResult(updated);
+          
+          // Only persist to history if it's a real AI summary
+          // This allows users to "retry" by refreshing if their key was broken
+          if (data.source === "ai") {
+            saveAuditToHistory(updated);
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("[AuditResultPage] AI summary fetch failed:", err);
+        // Keep the templated fallback already in result.aiSummary
+      })
+      .finally(() => {
+        setSummaryLoading(false);
+      });
+  }, [result]);
 
   function handleShare() {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -134,7 +187,7 @@ export default function AuditResultPage({ id }: Props) {
           />
 
           {/* ── AI Summary ── */}
-          <AiSummaryCard summary={result.aiSummary} />
+          <AiSummaryCard summary={result.aiSummary} isLoading={summaryLoading} />
 
           {/* ── Per-tool breakdown ── */}
           <section>

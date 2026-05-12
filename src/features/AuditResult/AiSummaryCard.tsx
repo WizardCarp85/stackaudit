@@ -14,13 +14,13 @@ export default function AiSummaryCard({ summary, isLoading = false }: Props) {
 
       <div className="px-6 py-5">
         <div className="flex items-center gap-2 mb-4">
-          {/* Anthropic-style spark icon */}
+          {/* Gemini-style spark icon */}
           <div className="w-7 h-7 rounded-lg bg-[#20714b]/10 border border-[#20714b]/20 flex items-center justify-center text-sm text-[#20714b]">
             <FaMagic />
           </div>
           <div>
             <p className="text-xs font-bold text-gray-900 leading-none">AI Summary</p>
-            <p className="text-[11px] text-gray-400">Powered by Claude (Anthropic)</p>
+            <p className="text-[11px] text-gray-400">Powered by Gemini (Google)</p>
           </div>
         </div>
 
