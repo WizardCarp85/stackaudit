@@ -157,7 +157,7 @@ function HeroSection() {
               </div>
             ))}
             <div className="flex items-center bg-white border border-dashed border-gray-200 rounded-full px-3.5 py-1.5 text-sm text-gray-400 font-medium">
-              + many more
+              + more coming soon
             </div>
           </div>
         </div>
