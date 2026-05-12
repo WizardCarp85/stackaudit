@@ -1,4 +1,4 @@
-## Day 1 2026-05-07
+## Day 1 – 2026-05-07
 **Hours worked:** 0
 
 **Why I took a day off:** Because of my college exam preparation and completing assignments
@@ -6,7 +6,7 @@
 **Plan for tomorrow:** Setup Proper folder stucture with necessary initial files and content and do some reasearch
 
 
-## Day 2 2026-05-08
+## Day 2 – 2026-05-08
 
 **Hours worked:** 3
 
@@ -19,7 +19,7 @@
 **Plan for tomorrow:** work on logo and landing page
 
 
-## Day 3 2026-05-09
+## Day 3 – 2026-05-09
 
 **Hours worked:** 3
 
@@ -32,7 +32,7 @@
 **Plan for tomorrow:** make form page and results page
 
 
-## Day 4 2026-05-10
+## Day 4 – 2026-05-10
 
 **Hours worked:** 4
 
@@ -45,7 +45,7 @@
 **Plan for tomorrow:** work on logic
 
 
-## Day 5 2026-05-11
+## Day 5 – 2026-05-11
 
 **Hours worked:** 5
 
@@ -58,7 +58,7 @@
 **Plan for tomorrow:** work on logic
 
 
-## Day 6 2026-05-12
+## Day 6 – 2026-05-12
 
 **Hours worked:** 8
 
@@ -68,17 +68,15 @@
 
 **Blockers / what I'm stuck on:** api response display issue, still confused about logic
 
-**Plan for tomorrow:** complete the log files
+**Plan for tomorrow:** complete the log files and finish all remaining things
 
 
-## Day 7 2026-05-13
+## Day 7 – 2026-05-13
 
-**Hours worked:** 2
+**Hours worked:** 3
 
 **What I did:** worked on tests and linting
 
 **What I learned:** how to write test and linting
 
 **Blockers / what I'm stuck on:** the open graph sharing result issue
-
-**Plan for tomorrow:** finish final remaining things

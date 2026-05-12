@@ -4,14 +4,11 @@
 
 ---
 
-## Screenshots / Demo
+## Demo
 
-> [!NOTE]
-> 3+ screenshots or a 30-second screen recording (YouTube/Loom link) will be placed here.
->
-> 1. **Landing Page**: The hero section and tool selection.
-> 2. **Audit Form**: The seat count and plan selection interface.
-> 3. **Audit Results**: The savings dashboard and AI-generated summary.
+[![StackAudit Demo](./public/title.png)](https://youtu.be/GnxA4kKRZ2o)
+
+[Watch the 30-second demo on YouTube](https://youtu.be/GnxA4kKRZ2o)
 
 ---
 
