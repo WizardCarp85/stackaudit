@@ -62,7 +62,7 @@
 
 **Hours worked:** 8
 
-**What I did:** added logic, added ai summary, updated pricing_data.md
+**What I did:** added logic, added ai summary, updated pricing_data.md, added email and share feature
 
 **What I learned:** integrating gemini api and using supabase, resend, honeypot
 
