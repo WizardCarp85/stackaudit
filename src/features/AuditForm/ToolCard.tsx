@@ -24,7 +24,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
       className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
         entry.enabled
           ? "border-[#20714b]/40 bg-[#20714b]/5 shadow-md shadow-[#20714b]/10"
-          : "border-gray-200 bg-white hover:border-gray-300"
+          : "border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 hover:border-gray-300 dark:hover:border-white/20"
       }`}
     >
       {/* ── Header row ── */}
@@ -42,7 +42,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
             style={{ background: config.color }}
           />
           <div>
-            <p className="text-sm font-bold text-gray-900 leading-tight">{config.name}</p>
+            <p className="text-sm font-bold text-gray-900 dark:text-white leading-tight">{config.name}</p>
             <p className="text-xs text-gray-400">{config.vendor}</p>
           </div>
         </div>
@@ -50,11 +50,11 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
         {/* Toggle pill */}
         <div
           className={`relative w-11 h-6 rounded-full transition-colors duration-300 flex-shrink-0 ${
-            entry.enabled ? "bg-[#20714b]" : "bg-gray-200"
+            entry.enabled ? "bg-[#20714b]" : "bg-gray-200 dark:bg-white/10"
           }`}
         >
           <span
-            className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-300 ${
+            className={`absolute top-1 w-4 h-4 rounded-full bg-white dark:bg-gray-300 shadow transition-transform duration-300 ${
               entry.enabled ? "translate-x-6" : "translate-x-1"
             }`}
           />
@@ -73,7 +73,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
               id={`tool-plan-${config.id}`}
               value={entry.plan}
               onChange={(e) => onField(config.id, "plan", e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+              className="w-full bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all [&>option]:dark:bg-gray-900"
             >
               {config.plans.map((p) => (
                 <option key={p.value} value={p.value}>
@@ -100,7 +100,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
                 placeholder="0"
                 value={entry.monthlySpend}
                 onChange={(e) => onField(config.id, "monthlySpend", e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-xl pl-7 pr-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+                className="w-full bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl pl-7 pr-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
               placeholder="1"
               value={entry.seats}
               onChange={(e) => onField(config.id, "seats", e.target.value)}
-              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+              className="w-full bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function ToolCard({ config, entry, onToggle, onField }: Props) {
               onChange={(e) =>
                 onField(config.id, "useCase", e.target.value as ToolEntry["useCase"])
               }
-              className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+              className="w-full bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all [&>option]:dark:bg-gray-900"
             >
               <option value="">Select use case…</option>
               {USE_CASES.map((u) => (

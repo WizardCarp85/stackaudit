@@ -51,15 +51,15 @@ export default function SharePage({ id }: Props) {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#fafaf8] flex flex-col">
+      <div className="min-h-screen bg-[#fafaf8] dark:bg-black flex flex-col">
         <Navbar />
         <main className="flex-1 pt-32 pb-24 px-4 text-center">
-          <h1 className="text-2xl font-bold text-red-600">Audit result not found</h1>
-          <p className="text-gray-500 mt-2">
+          <h1 className="text-2xl font-bold text-red-600 dark:text-red-400">Audit result not found</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-2">
             {error ? `Database Error: ${error}` : "This link may have expired or is incorrect."}
           </p>
           {error?.includes("relation") && (
-            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl max-w-md mx-auto text-sm text-yellow-800">
+            <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700/50 rounded-xl max-w-md mx-auto text-sm text-yellow-800 dark:text-yellow-200">
               <strong>Fix:</strong> It looks like the &apos;audits&apos; table is missing. Did you run the SQL in your Supabase dashboard?
             </div>
           )}
@@ -75,7 +75,7 @@ export default function SharePage({ id }: Props) {
   const enabledCount = data.recommendations.length;
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8] dark:bg-black">
       <Navbar />
       <main className="flex-1 pt-28 pb-24 px-4">
         <div className="max-w-3xl mx-auto space-y-8">
@@ -85,10 +85,10 @@ export default function SharePage({ id }: Props) {
               <FaRegChartBar className="text-xs" />
               Shared Audit Results
             </span>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 tracking-tight leading-tight">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
               AI Stack Optimization Report
             </h1>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
               {enabledCount} tools audited · Anonymous report
             </p>
           </div>
@@ -102,7 +102,7 @@ export default function SharePage({ id }: Props) {
           <AiSummaryCard summary={data.ai_summary} />
 
           <section>
-            <h2 className="text-base font-bold text-gray-900 uppercase tracking-widest mb-4">
+            <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest mb-4">
               Recommendations
             </h2>
             <div className="flex flex-col gap-4">
@@ -112,8 +112,8 @@ export default function SharePage({ id }: Props) {
             </div>
           </section>
 
-          <div className="bg-gray-950 rounded-2xl p-8 text-center text-white space-y-6">
-            <h3 className="text-xl font-bold">Want to audit your own AI stack?</h3>
+          <div className="bg-black dark:bg-white/5 border border-transparent dark:border-white/10 rounded-2xl p-8 text-center text-white space-y-6">
+            <h3 className="text-xl font-bold text-white">Want to audit your own AI stack?</h3>
             <p className="text-gray-400 text-sm max-w-sm mx-auto">
               Get a breakdown of your team&apos;s AI spend and discover how to save thousands per year.
             </p>

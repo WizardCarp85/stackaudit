@@ -27,7 +27,7 @@ function AuditCard({
   });
 
   return (
-    <div className="group relative bg-white border border-gray-200 rounded-2xl hover:border-[#20714b]/40 hover:shadow-lg hover:shadow-[#20714b]/5 transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-[#20714b]/40 hover:shadow-lg hover:shadow-[#20714b]/5 transition-all duration-300 overflow-hidden">
       {/* Saving accent strip */}
       <div
         className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl transition-colors duration-300 ${hasSavings ? "bg-[#20714b]" : "bg-green-400"
@@ -39,7 +39,7 @@ function AuditCard({
           {/* Left: meta */}
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h2 className="text-base font-bold text-gray-900 truncate">
+              <h2 className="text-base font-bold text-gray-900 dark:text-white truncate">
                 {audit.formState.companyName
                   ? `${audit.formState.companyName}'s audit`
                   : "Unnamed audit"}
@@ -70,7 +70,7 @@ function AuditCard({
         </div>
 
         {/* Footer row */}
-        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-white/10 flex items-center justify-between">
           <span className="text-xs text-gray-400">
             ${audit.totalMonthlySpend.toLocaleString()}/mo spend ·{" "}
             ${audit.totalAnnualSaving.toLocaleString()}/yr saving
@@ -108,7 +108,7 @@ export default function AuditHistoryPage() {
   const { history, hydrated, deleteAudit } = useAuditHistory();
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8] dark:bg-black">
       <Navbar />
 
       <main className="flex-1 pt-28 pb-24 px-4">
@@ -120,7 +120,7 @@ export default function AuditHistoryPage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
                 Audit history
               </span>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
                 Your{" "}
                 <span className="text-[#20714b]">past audits</span>
               </h1>
@@ -147,17 +147,17 @@ export default function AuditHistoryPage() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="bg-white border border-gray-100 rounded-2xl h-32 animate-pulse"
+                  className="bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl h-32 animate-pulse"
                 />
               ))}
             </div>
           ) : history.length === 0 ? (
-            <div className="bg-white border-2 border-dashed border-gray-200 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
+            <div className="bg-white dark:bg-white/5 border-2 border-dashed border-gray-200 dark:border-white/20 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
               <div className="w-16 h-16 rounded-2xl bg-[#20714b]/10 border border-[#20714b]/20 flex items-center justify-center text-3xl text-[#20714b]">
                 <FaClipboardList />
               </div>
               <div>
-                <p className="text-gray-900 font-bold text-xl mb-2">No audits yet</p>
+                <p className="text-gray-900 dark:text-white font-bold text-xl mb-2">No audits yet</p>
                 <p className="text-gray-400 text-sm max-w-sm">
                   Run your first audit and it will appear here. Takes under 3 minutes.
                 </p>

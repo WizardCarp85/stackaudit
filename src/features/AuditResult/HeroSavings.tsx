@@ -20,7 +20,7 @@ export default function HeroSavings({
   const isBig = totalMonthlySaving >= 500;
 
   return (
-    <div className="relative bg-gray-950 rounded-3xl overflow-hidden px-8 py-10 md:px-14 md:py-14">
+    <div className="relative bg-black dark:border dark:border-white/10 rounded-3xl overflow-hidden px-8 py-10 md:px-14 md:py-14">
       {/* Background glow */}
       <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #20714b 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-[#20714b]/10 rounded-full blur-3xl pointer-events-none" />
@@ -53,11 +53,11 @@ export default function HeroSavings({
           {/* Stats pill */}
           {!isOptimised && (
             <div className="md:ml-auto flex flex-col items-start md:items-end gap-3">
-              <div className="bg-white/5 border border-white/10 rounded-2xl px-5 py-3">
+              <div className="bg-white/5 dark:bg-white/10 border border-white/10 dark:border-white/20 rounded-2xl px-5 py-3">
                 <p className="text-gray-400 text-xs mb-1">vs. current spend</p>
                 <p className="text-white font-bold text-2xl">{savingsPercent}%</p>
               </div>
-              <p className="text-gray-600 text-xs">
+              <p className="text-gray-600 dark:text-gray-500 text-xs">
                 Current: ${totalMonthlySpend.toLocaleString()}/mo
               </p>
             </div>

@@ -28,7 +28,7 @@ export default function AuditFormPage() {
   }, 0);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8] dark:bg-black">
       <Navbar />
 
       <main className="flex-1 pt-28 pb-24 px-4">
@@ -39,11 +39,11 @@ export default function AuditFormPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#20714b] animate-pulse" />
               Free AI spend audit
             </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight mb-4">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight mb-4">
               What&apos;s in your{" "}
               <span className="text-[#20714b]">AI stack?</span>
             </h1>
-            <p className="text-gray-500 text-lg font-light max-w-xl mx-auto">
+            <p className="text-gray-500 dark:text-gray-400 text-lg font-light max-w-xl mx-auto">
               Toggle the tools your team uses, fill in your current spend, and we&apos;ll
               find where you&apos;re overpaying.
             </p>
@@ -53,7 +53,7 @@ export default function AuditFormPage() {
             {/* ── Section 1: Tools ── */}
             <section>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-bold text-gray-900 uppercase tracking-widest">
+                <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest">
                   Your tools
                 </h2>
                 {enabledTools.length > 0 && (
@@ -77,10 +77,10 @@ export default function AuditFormPage() {
 
             {/* ── Section 2: Team context ── */}
             <section>
-              <h2 className="text-base font-bold text-gray-900 uppercase tracking-widest mb-4">
+              <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest mb-4">
                 Team context
               </h2>
-              <div className="bg-white border border-gray-200 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Team size */}
                 <div className="flex flex-col gap-1.5">
                   <label
@@ -97,7 +97,7 @@ export default function AuditFormPage() {
                     placeholder="e.g. 12"
                     value={form.teamSize}
                     onChange={(e) => setTopLevel("teamSize", e.target.value)}
-                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+                    className="bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
                   />
                 </div>
 
@@ -116,7 +116,7 @@ export default function AuditFormPage() {
                     placeholder="Acme Inc."
                     value={form.companyName}
                     onChange={(e) => setTopLevel("companyName", e.target.value)}
-                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+                    className="bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
                   />
                 </div>
 
@@ -137,7 +137,7 @@ export default function AuditFormPage() {
                     placeholder="you@acme.com"
                     value={form.email}
                     onChange={(e) => setTopLevel("email", e.target.value)}
-                    className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+                    className="bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
                   />
                 </div>
               </div>
@@ -145,7 +145,7 @@ export default function AuditFormPage() {
 
             {/* ── Live spend ticker ── */}
             {totalMonthly > 0 && (
-              <div className="bg-gray-950 rounded-2xl px-6 py-4 flex items-center justify-between">
+              <div className="bg-black dark:bg-white/10 border border-transparent dark:border-white/10 rounded-2xl px-6 py-4 flex items-center justify-between">
                 <span className="text-gray-400 text-sm">
                   Declared monthly spend
                 </span>

@@ -120,23 +120,23 @@ export default function AuditResultPage({ id }: Props) {
   // ── Not found state ──
   if (notFound) {
     return (
-      <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
+      <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8] dark:bg-black">
         <Navbar />
         <main className="flex-1 pt-28 pb-24 px-4">
           <div className="max-w-3xl mx-auto">
-            <div className="bg-white border-2 border-dashed border-gray-200 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center text-3xl text-gray-400">
+            <div className="bg-white dark:bg-white/5 border-2 border-dashed border-gray-200 dark:border-white/20 rounded-3xl px-8 py-20 flex flex-col items-center text-center gap-6">
+              <div className="w-16 h-16 rounded-2xl bg-gray-50 dark:bg-white/10 border border-gray-200 dark:border-white/10 flex items-center justify-center text-3xl text-gray-400">
                 <FaSearch />
               </div>
               <div>
-                <p className="text-gray-900 font-bold text-xl mb-2">Audit not found</p>
+                <p className="text-gray-900 dark:text-white font-bold text-xl mb-2">Audit not found</p>
                 <p className="text-gray-400 text-sm max-w-sm">
                   This audit doesn&apos;t exist or may have been deleted.
                 </p>
               </div>
               <Link
                 href="/result"
-                className="inline-flex items-center gap-2 bg-gray-950 hover:bg-gray-800 text-white font-bold px-8 py-4 rounded-full text-sm transition-all duration-200"
+                className="inline-flex items-center gap-2 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900 font-bold px-8 py-4 rounded-full text-sm transition-all duration-200"
               >
                 ← Back to audit history
               </Link>
@@ -156,7 +156,7 @@ export default function AuditResultPage({ id }: Props) {
   const enabledCount = result.recommendations.length;
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8]">
+    <div className="min-h-screen flex flex-col font-sans antialiased bg-[#fafaf8] dark:bg-black">
       <Navbar />
 
       <main className="flex-1 pt-28 pb-24 px-4">
@@ -176,7 +176,7 @@ export default function AuditResultPage({ id }: Props) {
               id="share-result-btn"
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-[#20714b] transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-[#20714b] dark:hover:text-[#20714b] transition-colors"
             >
               <FaShare className="text-xs" />
               {copied ? "Link copied!" : "Share result"}
@@ -189,13 +189,13 @@ export default function AuditResultPage({ id }: Props) {
               <span className="w-1.5 h-1.5 rounded-full bg-[#20714b]" />
               Audit complete
             </span>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 tracking-tight leading-tight">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
               {result.formState.companyName
                 ? `${result.formState.companyName}'s`
                 : "Your"}{" "}
               AI spend audit
             </h1>
-            <p className="text-gray-500 text-sm mt-2">
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
               {enabledCount} tool{enabledCount !== 1 ? "s" : ""} audited ·{" "}
               {new Date(result.auditedAt).toLocaleDateString("en-US", {
                 month: "long",
@@ -217,7 +217,7 @@ export default function AuditResultPage({ id }: Props) {
 
           {/* ── Per-tool breakdown ── */}
           <section>
-            <h2 className="text-base font-bold text-gray-900 uppercase tracking-widest mb-4">
+            <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest mb-4">
               Per-tool breakdown
             </h2>
             <div className="flex flex-col gap-4">
@@ -229,11 +229,11 @@ export default function AuditResultPage({ id }: Props) {
 
           {/* ── Honest message if already optimised ── */}
           {isOptimised && (
-            <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-5 text-center">
-              <p className="text-green-800 font-bold text-base mb-1 flex items-center justify-center gap-2">
+            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/50 rounded-2xl px-6 py-5 text-center">
+              <p className="text-green-800 dark:text-green-400 font-bold text-base mb-1 flex items-center justify-center gap-2">
                 <FaCheckCircle /> You&apos;re spending well.
               </p>
-              <p className="text-green-700 text-sm">
+              <p className="text-green-700 dark:text-green-500 text-sm">
                 We didn&apos;t find meaningful waste in your stack. Come back as your team
                 grows — that&apos;s when overspend tends to creep in.
               </p>

@@ -4,7 +4,7 @@ import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-950 border-t border-gray-800 pt-16 pb-8 px-6">
+    <footer className="bg-black border-t border-gray-800 dark:border-white/10 pt-16 pb-8 px-6">
       <div className="max-w-6xl mx-auto flex flex-col gap-12">
         <div className="flex flex-col md:flex-row justify-between gap-12">
           {/* Brand & Credex */}
@@ -18,7 +18,7 @@ export default function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               A free tool to help startups uncover AI overspend and find better alternatives.
             </p>
-            <div className="inline-flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-full px-4 py-2 text-xs text-gray-400">
+            <div className="inline-flex items-center gap-2 bg-gray-900 dark:bg-white/5 border border-gray-800 dark:border-white/10 rounded-full px-4 py-2 text-xs text-gray-400">
               <span>Powered by</span>
               <a href="https://credex.rocks" target="_blank" rel="noopener noreferrer" className="text-[#20714b] font-semibold hover:text-[#2a9463] transition-colors flex items-center gap-1">
                 Credex
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-800/80 gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-800/80 dark:border-white/10 gap-4">
           <p className="text-gray-600 text-xs">© 2026 StackAudit. All rights reserved.</p>
           <div className="flex items-center gap-5 text-gray-500">
             <a href="#" className="hover:text-[#20714b] transition-colors" aria-label="Twitter">

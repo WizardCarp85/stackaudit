@@ -51,12 +51,12 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
 
   if (submitted) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-8 text-center">
-        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
-          <FaBell className="text-green-600" />
+      <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/50 rounded-2xl px-6 py-8 text-center">
+        <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mx-auto mb-3">
+          <FaBell className="text-green-600 dark:text-green-400" />
         </div>
-        <p className="text-green-800 font-bold text-base">You&apos;re on the list!</p>
-        <p className="text-green-700 text-sm mt-1">
+        <p className="text-green-800 dark:text-green-400 font-bold text-base">You&apos;re on the list!</p>
+        <p className="text-green-700 dark:text-green-500 text-sm mt-1">
           We&apos;ll reach out when new optimisations apply to your stack.
         </p>
       </div>
@@ -65,8 +65,8 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
 
   return (
     <div className={showCredex 
-      ? "relative bg-gray-950 rounded-2xl overflow-hidden px-6 py-8 md:px-10"
-      : "bg-white border border-gray-200 rounded-2xl px-6 py-8"
+      ? "relative bg-black dark:border dark:border-white/10 rounded-2xl overflow-hidden px-6 py-8 md:px-10"
+      : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-6 py-8"
     }>
       {showCredex && (
         <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "radial-gradient(circle, #20714b 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
@@ -78,7 +78,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
             <FaBell className="text-[#20714b] text-sm" />
           </div>
           <div>
-            <p className={`text-sm font-bold ${showCredex ? "text-white" : "text-gray-900"}`}>
+            <p className={`text-sm font-bold ${showCredex ? "text-white" : "text-gray-900 dark:text-white"}`}>
               {showCredex ? "Get discounted AI credits" : "Stay in the loop"}
             </p>
             <p className="text-xs text-gray-400">
@@ -112,7 +112,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
                 className={`w-full rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2 ${
                   showCredex 
                     ? "bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:ring-[#20714b]/50 focus:border-[#20714b]"
-                    : "bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 focus:ring-[#20714b]/30 focus:border-[#20714b]"
+                    : "bg-gray-50 dark:bg-transparent border border-gray-200 dark:border-white/20 text-gray-800 dark:text-white placeholder-gray-400 focus:ring-[#20714b]/30 focus:border-[#20714b]"
                 }`}
               />
             </div>
@@ -127,7 +127,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
                 className={`w-full rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2 ${
                   showCredex 
                     ? "bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:ring-[#20714b]/50 focus:border-[#20714b]"
-                    : "bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 focus:ring-[#20714b]/30 focus:border-[#20714b]"
+                    : "bg-gray-50 dark:bg-transparent border border-gray-200 dark:border-white/20 text-gray-800 dark:text-white placeholder-gray-400 focus:ring-[#20714b]/30 focus:border-[#20714b]"
                 }`}
               />
             </div>
@@ -140,14 +140,14 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
                 className={`w-full rounded-xl px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2 ${
                   showCredex 
                     ? "bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:ring-[#20714b]/50 focus:border-[#20714b]"
-                    : "bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 focus:ring-[#20714b]/30 focus:border-[#20714b]"
-                }`}
+                    : "bg-gray-50 dark:bg-transparent border border-gray-200 dark:border-white/20 text-gray-800 dark:text-white placeholder-gray-400 focus:ring-[#20714b]/30 focus:border-[#20714b]"
+                } [&>option]:dark:bg-gray-900`}
               >
-                <option value="" disabled className="text-gray-900">Select size...</option>
-                <option value="1-5" className="text-gray-900">1-5 people</option>
-                <option value="6-20" className="text-gray-900">6-20 people</option>
-                <option value="21-50" className="text-gray-900">21-50 people</option>
-                <option value="50+" className="text-gray-900">50+ people</option>
+                <option value="" disabled className="text-gray-900 dark:text-white">Select size...</option>
+                <option value="1-5" className="text-gray-900 dark:text-white">1-5 people</option>
+                <option value="6-20" className="text-gray-900 dark:text-white">6-20 people</option>
+                <option value="21-50" className="text-gray-900 dark:text-white">21-50 people</option>
+                <option value="50+" className="text-gray-900 dark:text-white">50+ people</option>
               </select>
             </div>
             <div className="flex items-end">
@@ -156,7 +156,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
                 className={`w-full inline-flex items-center justify-center gap-2 font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 ${
                   showCredex
                     ? "bg-[#20714b] hover:bg-[#185e3e] text-white hover:scale-[1.02] active:scale-95"
-                    : "bg-gray-950 hover:bg-gray-800 text-white"
+                    : "bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900"
                 }`}
               >
                 {showCredex ? "Connect me" : "Notify me"}

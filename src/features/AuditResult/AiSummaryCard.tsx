@@ -8,7 +8,7 @@ interface Props {
 
 export default function AiSummaryCard({ summary, isLoading = false }: Props) {
   return (
-    <div className="relative bg-white border border-gray-200 rounded-2xl overflow-hidden">
+    <div className="relative bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden">
       {/* Top accent */}
       <div className="h-1 w-full bg-gradient-to-r from-[#20714b] via-[#2a9463] to-[#3ab57a]" />
 
@@ -19,7 +19,7 @@ export default function AiSummaryCard({ summary, isLoading = false }: Props) {
             <FaMagic />
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-900 leading-none">AI Summary</p>
+            <p className="text-xs font-bold text-gray-900 dark:text-white leading-none">AI Summary</p>
             <p className="text-[11px] text-gray-400">Powered by Gemini (Google)</p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function AiSummaryCard({ summary, isLoading = false }: Props) {
             ))}
           </div>
         ) : (
-          <p className="text-gray-700 text-sm leading-relaxed">{summary}</p>
+          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{summary}</p>
         )}
       </div>
     </div>
