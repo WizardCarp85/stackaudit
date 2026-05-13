@@ -136,7 +136,7 @@ export default function AuditResultPage({ id }: Props) {
               </div>
               <Link
                 href="/result"
-                className="inline-flex items-center gap-2 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900 font-bold px-8 py-4 rounded-full text-sm transition-all duration-200"
+                className="inline-flex items-center gap-2 bg-gray-950 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900 font-bold px-8 py-4 rounded-full text-sm transition-all duration-200"
               >
                 ← Back to audit history
               </Link>

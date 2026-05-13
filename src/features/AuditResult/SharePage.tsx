@@ -112,7 +112,7 @@ export default function SharePage({ id }: Props) {
             </div>
           </section>
 
-          <div className="bg-black dark:bg-white/5 border border-transparent dark:border-white/10 rounded-2xl p-8 text-center text-white space-y-6">
+          <div className="bg-gray-950 dark:bg-white/5 border border-transparent dark:border-white/10 rounded-2xl p-8 text-center text-white space-y-6">
             <h3 className="text-xl font-bold text-white">Want to audit your own AI stack?</h3>
             <p className="text-gray-400 text-sm max-w-sm mx-auto">
               Get a breakdown of your team&apos;s AI spend and discover how to save thousands per year.

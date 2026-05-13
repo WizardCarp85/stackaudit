@@ -4,7 +4,7 @@ import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-gray-800 dark:border-white/10 pt-16 pb-8 px-6">
+    <footer className="bg-gray-950 dark:bg-black border-t border-gray-800 dark:border-white/10 pt-16 pb-8 px-6">
       <div className="max-w-6xl mx-auto flex flex-col gap-12">
         <div className="flex flex-col md:flex-row justify-between gap-12">
           {/* Brand & Credex */}

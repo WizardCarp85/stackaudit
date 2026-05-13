@@ -145,7 +145,7 @@ export default function AuditFormPage() {
 
             {/* ── Live spend ticker ── */}
             {totalMonthly > 0 && (
-              <div className="bg-black dark:bg-white/10 border border-transparent dark:border-white/10 rounded-2xl px-6 py-4 flex items-center justify-between">
+              <div className="bg-gray-950 dark:bg-white/10 border border-transparent dark:border-white/10 rounded-2xl px-6 py-4 flex items-center justify-between">
                 <span className="text-gray-400 text-sm">
                   Declared monthly spend
                 </span>

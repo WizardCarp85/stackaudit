@@ -134,7 +134,7 @@ function HeroSection() {
         <div id="audit" className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <a
             href="/audit"
-            className="group bg-black dark:bg-white hover:bg-[#20714b] dark:hover:bg-[#20714b] text-white dark:text-gray-950 dark:hover:text-white font-bold px-8 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#20714b]/20 hover:scale-105 active:scale-95 flex items-center gap-2.5"
+            className="group bg-gray-950 dark:bg-white hover:bg-[#20714b] dark:hover:bg-[#20714b] text-white dark:text-gray-950 dark:hover:text-white font-bold px-8 py-4 rounded-full text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#20714b]/20 hover:scale-105 active:scale-95 flex items-center gap-2.5"
           >
             Audit my stack — it&apos;s free
             <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-200" />
@@ -168,7 +168,7 @@ function HeroSection() {
 
 function ProblemSection() {
   return (
-    <section className="bg-black py-24 px-6 relative overflow-hidden">
+    <section className="bg-gray-950 dark:bg-black py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent z-20" />
       <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
 
@@ -222,7 +222,7 @@ function HowItWorksSection() {
                 <div className="w-14 h-14 bg-[#f0f7f4] dark:bg-[#05120c] border-2 border-[#20714b]/30 group-hover:bg-[#20714b] group-hover:border-[#20714b] rounded-full flex items-center justify-center text-xl text-[#20714b] group-hover:text-white transition-all duration-300 relative z-10">
                   {step.icon}
                 </div>
-                <span className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-black dark:bg-[#1a1a1a] text-white text-[11px] font-bold rounded-full flex items-center justify-center z-20 border-2 border-white dark:border-black">
+                <span className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-gray-950 dark:bg-[#1a1a1a] text-white text-[11px] font-bold rounded-full flex items-center justify-center z-20 border-2 border-white dark:border-black">
                   {i + 1}
                 </span>
               </div>
@@ -273,7 +273,7 @@ function FeaturesSection() {
 
 function CTASection() {
   return (
-    <section className="bg-black py-24 px-6 relative overflow-hidden">
+    <section className="bg-gray-950 dark:bg-black py-24 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent z-20" />
       <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #20714b 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-[#20714b]/15 rounded-full blur-3xl pointer-events-none" />

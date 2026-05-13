@@ -65,7 +65,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
 
   return (
     <div className={showCredex 
-      ? "relative bg-black dark:border dark:border-white/10 rounded-2xl overflow-hidden px-6 py-8 md:px-10"
+      ? "relative bg-gray-950 dark:bg-black dark:border dark:border-white/10 rounded-2xl overflow-hidden px-6 py-8 md:px-10"
       : "bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-6 py-8"
     }>
       {showCredex && (
@@ -156,7 +156,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
                 className={`w-full inline-flex items-center justify-center gap-2 font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 ${
                   showCredex
                     ? "bg-[#20714b] hover:bg-[#185e3e] text-white hover:scale-[1.02] active:scale-95"
-                    : "bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900"
+                    : "bg-gray-950 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900"
                 }`}
               >
                 {showCredex ? "Connect me" : "Notify me"}
