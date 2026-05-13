@@ -77,7 +77,7 @@
 
 ## Day 7 – 2026-05-13
 
-**Hours worked:** 3
+**Hours worked:** 6
 
 **What I did:** worked on tests and documentation
 
