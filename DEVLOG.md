@@ -84,3 +84,5 @@
 **What I learned:** how to write tests and document things properly
 
 **Blockers / what I'm stuck on:** the open graph sharing result issue 
+
+**Plan for tomorrow:** work on user feedback
