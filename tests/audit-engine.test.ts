@@ -4,6 +4,7 @@ import { AuditFormState } from "../src/lib/types";
 const createBaseForm = (): AuditFormState => ({
   teamSize: "10",
   companyName: "Test Co",
+  auditName: "",
   email: "test@example.com",
   tools: [],
 });
