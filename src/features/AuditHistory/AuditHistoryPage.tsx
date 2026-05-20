@@ -46,6 +46,11 @@ function AuditCard({
                   ? `${audit.formState.companyName}'s audit`
                   : "Unnamed audit"}
               </h2>
+              {audit.isUpdated && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                  Updated
+                </span>
+              )}
             </div>
             <p className="text-xs text-gray-400 mb-3">{date}</p>
             <p className="text-xs text-gray-500 truncate max-w-xs">

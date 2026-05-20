@@ -2,15 +2,16 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSavings from "./HeroSavings";
 import ToolRecommendationCard from "./ToolRecommendationCard";
 import AiSummaryCard from "./AiSummaryCard";
 import LeadCaptureSection from "./LeadCaptureSection";
+import DiffView from "./DiffView";
 import { getAuditById, saveAuditToHistory } from "@/lib/audit-history";
-import type { AuditResult } from "@/lib/types";
+import type { AuditResult, ToolRecommendation } from "@/lib/types";
 import { FaArrowLeft, FaShare, FaSearch, FaCheckCircle, FaRedo, FaEdit } from "react-icons/fa";
 
 interface Props {
@@ -20,11 +21,13 @@ interface Props {
 
 export default function AuditResultPage({ id }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [result, setResult] = useState<AuditResult | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareId, setShareId] = useState<string | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
+  const [oldRecs, setOldRecs] = useState<ToolRecommendation[] | null>(null);
   const summaryFetched = useRef(false);
   const savedToCloud = useRef(false);
 
@@ -41,6 +44,28 @@ export default function AuditResultPage({ id }: Props) {
       setNotFound(true);
     }
   }, [id]);
+
+  // Load old recommendations for diff view
+  useEffect(() => {
+    const compare = searchParams.get("compare");
+    const diffWith = searchParams.get("diffWith");
+
+    if (compare === "true") {
+      // "Update existing" path — read snapshot we saved before overwriting
+      try {
+        const raw = localStorage.getItem(`stackaudit_diff_prev_${id}`);
+        if (raw) {
+          setOldRecs(JSON.parse(raw));
+          // Note: Deliberately not clearing this key here so it persists on reload.
+          // It will get overwritten the next time they update this specific audit.
+        }
+      } catch { /* ignore */ }
+    } else if (diffWith) {
+      // "Create new" path — load the original audit from history
+      const original = getAuditById(diffWith);
+      if (original) setOldRecs(original.recommendations);
+    }
+  }, [id, searchParams]);
 
   // Fetch AI-generated summary asynchronously after audit loads
   useEffect(() => {
@@ -245,6 +270,11 @@ export default function AuditResultPage({ id }: Props) {
               </div>
             )}
           </div>
+
+          {/* ── Diff view (shown when coming from a re-run/edit) ── */}
+          {oldRecs && result.recommendations.length > 0 && (
+            <DiffView oldRecs={oldRecs} newRecs={result.recommendations} />
+          )}
 
           {/* ── Hero savings ── */}
           <HeroSavings

@@ -91,4 +91,6 @@ export interface AuditResult {
   pricingSnapshot?: any[];
   /** Flag for when pricing has changed */
   pricingOutdated?: boolean;
+  /** Flag for when this audit was created via an edit/update */
+  isUpdated?: boolean;
 }

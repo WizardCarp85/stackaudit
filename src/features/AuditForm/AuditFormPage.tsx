@@ -14,7 +14,7 @@ import UpdateModeModal from "./UpdateModeModal";
 import { useAuditForm } from "@/hooks/useAuditForm";
 import { TOOLS_MAP } from "@/lib/tools-config";
 import { runAudit } from "@/lib/audit-engine";
-import { saveAuditToHistory } from "@/lib/audit-history";
+import { saveAuditToHistory, getAuditById } from "@/lib/audit-history";
 import type { ToolId } from "@/lib/types";
 
 export default function AuditFormPage() {
@@ -29,11 +29,36 @@ export default function AuditFormPage() {
   }
 
   function executeAudit(overrideId?: string) {
+    // Snapshot old recommendations BEFORE we overwrite, so the result page can show a diff
+    let diffParam = "";
+    if (overrideId) {
+      // "Update existing" path — save old recs under a temp localStorage key
+      try {
+        const oldAudit = getAuditById(overrideId);
+        if (oldAudit) {
+          localStorage.setItem(
+            `stackaudit_diff_prev_${overrideId}`,
+            JSON.stringify(oldAudit.recommendations)
+          );
+        }
+      } catch { /* ignore storage errors */ }
+      diffParam = "?compare=true";
+    } else if (form.originalAuditId) {
+      // "Create new" path — point the result page at the original for comparison
+      diffParam = `?diffWith=${form.originalAuditId}`;
+    }
+
     const result = runAudit(form, overrideId);
+    
+    // If this came from an update flow, flag it for the UI
+    if (overrideId || form.originalAuditId) {
+      result.isUpdated = true;
+    }
+
     saveAuditToHistory(result);
-    // Clear the form and local storage so a subsequent visit to /audit is fresh
+    // Clear the form so a subsequent visit to /audit is fresh
     resetForm();
-    router.push(`/result/${result.id}`);
+    router.push(`/result/${result.id}${diffParam}`);
   }
 
   function handleSubmit(e: React.FormEvent) {

@@ -107,6 +107,9 @@ export async function GET() {
         const html = generatePricingUpdateEmailHtml(updates, BASE_URL);
         
         try {
+          // NOTE: On the Resend free tier, you can only send emails TO your verified 
+          // account email address (yaashkumar.nimje2024@nst.rishihood.edu.in).
+          // Emails to any other address will be blocked until you verify a domain or upgrade.
           const res = await fetch("https://api.resend.com/emails", {
             method: "POST",
             headers: {
