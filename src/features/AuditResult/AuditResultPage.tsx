@@ -203,6 +203,21 @@ export default function AuditResultPage({ id }: Props) {
                 year: "numeric",
               })}
             </p>
+            {/* ── Outdated Pricing Banner ── */}
+            {result.pricingOutdated && (
+              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-2xl px-6 py-4 mt-6">
+                <p className="text-amber-800 dark:text-amber-400 font-bold text-sm mb-1">
+                  ⚠️ Pricing data has changed
+                </p>
+                <p className="text-amber-700 dark:text-amber-500 text-sm">
+                  One or more of the tools in this stack have updated their prices or plans since this audit was run.{" "}
+                  <Link href="/audit" className="underline font-medium hover:text-amber-900 dark:hover:text-amber-300">
+                    Click here
+                  </Link>{" "}
+                  to re-run your stack against current prices.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* ── Hero savings ── */}

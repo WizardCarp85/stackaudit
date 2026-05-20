@@ -83,4 +83,8 @@ export interface AuditResult {
   aiSummary: string;
   /** ISO timestamp */
   auditedAt: string;
+  /** Snapshot of TOOLS_CONFIG used during evaluation */
+  pricingSnapshot?: any[];
+  /** Flag for when pricing has changed */
+  pricingOutdated?: boolean;
 }

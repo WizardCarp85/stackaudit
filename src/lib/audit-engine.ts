@@ -196,5 +196,7 @@ export function runAudit(form: AuditFormState): AuditResult {
     totalAnnualSaving,
     aiSummary,
     auditedAt: new Date().toISOString(),
+    pricingSnapshot: Object.values(TOOLS_MAP),
+    pricingOutdated: false,
   };
 }

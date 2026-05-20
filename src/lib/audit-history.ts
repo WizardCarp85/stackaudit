@@ -24,17 +24,22 @@ export function loadHistory(): AuditResult[] {
 
 export function saveAuditToHistory(result: AuditResult): void {
   if (typeof window === "undefined") return;
+  
+  // 1. Save to local storage for instant UI updates
   try {
     const history = loadHistory();
-    // Prepend newest, deduplicate by id, cap at MAX_ENTRIES
-    const updated = [result, ...history.filter((r) => r.id !== result.id)].slice(
-      0,
-      MAX_ENTRIES
-    );
+    const updated = [result, ...history.filter((r) => r.id !== result.id)].slice(0, MAX_ENTRIES);
     localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
   } catch {
     // Storage quota exceeded — silently ignore
   }
+
+  // 2. Fire-and-forget save to database
+  fetch("/api/audits", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(result),
+  }).catch((err) => console.error("Failed to sync audit to database:", err));
 }
 
 export function getAuditById(id: string): AuditResult | null {

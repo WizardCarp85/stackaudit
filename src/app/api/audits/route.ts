@@ -13,14 +13,19 @@ export async function POST(request: Request) {
     // Save to Supabase (Omit formState to strip PII like companyName)
     const { data, error } = await supabase
       .from("audits")
-      .insert([
+      .upsert([
         {
+          id: result.id,
+          email: result.formState?.email || null,
+          form_state: result.formState,
           recommendations: result.recommendations,
+          pricing_snapshot: result.pricingSnapshot,
+          pricing_outdated: result.pricingOutdated || false,
           total_monthly_spend: result.totalMonthlySpend,
           total_monthly_saving: result.totalMonthlySaving,
           total_annual_saving: result.totalAnnualSaving,
           ai_summary: result.aiSummary,
-          created_at: new Date().toISOString(),
+          created_at: result.auditedAt || new Date().toISOString(),
         },
       ])
       .select("id")
