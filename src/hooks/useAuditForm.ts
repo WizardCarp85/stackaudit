@@ -44,21 +44,24 @@ function loadFromStorage(): AuditFormState {
 
 export function useAuditForm() {
   const [form, setForm] = useState<AuditFormState>(buildDefaultState);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // Hydrate from localStorage on mount (client only)
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setForm(loadFromStorage());
+    const loaded = loadFromStorage();
+    setForm(loaded);
+    setIsHydrated(true);
   }, []);
 
-  // Persist to localStorage on every change
+  // Persist to localStorage on every change AFTER hydration
   useEffect(() => {
+    if (!isHydrated) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
     } catch {
       // storage quota exceeded — silently ignore
     }
-  }, [form]);
+  }, [form, isHydrated]);
 
   // ── helpers ────────────────────────────────────────────────────────────────
 

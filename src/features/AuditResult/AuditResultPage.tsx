@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSavings from "./HeroSavings";
@@ -10,7 +11,7 @@ import AiSummaryCard from "./AiSummaryCard";
 import LeadCaptureSection from "./LeadCaptureSection";
 import { getAuditById, saveAuditToHistory } from "@/lib/audit-history";
 import type { AuditResult } from "@/lib/types";
-import { FaArrowLeft, FaShare, FaSearch, FaCheckCircle } from "react-icons/fa";
+import { FaArrowLeft, FaShare, FaSearch, FaCheckCircle, FaRedo, FaEdit } from "react-icons/fa";
 
 interface Props {
   /** The audit ID from the URL — e.g. /result/[id] */
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function AuditResultPage({ id }: Props) {
+  const router = useRouter();
   const [result, setResult] = useState<AuditResult | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -117,6 +119,17 @@ export default function AuditResultPage({ id }: Props) {
     });
   }
 
+  function handleRerun() {
+    if (!result) return;
+    // Write old form state into the form's localStorage key so it pre-fills on mount
+    try {
+      localStorage.setItem("stackaudit_form_v2", JSON.stringify(result.formState));
+    } catch {
+      // ignore storage errors
+    }
+    router.push("/audit");
+  }
+
   // ── Not found state ──
   if (notFound) {
     return (
@@ -205,17 +218,23 @@ export default function AuditResultPage({ id }: Props) {
             </p>
             {/* ── Outdated Pricing Banner ── */}
             {result.pricingOutdated && (
-              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-2xl px-6 py-4 mt-6">
-                <p className="text-amber-800 dark:text-amber-400 font-bold text-sm mb-1">
-                  ⚠️ Pricing data has changed
-                </p>
-                <p className="text-amber-700 dark:text-amber-500 text-sm">
-                  One or more of the tools in this stack have updated their prices or plans since this audit was run.{" "}
-                  <Link href="/audit" className="underline font-medium hover:text-amber-900 dark:hover:text-amber-300">
-                    Click here
-                  </Link>{" "}
-                  to re-run your stack against current prices.
-                </p>
+              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-2xl px-6 py-4 mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <p className="text-amber-800 dark:text-amber-400 font-bold text-sm mb-1">
+                    ⚠️ Pricing data has changed
+                  </p>
+                  <p className="text-amber-700 dark:text-amber-500 text-sm">
+                    One or more tools in this stack have updated their prices or plans since this audit was run.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleRerun}
+                  className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 whitespace-nowrap shadow-sm hover:shadow-md flex-shrink-0"
+                >
+                  <FaRedo className="text-xs" />
+                  Re-run Audit
+                </button>
               </div>
             )}
           </div>
@@ -270,11 +289,20 @@ export default function AuditResultPage({ id }: Props) {
               ← All audits
             </Link>
             <span className="hidden sm:block text-gray-200">·</span>
+            <button
+              type="button"
+              onClick={handleRerun}
+              className="text-sm text-gray-400 hover:text-[#20714b] transition-colors font-medium inline-flex items-center gap-1.5"
+            >
+              <FaEdit className="text-xs" />
+              Edit this stack
+            </button>
+            <span className="hidden sm:block text-gray-200">·</span>
             <Link
               href="/audit"
               className="text-sm text-gray-400 hover:text-[#20714b] transition-colors font-medium"
             >
-              Run a new audit →
+              Start new audit →
             </Link>
           </div>
 
