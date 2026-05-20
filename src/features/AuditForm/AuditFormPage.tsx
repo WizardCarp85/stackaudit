@@ -4,12 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   FaArrowRight, FaUndo, FaPlus, FaLayerGroup,
-  FaUsers, FaBuilding, FaEnvelope, FaChartBar,
+  FaUsers, FaBuilding, FaEnvelope, FaChartBar, FaTag,
 } from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToolCard from "./ToolCard";
 import AddToolModal from "./AddToolModal";
+import UpdateModeModal from "./UpdateModeModal";
 import { useAuditForm } from "@/hooks/useAuditForm";
 import { TOOLS_MAP } from "@/lib/tools-config";
 import { runAudit } from "@/lib/audit-engine";
@@ -19,6 +20,7 @@ import type { ToolId } from "@/lib/types";
 export default function AuditFormPage() {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const { form, setTopLevel, setToolField, addTool, removeTool, resetForm } =
     useAuditForm();
 
@@ -26,11 +28,21 @@ export default function AuditFormPage() {
     addTool(toolId);
   }
 
+  function executeAudit(overrideId?: string) {
+    const result = runAudit(form, overrideId);
+    saveAuditToHistory(result);
+    // Clear the form and local storage so a subsequent visit to /audit is fresh
+    resetForm();
+    router.push(`/result/${result.id}`);
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const result = runAudit(form);
-    saveAuditToHistory(result);
-    router.push(`/result/${result.id}`);
+    if (form.originalAuditId) {
+      setShowUpdateModal(true);
+    } else {
+      executeAudit();
+    }
   }
 
   const totalMonthly = form.tools.reduce((sum, entry) => {
@@ -76,15 +88,27 @@ export default function AuditFormPage() {
                   )}
                 </div>
 
-                <button
-                  type="button"
-                  id="add-tool-btn"
-                  onClick={() => setShowModal(true)}
-                  className="group inline-flex items-center gap-2 bg-[#20714b] hover:bg-[#185e3e] text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-200 shadow-[0_0_16px_0_#20714b40] hover:shadow-[0_0_24px_0_#20714b66] hover:scale-105 active:scale-95"
-                >
-                  <FaPlus className="text-xs group-hover:rotate-90 transition-transform duration-200" />
-                  Add tool
-                </button>
+                <div className="flex items-center gap-3">
+                  {form.tools.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={resetForm}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-400 hover:text-red-500 transition-colors duration-200"
+                    >
+                      <FaUndo className="text-xs" />
+                      Clear all
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    id="add-tool-btn"
+                    onClick={() => setShowModal(true)}
+                    className="group inline-flex items-center gap-2 bg-[#20714b] hover:bg-[#185e3e] text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-200 shadow-[0_0_16px_0_#20714b40] hover:shadow-[0_0_24px_0_#20714b66] hover:scale-105 active:scale-95"
+                  >
+                    <FaPlus className="text-xs group-hover:rotate-90 transition-transform duration-200" />
+                    Add tool
+                  </button>
+                </div>
               </div>
 
               {/* Tool cards */}
@@ -177,24 +201,47 @@ export default function AuditFormPage() {
                 {/* Divider */}
                 <div className="border-t border-gray-100 dark:border-white/[0.1]" />
 
-                {/* Row 2: email full width */}
-                <div className="p-5">
-                  <label
-                    htmlFor="email"
-                    className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
-                  >
-                    <FaEnvelope className="text-[10px]" />
-                    Email
-                    <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(we&apos;ll send you the report)</span>
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="you@acme.com"
-                    value={form.email}
-                    onChange={(e) => setTopLevel("email", e.target.value)}
-                    className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
-                  />
+                {/* Row 2: audit name + email */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 dark:divide-white/[0.1]">
+                  {/* Audit Name */}
+                  <div className="p-5">
+                    <label
+                      htmlFor="audit-name"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
+                    >
+                      <FaTag className="text-[10px]" />
+                      Audit Name
+                      <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(optional)</span>
+                    </label>
+                    <input
+                      id="audit-name"
+                      type="text"
+                      placeholder="e.g. Q3 Cost Analysis"
+                      value={form.auditName || ""}
+                      onChange={(e) => setTopLevel("auditName", e.target.value)}
+                      className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="p-5">
+                    <label
+                      htmlFor="email"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
+                    >
+                      <FaEnvelope className="text-[10px]" />
+                      Email
+                      <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(we&apos;ll send you the report)</span>
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      placeholder="you@acme.com"
+                      value={form.email}
+                      onChange={(e) => setTopLevel("email", e.target.value)}
+                      className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+                    />
+                  </div>
                 </div>
 
               </div>
@@ -245,6 +292,21 @@ export default function AuditFormPage() {
             <AddToolModal
               onAdd={handleAddTool}
               onClose={() => setShowModal(false)}
+            />
+          )}
+
+          {/* ── Update Mode Modal ── */}
+          {showUpdateModal && (
+            <UpdateModeModal
+              onClose={() => setShowUpdateModal(false)}
+              onSelect={(mode) => {
+                setShowUpdateModal(false);
+                if (mode === "update") {
+                  executeAudit(form.originalAuditId);
+                } else {
+                  executeAudit();
+                }
+              }}
             />
           )}
 

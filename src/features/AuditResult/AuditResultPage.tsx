@@ -123,7 +123,8 @@ export default function AuditResultPage({ id }: Props) {
     if (!result) return;
     // Write old form state into the form's localStorage key so it pre-fills on mount
     try {
-      localStorage.setItem("stackaudit_form_v2", JSON.stringify(result.formState));
+      const stateToSave = { ...result.formState, originalAuditId: result.id };
+      localStorage.setItem("stackaudit_form_v2", JSON.stringify(stateToSave));
     } catch {
       // ignore storage errors
     }
@@ -203,10 +204,16 @@ export default function AuditResultPage({ id }: Props) {
               Audit complete
             </span>
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
-              {result.formState.companyName
-                ? `${result.formState.companyName}'s`
-                : "Your"}{" "}
-              AI spend audit
+              {result.formState.auditName ? (
+                result.formState.auditName
+              ) : (
+                <>
+                  {result.formState.companyName
+                    ? `${result.formState.companyName}'s`
+                    : "Your"}{" "}
+                  AI spend audit
+                </>
+              )}
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
               {enabledCount} tool{enabledCount !== 1 ? "s" : ""} audited ·{" "}

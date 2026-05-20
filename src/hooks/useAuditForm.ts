@@ -17,6 +17,7 @@ function buildDefaultState(): AuditFormState {
     tools: [],
     teamSize: "",
     companyName: "",
+    auditName: "",
     email: "",
   };
 }

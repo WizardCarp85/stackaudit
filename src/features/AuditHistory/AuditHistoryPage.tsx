@@ -40,7 +40,9 @@ function AuditCard({
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h2 className="text-base font-bold text-gray-900 dark:text-white truncate">
-                {audit.formState.companyName
+                {audit.formState.auditName
+                  ? audit.formState.auditName
+                  : audit.formState.companyName
                   ? `${audit.formState.companyName}'s audit`
                   : "Unnamed audit"}
               </h2>

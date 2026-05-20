@@ -153,7 +153,7 @@ function evaluateTool(entry: ToolEntry, teamSize: number, otherActiveTools: stri
 
 // ─── Main audit runner ────────────────────────────────────────────────────────
 
-export function runAudit(form: AuditFormState): AuditResult {
+export function runAudit(form: AuditFormState, overrideId?: string): AuditResult {
   const recommendations: ToolRecommendation[] = [];
   let totalMonthlySpend = 0;
   let totalMonthlySaving = 0;
@@ -188,7 +188,7 @@ export function runAudit(form: AuditFormState): AuditResult {
       : `You're spending well. No obvious savings found based on your current plans and team size. We'll notify you when new optimisations apply to your stack.`;
 
   return {
-    id: generateId(),
+    id: overrideId ?? generateId(),
     formState: form,
     recommendations,
     totalMonthlySpend,

@@ -54,8 +54,12 @@ export interface AuditFormState {
   teamSize: string;
   /** Company name (optional) */
   companyName: string;
+  /** Custom name for this audit (optional) */
+  auditName: string;
   /** Email for lead capture */
   email: string;
+  /** ID of the original audit if this form was pre-filled via Edit/Rerun */
+  originalAuditId?: string;
 }
 
 // ─── Audit result types (populated by the audit engine, not the form) ─────────
