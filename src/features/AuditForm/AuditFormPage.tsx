@@ -1,19 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaArrowRight, FaUndo } from "react-icons/fa";
+import {
+  FaArrowRight, FaUndo, FaPlus, FaLayerGroup,
+  FaUsers, FaBuilding, FaEnvelope, FaChartBar,
+} from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ToolCard from "./ToolCard";
+import AddToolModal from "./AddToolModal";
 import { useAuditForm } from "@/hooks/useAuditForm";
-import { TOOLS_CONFIG } from "@/lib/tools-config";
+import { TOOLS_MAP } from "@/lib/tools-config";
 import { runAudit } from "@/lib/audit-engine";
 import { saveAuditToHistory } from "@/lib/audit-history";
+import type { ToolId } from "@/lib/types";
 
 export default function AuditFormPage() {
   const router = useRouter();
-  const { form, enabledTools, setTopLevel, setToolField, toggleTool, resetForm } =
+  const [showModal, setShowModal] = useState(false);
+  const { form, setTopLevel, setToolField, addTool, removeTool, resetForm } =
     useAuditForm();
+
+  function handleAddTool(toolId: ToolId) {
+    addTool(toolId);
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -22,8 +33,8 @@ export default function AuditFormPage() {
     router.push(`/result/${result.id}`);
   }
 
-  const totalMonthly = enabledTools.reduce((sum, t) => {
-    const spend = parseFloat(form.tools[t.id]?.monthlySpend || "0");
+  const totalMonthly = form.tools.reduce((sum, entry) => {
+    const spend = parseFloat(entry.monthlySpend || "0");
     return sum + (isNaN(spend) ? 0 : spend);
   }, 0);
 
@@ -44,7 +55,7 @@ export default function AuditFormPage() {
               <span className="text-[#20714b]">AI stack?</span>
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-lg font-light max-w-xl mx-auto">
-              Toggle the tools your team uses, fill in your current spend, and we&apos;ll
+              Add the tools your team uses, fill in your current spend, and we&apos;ll
               find where you&apos;re overpaying.
             </p>
           </div>
@@ -52,27 +63,63 @@ export default function AuditFormPage() {
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* ── Section 1: Tools ── */}
             <section>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest">
-                  Your tools
-                </h2>
-                {enabledTools.length > 0 && (
-                  <span className="text-xs text-gray-400">
-                    {enabledTools.length} selected
+              {/* Header row with Add Tool button */}
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-3">
+                  <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest">
+                    Your tools
+                  </h2>
+                  {form.tools.length > 0 && (
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#20714b] text-white text-[10px] font-bold">
+                      {form.tools.length}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  id="add-tool-btn"
+                  onClick={() => setShowModal(true)}
+                  className="group inline-flex items-center gap-2 bg-[#20714b] hover:bg-[#185e3e] text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-200 shadow-[0_0_16px_0_#20714b40] hover:shadow-[0_0_24px_0_#20714b66] hover:scale-105 active:scale-95"
+                >
+                  <FaPlus className="text-xs group-hover:rotate-90 transition-transform duration-200" />
+                  Add tool
+                </button>
+              </div>
+
+              {/* Tool cards */}
+              {form.tools.length > 0 ? (
+                <div className="flex flex-col gap-4">
+                  {form.tools.map((entry) => (
+                    <ToolCard
+                      key={entry.instanceId}
+                      config={TOOLS_MAP[entry.toolId]}
+                      entry={entry}
+                      onRemove={removeTool}
+                      onField={setToolField}
+                    />
+                  ))}
+                </div>
+              ) : (
+                /* Empty state */
+                <button
+                  type="button"
+                  onClick={() => setShowModal(true)}
+                  className="w-full group flex flex-col items-center justify-center gap-3 border-2 border-dashed border-[#20714b]/30 dark:border-[#20714b]/40 rounded-2xl py-12 bg-[#20714b]/[0.03] dark:bg-[#20714b]/[0.07] hover:border-[#20714b]/60 dark:hover:border-[#20714b]/70 hover:bg-[#20714b]/[0.07] dark:hover:bg-[#20714b]/[0.13] shadow-[0_0_0_0_#20714b00] hover:shadow-[0_0_24px_0_#20714b22] dark:hover:shadow-[0_0_32px_0_#20714b33] transition-all duration-200 cursor-pointer"
+                >
+                  <span className="w-12 h-12 rounded-2xl bg-[#20714b]/10 dark:bg-[#20714b]/20 flex items-center justify-center text-[#20714b]/60 dark:text-[#4ade80]/60 group-hover:bg-[#20714b]/20 dark:group-hover:bg-[#20714b]/30 group-hover:text-[#20714b] dark:group-hover:text-[#4ade80] transition-all duration-200">
+                    <FaLayerGroup className="text-xl" />
                   </span>
-                )}
-              </div>
-              <div className="flex flex-col gap-3">
-                {TOOLS_CONFIG.map((tool) => (
-                  <ToolCard
-                    key={tool.id}
-                    config={tool}
-                    entry={form.tools[tool.id]}
-                    onToggle={toggleTool}
-                    onField={setToolField}
-                  />
-                ))}
-              </div>
+                  <div className="text-center">
+                    <p className="text-sm font-semibold text-[#20714b]/70 dark:text-[#4ade80]/70 group-hover:text-[#20714b] dark:group-hover:text-[#4ade80] transition-colors">
+                      No tools added yet
+                    </p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                      Click to add your first AI tool
+                    </p>
+                  </div>
+                </button>
+              )}
             </section>
 
             {/* ── Section 2: Team context ── */}
@@ -80,56 +127,65 @@ export default function AuditFormPage() {
               <h2 className="text-base font-bold text-gray-900 dark:text-gray-100 uppercase tracking-widest mb-4">
                 Team context
               </h2>
-              <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Team size */}
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="team-size"
-                    className="text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Total team size
-                  </label>
-                  <input
-                    id="team-size"
-                    type="number"
-                    min="1"
-                    step="1"
-                    placeholder="e.g. 12"
-                    value={form.teamSize}
-                    onChange={(e) => setTopLevel("teamSize", e.target.value)}
-                    className="bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
-                  />
+              <div className="rounded-2xl border border-gray-200 dark:border-white/[0.14] bg-white dark:bg-white/[0.05] overflow-hidden">
+
+                {/* Row 1: team size + company */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-100 dark:divide-white/[0.1]">
+
+                  {/* Team size */}
+                  <div className="p-5">
+                    <label
+                      htmlFor="team-size"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
+                    >
+                      <FaUsers className="text-[10px]" />
+                      Total team size
+                    </label>
+                    <input
+                      id="team-size"
+                      type="number"
+                      min="1"
+                      step="1"
+                      placeholder="e.g. 12"
+                      value={form.teamSize}
+                      onChange={(e) => setTopLevel("teamSize", e.target.value)}
+                      className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Company name */}
+                  <div className="p-5">
+                    <label
+                      htmlFor="company-name"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
+                    >
+                      <FaBuilding className="text-[10px]" />
+                      Company name
+                      <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(optional)</span>
+                    </label>
+                    <input
+                      id="company-name"
+                      type="text"
+                      placeholder="Acme Inc."
+                      value={form.companyName}
+                      onChange={(e) => setTopLevel("companyName", e.target.value)}
+                      className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+                    />
+                  </div>
                 </div>
 
-                {/* Company name */}
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="company-name"
-                    className="text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  >
-                    Company name{" "}
-                    <span className="text-gray-300 normal-case font-normal">(optional)</span>
-                  </label>
-                  <input
-                    id="company-name"
-                    type="text"
-                    placeholder="Acme Inc."
-                    value={form.companyName}
-                    onChange={(e) => setTopLevel("companyName", e.target.value)}
-                    className="bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
-                  />
-                </div>
+                {/* Divider */}
+                <div className="border-t border-gray-100 dark:border-white/[0.1]" />
 
-                {/* Email — full width */}
-                <div className="flex flex-col gap-1.5 sm:col-span-2">
+                {/* Row 2: email full width */}
+                <div className="p-5">
                   <label
                     htmlFor="email"
-                    className="text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                    className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2"
                   >
-                    Email{" "}
-                    <span className="text-gray-300 normal-case font-normal">
-                      (we&apos;ll send you the report)
-                    </span>
+                    <FaEnvelope className="text-[10px]" />
+                    Email
+                    <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(we&apos;ll send you the report)</span>
                   </label>
                   <input
                     id="email"
@@ -137,22 +193,26 @@ export default function AuditFormPage() {
                     placeholder="you@acme.com"
                     value={form.email}
                     onChange={(e) => setTopLevel("email", e.target.value)}
-                    className="bg-white dark:bg-transparent border border-gray-200 dark:border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#20714b]/30 focus:border-[#20714b] transition-all"
+                    className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
                   />
                 </div>
+
               </div>
             </section>
 
             {/* ── Live spend ticker ── */}
             {totalMonthly > 0 && (
-              <div className="bg-gray-950 dark:bg-white/10 border border-transparent dark:border-white/10 rounded-2xl px-6 py-4 flex items-center justify-between">
-                <span className="text-gray-400 text-sm">
-                  Declared monthly spend
-                </span>
-                <span className="text-white font-extrabold text-xl">
-                  ${totalMonthly.toLocaleString("en-US", { maximumFractionDigits: 0 })}
-                  <span className="text-gray-500 font-normal text-sm">/mo</span>
-                </span>
+              <div className="rounded-2xl bg-gradient-to-r from-gray-950 to-gray-900 dark:from-white/10 dark:to-white/5 border border-gray-800 dark:border-white/10 px-6 py-4 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2.5 text-gray-400">
+                  <FaChartBar className="text-sm flex-shrink-0" />
+                  <span className="text-sm">Declared monthly spend</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-white font-extrabold text-2xl tabular-nums">
+                    ${totalMonthly.toLocaleString("en-US", { maximumFractionDigits: 0 })}
+                  </span>
+                  <span className="text-gray-500 text-sm ml-1">/mo</span>
+                </div>
               </div>
             )}
 
@@ -161,8 +221,8 @@ export default function AuditFormPage() {
               <button
                 type="submit"
                 id="run-audit-btn"
-                disabled={enabledTools.length === 0}
-                className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2.5 bg-[#20714b] hover:bg-[#185e3e] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-bold px-10 py-4 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-[#20714b]/20 hover:scale-105 active:scale-95 text-base"
+                disabled={form.tools.length === 0}
+                className="group flex-1 sm:flex-none inline-flex items-center justify-center gap-2.5 bg-[#20714b] hover:bg-[#185e3e] disabled:opacity-40 disabled:hover:bg-[#20714b] disabled:hover:scale-100 disabled:cursor-not-allowed text-white font-bold px-10 py-4 rounded-full transition-all duration-200 shadow-[0_0_16px_0_#20714b40] hover:shadow-[0_0_24px_0_#20714b66] disabled:shadow-none hover:scale-105 active:scale-95 text-base"
               >
                 Run my audit
                 <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform duration-200" />
@@ -172,19 +232,22 @@ export default function AuditFormPage() {
                 type="button"
                 id="reset-form-btn"
                 onClick={resetForm}
-                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors duration-200"
+                className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
               >
                 <FaUndo className="text-xs" />
                 Reset form
               </button>
             </div>
-
-            {enabledTools.length === 0 && (
-              <p className="text-center text-xs text-gray-400">
-                Toggle at least one tool above to run your audit.
-              </p>
-            )}
           </form>
+
+          {/* ── Add Tool Modal ── */}
+          {showModal && (
+            <AddToolModal
+              onAdd={handleAddTool}
+              onClose={() => setShowModal(false)}
+            />
+          )}
+
         </div>
       </main>
 

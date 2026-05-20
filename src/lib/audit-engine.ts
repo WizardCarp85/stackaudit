@@ -437,18 +437,16 @@ export function runAudit(form: AuditFormState): AuditResult {
 
   const teamSize = parseInt(form.teamSize || "0", 10) || 0;
 
-  // Collect active tool IDs for overlap detection
-  const activeTools = Object.values(form.tools)
-    .filter((e) => e.enabled)
-    .map((e) => e.toolId);
+  // Collect all tool IDs to check for overlaps
+  const activeTools = form.tools.map((e) => e.toolId);
 
-  for (const entry of Object.values(form.tools)) {
-    if (!entry.enabled) continue;
-
+  for (let i = 0; i < form.tools.length; i++) {
+    const entry = form.tools[i];
     const spend = parseFloat(entry.monthlySpend || "0") || 0;
     totalMonthlySpend += spend;
 
-    const otherActiveTools = activeTools.filter((id) => id !== entry.toolId);
+    // Exclude the current instance's toolId when checking what else is active
+    const otherActiveTools = activeTools.filter((id, index) => index !== i);
 
     let result: Omit<ToolRecommendation, "toolId">;
 

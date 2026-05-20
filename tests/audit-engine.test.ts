@@ -5,30 +5,21 @@ const createBaseForm = (): AuditFormState => ({
   teamSize: "10",
   companyName: "Test Co",
   email: "test@example.com",
-  tools: {
-    cursor: { toolId: "cursor", enabled: false, plan: "pro", monthlySpend: "0", seats: "0", useCase: "coding" },
-    github_copilot: { toolId: "github_copilot", enabled: false, plan: "business", monthlySpend: "0", seats: "0", useCase: "coding" },
-    claude: { toolId: "claude", enabled: false, plan: "pro", monthlySpend: "0", seats: "0", useCase: "mixed" },
-    chatgpt: { toolId: "chatgpt", enabled: false, plan: "plus", monthlySpend: "0", seats: "0", useCase: "mixed" },
-    anthropic_api: { toolId: "anthropic_api", enabled: false, plan: "sonnet_4_6", monthlySpend: "0", seats: "0", useCase: "coding" },
-    openai_api: { toolId: "openai_api", enabled: false, plan: "gpt_5_4", monthlySpend: "0", seats: "0", useCase: "coding" },
-    gemini: { toolId: "gemini", enabled: false, plan: "pro", monthlySpend: "0", seats: "0", useCase: "mixed" },
-    windsurf: { toolId: "windsurf", enabled: false, plan: "pro", monthlySpend: "0", seats: "0", useCase: "coding" },
-  },
+  tools: [],
 });
 
 describe("Audit Engine Tests", () => {
   test("Cursor Downgrade: recommends Pro when on Business with < 5 seats", () => {
     const form = createBaseForm();
     form.teamSize = "3";
-    form.tools.cursor = {
+    form.tools.push({
+      instanceId: "cursor-1",
       toolId: "cursor",
-      enabled: true,
       plan: "business",
       monthlySpend: "120",
       seats: "3",
       useCase: "coding",
-    };
+    });
 
     const result = runAudit(form);
     const cursorRec = result.recommendations.find((r) => r.toolId === "cursor");
@@ -39,22 +30,22 @@ describe("Audit Engine Tests", () => {
 
   test("Cursor Overlap: recommends dropping Copilot if Cursor is also active", () => {
     const form = createBaseForm();
-    form.tools.cursor = {
+    form.tools.push({
+      instanceId: "cursor-1",
       toolId: "cursor",
-      enabled: true,
       plan: "pro",
       monthlySpend: "20",
       seats: "1",
       useCase: "coding",
-    };
-    form.tools.github_copilot = {
+    });
+    form.tools.push({
+      instanceId: "copilot-1",
       toolId: "github_copilot",
-      enabled: true,
       plan: "business",
       monthlySpend: "19",
       seats: "1",
       useCase: "coding",
-    };
+    });
 
     const result = runAudit(form);
     const copilotRec = result.recommendations.find((r) => r.toolId === "github_copilot");
@@ -66,14 +57,14 @@ describe("Audit Engine Tests", () => {
   test("Cursor Right-sizing: recommends reducing seats when seats > teamSize", () => {
     const form = createBaseForm();
     form.teamSize = "5";
-    form.tools.cursor = {
+    form.tools.push({
+      instanceId: "cursor-1",
       toolId: "cursor",
-      enabled: true,
       plan: "pro",
       monthlySpend: "160",
       seats: "8",
       useCase: "coding",
-    };
+    });
 
     const result = runAudit(form);
     const cursorRec = result.recommendations.find((r) => r.toolId === "cursor");
@@ -85,14 +76,14 @@ describe("Audit Engine Tests", () => {
   test("GitHub Copilot Downgrade: recommends Business when on Enterprise with < 10 seats", () => {
     const form = createBaseForm();
     form.teamSize = "5";
-    form.tools.github_copilot = {
+    form.tools.push({
+      instanceId: "copilot-1",
       toolId: "github_copilot",
-      enabled: true,
       plan: "enterprise",
       monthlySpend: "195",
       seats: "5",
       useCase: "coding",
-    };
+    });
 
     const result = runAudit(form);
     const copilotRec = result.recommendations.find((r) => r.toolId === "github_copilot");

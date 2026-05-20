@@ -13,10 +13,10 @@ export type ToolId =
 // ─── Per-tool form entry ──────────────────────────────────────────────────────
 
 export interface ToolEntry {
+  /** Unique ID for this specific added instance of the tool */
+  instanceId: string;
   /** Which tool this entry is for */
   toolId: ToolId;
-  /** Whether the user has toggled this tool on */
-  enabled: boolean;
   /** Selected plan slug (e.g. "hobby", "pro", "business", "enterprise") */
   plan: string;
   /** Monthly spend in USD */
@@ -30,8 +30,8 @@ export interface ToolEntry {
 // ─── Whole-form state ─────────────────────────────────────────────────────────
 
 export interface AuditFormState {
-  /** Tool entries keyed by ToolId */
-  tools: Record<ToolId, ToolEntry>;
+  /** Tool entries added by the user */
+  tools: ToolEntry[];
   /** Total team size */
   teamSize: string;
   /** Company name (optional) */

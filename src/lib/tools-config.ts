@@ -33,7 +33,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
     id: "github_copilot",
     name: "GitHub Copilot",
     vendor: "GitHub / Microsoft",
-    color: "#24292e",
+    color: "#2563eb",
     plans: [
       { value: "pro", label: "Pro ($10/mo)", pricePerSeat: 10 },
       { value: "business", label: "Business ($19/mo)", pricePerSeat: 19 },
