@@ -10,6 +10,24 @@ export type ToolId =
   | "gemini"
   | "windsurf";
 
+// ─── Declarative Audit Rules ───────────────────────────────────────────────────
+
+export interface AuditRules {
+  /** Drop this tool if any of these tools are also active */
+  overlapWith?: { toolId: ToolId; message: string }[];
+  /** If the use case isn't in this list, recommend switching */
+  idealUseCases?: { cases: string[]; alternative: string; message: string };
+  /** E.g. "business" needs 5 seats, else fallback to "pro" */
+  minSeatsForPlan?: Record<string, { minSeats: number; fallbackPlan: string; message: string }>;
+  /** Unconditional downgrades (e.g. always downgrade from Ultra to Pro unless needed) */
+  fixedDowngrades?: Record<string, { fallbackPlan: string; message: string }>;
+  /** API optimisations based on spend thresholds */
+  apiOptimizations?: Record<
+    string,
+    { threshold: number; alternativePlan: string; savingMultiplier: number; message: string }
+  >;
+}
+
 // ─── Per-tool form entry ──────────────────────────────────────────────────────
 
 export interface ToolEntry {

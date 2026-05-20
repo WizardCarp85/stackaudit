@@ -88,7 +88,7 @@ describe("Audit Engine Tests", () => {
     const result = runAudit(form);
     const copilotRec = result.recommendations.find((r) => r.toolId === "github_copilot");
 
-    expect(copilotRec?.recommendedAction).toContain("Downgrade to Copilot Business");
+    expect(copilotRec?.recommendedAction).toContain("Downgrade to GitHub Copilot Business");
     expect(copilotRec?.potentialSaving).toBe(5 * (39 - 19));
   });
 
