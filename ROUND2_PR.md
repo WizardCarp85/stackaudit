@@ -12,7 +12,6 @@ Pricing for AI tools changes rapidly, meaning an audit run last month might be g
 ## What I cut
 *   **Unsubscribe Links:** I didn't add unsubscribe functionality or database opt-out flags because the value/effort ratio favored focusing on the core Diff View UX first, and Resend free tier restrictions made full list management overkill for this stage.
 *   **Historical Pricing Database:** Instead of building a complex versioned pricing database, I opted for a simpler `pricing_snapshot` JSONB column on the audit row. We simply compare current `TOOLS_CONFIG` to the row's snapshot.
-*   **Resend SDK:** I cut the official `resend` Node SDK dependency and instead used native `fetch` to keep the bundle size small and avoid strict sandbox environment issues.
 
 ## How to test it manually
 1. **Run an initial audit:** Go to `/audit`, add "Cursor" (Pro, $20/mo), fill in an email, and click "Run my audit".
@@ -22,10 +21,11 @@ Pricing for AI tools changes rapidly, meaning an audit run last month might be g
 5. **View Diff:** Click the re-run link in the email (or just go to your result page). You will see the "Pricing data has changed" banner. Click "Re-run", submit the pre-filled form, select "Update existing", and verify the side-by-side `DiffView` shows the change in your savings delta.
 
 ## What's tested
-*   *I skipped adding automated tests for the email dispatch endpoint and DiffView components due to time constraints, focusing on shipping the end-to-end user flow.*
-*   If I had more time, I would first test:
-    *   Unit tests for `buildDiffRows` in `DiffView.tsx` to ensure `improved`, `worse`, `new`, and `removed` statuses calculate correctly.
-    *   Mocking the `fetch` call in `/api/detect-changes` to ensure it correctly groups multiple outdated audits for a single user into one email.
+*   *Honest disclosure: I skipped adding automated tests for the new DiffView components and the centralized pricing/re-run logic due to time constraints. I prioritized shipping the end-to-end user flow and fixing UI bugs over test coverage.*
+*   If we had more time, here is exactly what I'd test first:
+    *   **Unit test for Diff logic:** Test the `buildDiffRows` function in `DiffView.tsx` with mocked `oldRecs` and `newRecs` to ensure the `improved`, `worse`, `new`, and `removed` statuses calculate the deltas perfectly every time.
+    *   **Mocking the API:** Write a test for `/api/detect-changes` that mocks the native `fetch` call to Resend, verifying it correctly groups multiple outdated audits for a single user into one consolidated email payload.
+    *   **Form State:** Add a small integration test ensuring that the new `UpdateModeModal` properly passes the `compare=true` flag versus a `diffWith` ID based on the user's choice.
 
 ## Open questions / risks
 *   **Cron Job Scaling:** The `/api/detect-changes` endpoint currently fetches *all* audits into memory to compare them. If this shipped to production, we would need to paginate this database query or move the heavy lifting to an asynchronous queue as the user base grows.
