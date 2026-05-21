@@ -80,7 +80,12 @@ export default function AuditResultPage({ id }: Props) {
           // Only sync specific flags that the cron job may have updated
           let needsUpdate = false;
 
-          if (dbAudit.pricingOutdated && !localAudit.pricingOutdated) {
+          // ONLY apply the cloud's outdated flag if the cloud version is explicitly NEWER than our local version.
+          // This prevents a race condition where we just re-ran the audit locally, but the DB fetch
+          // completes before our POST finishes, causing us to accidentally read the old stale DB flag!
+          const isDbNewer = new Date(dbAudit.auditedAt).getTime() > new Date(localAudit.auditedAt).getTime();
+
+          if (isDbNewer && dbAudit.pricingOutdated && !localAudit.pricingOutdated) {
             localAudit.pricingOutdated = true;
             needsUpdate = true;
           }

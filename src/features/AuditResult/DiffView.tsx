@@ -52,11 +52,15 @@ function buildDiffRows(oldRecs: ToolRecommendation[], newRecs: ToolRecommendatio
     let status: ChangeStatus;
     if (!oldRec) status = "new";
     else if (!newRec) status = "removed";
+    // Spend changes are the most important metric. If spend goes down, that's improved!
+    else if (oldRec.currentSpend !== newRec.currentSpend) {
+      status = newRec.currentSpend > oldRec.currentSpend ? "worse" : "improved";
+    }
+    // If spend is the same, but potential savings changed
     else if (delta > 0) status = "improved";
     else if (delta < 0) status = "worse";
-    // Also check if spend changed significantly — even if savings are both $0,
-    // a 10x price jump should NOT be hidden as "unchanged"
-    else if (oldRec.currentSpend !== newRec.currentSpend || oldRec.recommendedAction !== newRec.recommendedAction) status = newRec.currentSpend > oldRec.currentSpend ? "worse" : "improved";
+    // If recommended action changed (e.g. dropped to a cheaper tier but cost is same because free)
+    else if (oldRec.recommendedAction !== newRec.recommendedAction) status = "improved";
     else status = "unchanged";
 
     rows.push({
@@ -240,7 +244,7 @@ export default function DiffView({ oldRecs, newRecs }: Props) {
       {/* ── Headline delta ── */}
       <div className="px-6 pt-6 pb-5 border-b border-[#20714b]/10">
         <p className="text-xs font-bold text-[#20714b] uppercase tracking-widest mb-2">
-          What changed since your last audit
+          Change in potential savings
         </p>
         <div className="flex items-end gap-3 flex-wrap">
           <div className="text-gray-400 text-sm">
@@ -261,7 +265,7 @@ export default function DiffView({ oldRecs, newRecs }: Props) {
               {totalDelta > 0 ? <FaArrowUp className="text-xs" /> : <FaArrowDown className="text-xs" />}
               {totalDelta > 0 ? "Extra " : ""}
               {totalDelta > 0 ? "−" : "+"}${Math.abs(totalDelta).toLocaleString()}/mo{" "}
-              {totalDelta > 0 ? "unlocked" : "lost"}
+              {totalDelta > 0 ? "savings unlocked" : "savings lost"}
             </span>
           )}
         </div>

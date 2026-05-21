@@ -103,7 +103,7 @@ function AuditCard({
             </button>
             {/* View */}
             <Link
-              href={`/result/${audit.id}`}
+              href={`/result/${audit.id}${audit.isUpdated ? '?compare=true' : ''}`}
               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#20714b] hover:text-[#185e3e] transition-colors group/link"
             >
               View
