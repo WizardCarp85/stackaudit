@@ -32,7 +32,7 @@ export default function AuditResultPage({ id }: Props) {
   const savedToCloud = useRef(false);
 
   useEffect(() => {
-    // 1. Try local storage first for instant load
+    // 1. Try local storage first — it is ALWAYS the source of truth
     const localAudit = getAuditById(id);
     if (localAudit) {
       setResult(localAudit);
@@ -43,7 +43,10 @@ export default function AuditResultPage({ id }: Props) {
       setSummaryLoading(true); // Need to wait for DB fetch
     }
 
-    // 2. Fetch from DB to sync state (especially pricingOutdated)
+    // 2. Fetch from DB — but ONLY for:
+    //    a) Loading a shared/external link (no local data)
+    //    b) Syncing the pricingOutdated flag from the cron job
+    //    We NEVER overwrite local audit data with DB data.
     fetch(`/api/audits?id=${id}`)
       .then((res) => {
         if (!res.ok) return null;
@@ -55,7 +58,7 @@ export default function AuditResultPage({ id }: Props) {
             setNotFound(true);
             setSummaryLoading(false);
           } else {
-            // Not in DB yet (first time viewing), so save it to cloud
+            // Not in DB yet — push local version to cloud
             fetch("/api/audits", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -69,16 +72,41 @@ export default function AuditResultPage({ id }: Props) {
           }
           return;
         }
-        
+
         setShareId(dbAudit.id);
-        setResult(dbAudit);
-        saveAuditToHistory(dbAudit); // Sync local storage with DB state
-        if ((dbAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
-          setSummaryLoading(true);
+
+        if (localAudit) {
+          // LOCAL AUDIT EXISTS — don't overwrite it!
+          // Only sync specific flags that the cron job may have updated
+          let needsUpdate = false;
+
+          if (dbAudit.pricingOutdated && !localAudit.pricingOutdated) {
+            localAudit.pricingOutdated = true;
+            needsUpdate = true;
+          }
+
+          if (needsUpdate) {
+            setResult({ ...localAudit });
+            saveAuditToHistory(localAudit);
+          }
+
+          // Push our local version to the cloud if it's newer
+          if (new Date(localAudit.auditedAt).getTime() > new Date(dbAudit.auditedAt).getTime()) {
+            fetch("/api/audits", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(localAudit),
+            }).catch(console.error);
+          }
         } else {
-          setSummaryLoading(false);
+          // NO LOCAL AUDIT — this is a shared link, use DB data
+          setResult(dbAudit);
+          saveAuditToHistory(dbAudit);
+          if ((dbAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource === "ai") {
+            setSummaryLoading(false);
+          }
+          setNotFound(false);
         }
-        setNotFound(false);
       })
       .catch((err) => {
         console.error("[AuditResultPage] Failed to fetch from DB:", err);

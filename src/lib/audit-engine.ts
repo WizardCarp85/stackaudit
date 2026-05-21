@@ -14,7 +14,22 @@
  */
 
 import type { AuditFormState, AuditResult, ToolEntry, ToolRecommendation } from "./types";
-import { TOOLS_MAP } from "./tools-config";
+import { TOOLS_MAP, TOOLS_CONFIG } from "./tools-config";
+
+// ─── Cross-tool comparison categories ─────────────────────────────────────────
+// Tools in the same category serve similar purposes and can be compared.
+const TOOL_CATEGORIES: Record<string, string[]> = {
+  ai_assistant: ["claude", "chatgpt", "gemini"],
+  ide_coding: ["cursor", "github_copilot", "windsurf"],
+  api_llm: ["anthropic_api", "openai_api"],
+};
+
+function getToolCategory(toolId: string): string | null {
+  for (const [category, ids] of Object.entries(TOOL_CATEGORIES)) {
+    if (ids.includes(toolId)) return category;
+  }
+  return null;
+}
 
 function generateId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
@@ -140,6 +155,73 @@ function evaluateTool(entry: ToolEntry, teamSize: number, otherActiveTools: stri
         potentialSaving: saving,
         reason: `${seats - teamSize} unused ${config.name} seats at $${pricePerSeat}/seat = $${saving}/mo wasted.`,
       };
+    }
+  }
+
+  // 7. Price Spike Detection — if the current plan is significantly more expensive
+  //    than a cheaper alternative plan, suggest downgrading.
+  {
+    const currentPrice = getPlanCost(entry.toolId, entry.plan);
+    if (currentPrice > 0) {
+      // Find all cheaper plans (non-free, non-null pricePerSeat, cheaper than current)
+      const cheaperPlans = config.plans
+        .filter((p) => p.value !== entry.plan && p.pricePerSeat !== null && p.pricePerSeat > 0 && p.pricePerSeat < currentPrice)
+        .sort((a, b) => (b.pricePerSeat ?? 0) - (a.pricePerSeat ?? 0)); // Most expensive first (closest downgrade)
+
+      if (cheaperPlans.length > 0) {
+        const bestAlt = cheaperPlans[0];
+        const altPrice = bestAlt.pricePerSeat ?? 0;
+        // Only trigger if the current plan is ≥1.5x the alternative (significant difference)
+        if (currentPrice >= altPrice * 1.5) {
+          const saving = (currentPrice - altPrice) * seats;
+          const altLabel = bestAlt.label.split(" (")[0] || bestAlt.value;
+          return {
+            currentSpend: spend,
+            recommendedAction: `Consider ${config.name} ${altLabel} — ${Math.round(((currentPrice - altPrice) / currentPrice) * 100)}% cheaper per seat`,
+            potentialSaving: Math.round(saving),
+            reason: `${config.name} ${altLabel} ($${altPrice}/seat) offers similar capabilities at a fraction of the cost. Your current plan is $${currentPrice}/seat — switching could save $${Math.round(saving)}/mo.`,
+          };
+        }
+      }
+    }
+  }
+
+  // 8. Cross-tool comparison — compare against the cheapest equivalent tool
+  //    in the same category (e.g. Gemini Pro $199/seat vs Claude Pro $20/seat)
+  {
+    const currentPrice = getPlanCost(entry.toolId, entry.plan);
+    const category = getToolCategory(entry.toolId);
+
+    if (currentPrice > 0 && category) {
+      const competitorIds = TOOL_CATEGORIES[category].filter((id) => id !== entry.toolId);
+      let bestAlt: { toolName: string; planLabel: string; price: number } | null = null;
+
+      for (const compId of competitorIds) {
+        const compConfig = TOOLS_CONFIG.find((t) => t.id === compId);
+        if (!compConfig) continue;
+        for (const plan of compConfig.plans) {
+          if (plan.pricePerSeat !== null && plan.pricePerSeat > 0 && plan.pricePerSeat < currentPrice) {
+            if (!bestAlt || plan.pricePerSeat < bestAlt.price) {
+              bestAlt = {
+                toolName: compConfig.name,
+                planLabel: plan.label.split(" (")[0] || plan.value,
+                price: plan.pricePerSeat,
+              };
+            }
+          }
+        }
+      }
+
+      if (bestAlt && currentPrice >= bestAlt.price * 2) {
+        const saving = (currentPrice - bestAlt.price) * seats;
+        const pctCheaper = Math.round(((currentPrice - bestAlt.price) / currentPrice) * 100);
+        return {
+          currentSpend: spend,
+          recommendedAction: `Switch to ${bestAlt.toolName} ${bestAlt.planLabel} — ${pctCheaper}% cheaper for similar capabilities`,
+          potentialSaving: Math.round(saving),
+          reason: `${bestAlt.toolName} ${bestAlt.planLabel} costs $${bestAlt.price}/seat vs your current $${currentPrice}/seat on ${config.name}. For the same type of work, switching saves $${Math.round(saving)}/mo.`,
+        };
+      }
     }
   }
 

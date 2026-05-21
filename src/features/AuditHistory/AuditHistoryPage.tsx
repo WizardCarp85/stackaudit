@@ -48,7 +48,7 @@ function AuditCard({
               </h2>
               {audit.isUpdated && (
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 shrink-0">
-                  Updated
+                  Re-run
                 </span>
               )}
               {audit.pricingOutdated && (

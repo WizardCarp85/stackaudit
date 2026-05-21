@@ -54,6 +54,9 @@ function buildDiffRows(oldRecs: ToolRecommendation[], newRecs: ToolRecommendatio
     else if (!newRec) status = "removed";
     else if (delta > 0) status = "improved";
     else if (delta < 0) status = "worse";
+    // Also check if spend changed significantly — even if savings are both $0,
+    // a 10x price jump should NOT be hidden as "unchanged"
+    else if (oldRec.currentSpend !== newRec.currentSpend || oldRec.recommendedAction !== newRec.recommendedAction) status = newRec.currentSpend > oldRec.currentSpend ? "worse" : "improved";
     else status = "unchanged";
 
     rows.push({
