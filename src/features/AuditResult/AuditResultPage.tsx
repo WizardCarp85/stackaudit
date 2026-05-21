@@ -35,6 +35,7 @@ export default function AuditResultPage({ id }: Props) {
     // 1. Try local storage first — it is ALWAYS the source of truth
     const localAudit = getAuditById(id);
     if (localAudit) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setResult(localAudit);
       if ((localAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
         setSummaryLoading(true);
@@ -132,6 +133,7 @@ export default function AuditResultPage({ id }: Props) {
       try {
         const raw = localStorage.getItem(`stackaudit_diff_prev_${id}`);
         if (raw) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
           setOldRecs(JSON.parse(raw));
           // Note: Deliberately not clearing this key here so it persists on reload.
           // It will get overwritten the next time they update this specific audit.

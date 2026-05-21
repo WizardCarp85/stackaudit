@@ -20,6 +20,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
   useEffect(() => {
     try {
       if (localStorage.getItem("stackaudit_lead_submitted") === "true") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSubmitted(true);
       }
     } catch {

@@ -50,6 +50,7 @@ export function useAuditForm() {
   // Hydrate from localStorage on mount (client only)
   useEffect(() => {
     const loaded = loadFromStorage();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setForm(loaded);
     setIsHydrated(true);
   }, []);

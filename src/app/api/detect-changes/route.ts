@@ -36,7 +36,7 @@ export async function GET() {
 
     // 2. Evaluate each audit
     for (const audit of audits) {
-      const snapshot: any[] = audit.pricing_snapshot || [];
+      const snapshot: unknown[] = audit.pricing_snapshot || [];
       const formState = audit.form_state;
       const oldRecommendations = audit.recommendations || [];
       
@@ -45,8 +45,8 @@ export async function GET() {
 
       if (formState && formState.tools) {
         for (const entry of formState.tools) {
-          const snapTool = snapshot.find((t: any) => t.id === entry.toolId);
-          const snapPlan = snapTool?.plans.find((p: any) => p.value === entry.plan);
+          const snapTool = snapshot.find((t: unknown) => (t as { id: string }).id === entry.toolId);
+          const snapPlan = (snapTool as { plans: { value: string; pricePerSeat: number }[] } | undefined)?.plans.find((p: unknown) => (p as { value: string }).value === entry.plan);
           const oldPrice = snapPlan?.pricePerSeat;
           const currentPrice = getCurrentPrice(entry.toolId, entry.plan);
           const toolName = TOOLS_CONFIG.find(t => t.id === entry.toolId)?.name || entry.toolId;
@@ -68,7 +68,7 @@ export async function GET() {
         // Run the audit engine with CURRENT pricing to get new recommendations
         const newResult = runAudit(formState, audit.id);
         
-        const oldSaving = oldRecommendations.reduce((sum: number, r: any) => sum + (r.potentialSaving || 0), 0);
+        const oldSaving = oldRecommendations.reduce((sum: number, r: unknown) => sum + ((r as { potentialSaving?: number }).potentialSaving || 0), 0);
         const newSaving = newResult.totalMonthlySaving;
         
         let impactDescription = "";
@@ -129,9 +129,10 @@ export async function GET() {
             throw new Error(`Resend API Error: ${res.status} - ${errBody}`);
           }
           emailsSent.push(email);
-        } catch (e: any) {
+        } catch (e: unknown) {
+          const errMsg = e instanceof Error ? e.message : String(e);
           console.error(`Failed to send email to ${email}:`, e);
-          emailErrors.push({ email, error: e.message });
+          emailErrors.push({ email, error: errMsg });
         }
       }
     } else {
@@ -155,8 +156,9 @@ export async function GET() {
       emailsSent: emailsSent.length,
       emailErrors: emailErrors.length > 0 ? emailErrors : undefined,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const errMsg = err instanceof Error ? err.message : String(err);
     console.error("Detect changes error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: errMsg }, { status: 500 });
   }
 }

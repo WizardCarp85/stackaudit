@@ -88,7 +88,7 @@ export interface AuditResult {
   /** ISO timestamp */
   auditedAt: string;
   /** Snapshot of TOOLS_CONFIG used during evaluation */
-  pricingSnapshot?: any[];
+  pricingSnapshot?: unknown[];
   /** Flag for when pricing has changed */
   pricingOutdated?: boolean;
   /** Flag for when this audit was created via an edit/update */

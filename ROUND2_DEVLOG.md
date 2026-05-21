@@ -54,10 +54,7 @@ Checking if more changes can be done in remaining time, also need to complete th
 Updated all 3 md files with better explanations and details.
 
 ## 2026-05-21 15:42 - work flow
-The whole audit system wasnt actually working properly, so i started fixing it. ~ 2hrs
-
-## 2026-05-21 16:00 - Bug fixing and state sync
-Fixed multiple state sync bugs between localStorage and Supabase. The DB was overwriting fresh re-run results because the page always treated cloud data as authoritative. Restructured the sync so localStorage is always the source of truth, and the DB only provides data for shared links and syncs the `pricingOutdated` flag from the cron job. Also fixed the AI summary skeleton getting permanently stuck due to a race condition between the Gemini API fetch and the DB fetch. Fixed the Gemini model from `gemini-1.5-flash` (404) to `gemini-pro`. Added delete-from-Supabase support. Added background sync of `pricingOutdated` flag on the All Audits page so the orange badge appears without needing to click into each audit. ~1.5hrs
-
-## 2026-05-21 16:50 - Audit engine improvements
-Added two new rules to the audit engine: (1) Price Spike Detection — flags when a tool's current plan is significantly more expensive than a cheaper alternative within the same tool. (2) Cross-Tool Comparison — compares tools across categories (AI assistants, IDE coding tools, LLM APIs) and recommends switching to a competitor if it's much cheaper for equivalent work. Also fixed the DiffView to detect spend changes, not just savings delta — a $100 to $1000 jump was being hidden as "unchanged". Renamed the "Updated" badge to "Re-run" on the history page. ~30min
+The whole audit system wasnt actually working properly, so i started fixing it.
+Worked on fixing supabase bugs, mostly realted to rendering.
+I improved the audit engine to tackle few new things plan comparision when price changes.
+~ 3hrs

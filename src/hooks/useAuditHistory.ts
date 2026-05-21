@@ -15,8 +15,8 @@ export function useAuditHistory() {
   const syncAttempted = useRef(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     const localHistory = loadHistory();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHistory(localHistory);
     setHydrated(true);
 
