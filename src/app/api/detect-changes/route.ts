@@ -5,20 +5,18 @@ import { runAudit } from "@/lib/audit-engine";
 import { generatePricingUpdateEmailHtml, AuditUpdate, ToolChange } from "@/lib/email-templates";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "updates@stackaudit-one.vercel.app";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://stackaudit-one.vercel.app";
 
 export async function GET() {
   // Simple auth check for cron jobs if needed (e.g. ?cron_key=secret)
   // For now, left open or protected by Vercel cron auth
   try {
-    // 1. Fetch audits that haven't been flagged yet AND have an email
+    // 1. Fetch audits that haven't been flagged yet
     const { data: audits, error } = await supabase
       .from("audits")
       .select("*")
-      .eq("pricing_outdated", false)
-      .not("email", "is", null)
-      .not("email", "eq", "");
+      .eq("pricing_outdated", false);
 
     if (error) throw error;
     if (!audits || audits.length === 0) {
@@ -91,10 +89,12 @@ export async function GET() {
           newTotalSaving: newSaving,
         };
 
-        if (!updatesByEmail[audit.email]) {
-          updatesByEmail[audit.email] = [];
+        if (audit.email && audit.email.trim() !== "") {
+          if (!updatesByEmail[audit.email]) {
+            updatesByEmail[audit.email] = [];
+          }
+          updatesByEmail[audit.email].push(updateData);
         }
-        updatesByEmail[audit.email].push(updateData);
       }
     }
 

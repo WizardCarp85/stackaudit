@@ -52,3 +52,6 @@ Checking if more changes can be done in remaining time, also need to complete th
 
 ## 2026-05-20 14:40 - updating md files
 Updated all 3 md files with better explanations and details.
+
+## 2026-05-20 15:42 - work flow
+The whole audit system wasnt actually working properly

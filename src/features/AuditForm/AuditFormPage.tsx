@@ -256,7 +256,7 @@ export default function AuditFormPage() {
                     >
                       <FaEnvelope className="text-[10px]" />
                       Email
-                      <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(we&apos;ll send you the report)</span>
+                      <span className="normal-case font-normal text-gray-300 dark:text-gray-500">(optional)</span>
                     </label>
                     <input
                       id="email"
@@ -266,6 +266,9 @@ export default function AuditFormPage() {
                       onChange={(e) => setTopLevel("email", e.target.value)}
                       className="w-full bg-transparent text-sm font-medium text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
                     />
+                    <p className="text-[10px] text-[#20714b]/80 dark:text-[#4ade80]/80 mt-2 font-medium">
+                      * Add an email to receive automatic alerts when your tools change pricing.
+                    </p>
                   </div>
                 </div>
 

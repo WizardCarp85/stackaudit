@@ -16,7 +16,7 @@ Pricing for AI tools changes rapidly, meaning an audit run last month might be g
 ## How to test it manually
 1. **Run an initial audit:** Go to `/audit`, add "Cursor" (Pro, $20/mo), fill in an email address, and click "Run my audit".
 2. **Simulate a price change:** Open `src/lib/tools-config.ts` and manually change the price of Cursor Pro to `$30`.
-3. **Trigger detection:** Manually trigger a POST request to `/api/detect-changes` using cURL or Postman.
+3. **Trigger detection:** Open `http://localhost:3000/api/detect-changes` in your browser. It's a GET request, so no cURL or Postman needed.
 4. **Verify Email:** Check your Resend logs (or your verified inbox) to confirm the HTML update email was sent.
 5. **View Diff:** Click the re-run link in the email (or just go to your result page). You will see the "Pricing data has changed" banner. Click "Re-run", submit the pre-filled form, select "Update existing", and check that the side-by-side `DiffView` correctly shows the change in your savings.
 

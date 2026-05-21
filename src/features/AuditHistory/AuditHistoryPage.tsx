@@ -38,7 +38,7 @@ function AuditCard({
         <div className="flex items-start justify-between gap-4">
           {/* Left: meta */}
           <div className="min-w-0">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <h2 className="text-base font-bold text-gray-900 dark:text-white truncate">
                 {audit.formState.auditName
                   ? audit.formState.auditName
@@ -47,8 +47,13 @@ function AuditCard({
                   : "Unnamed audit"}
               </h2>
               {audit.isUpdated && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 shrink-0">
                   Updated
+                </span>
+              )}
+              {audit.pricingOutdated && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 shrink-0">
+                  Outdated Prices
                 </span>
               )}
             </div>

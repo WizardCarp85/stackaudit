@@ -18,6 +18,7 @@ export interface ToolConfig {
 }
 
 export const TOOLS_CONFIG: ToolConfig[] = [
+  // cursor
   {
     id: "cursor",
     name: "Cursor",
@@ -36,6 +37,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // github-copilot
   {
     id: "github_copilot",
     name: "GitHub Copilot",
@@ -54,6 +56,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // claude
   {
     id: "claude",
     name: "Claude",
@@ -76,6 +79,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // chatgpt
   {
     id: "chatgpt",
     name: "ChatGPT",
@@ -93,6 +97,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // anthropid_api
   {
     id: "anthropic_api",
     name: "Anthropic API",
@@ -110,6 +115,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // openai_api
   {
     id: "openai_api",
     name: "OpenAI API",
@@ -127,13 +133,14 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // gemini
   {
     id: "gemini",
     name: "Gemini",
     vendor: "Google",
     color: "#4285f4",
     plans: [
-      { value: "pro", label: "Pro ($19.99/mo)", pricePerSeat: 19.99 },
+      { value: "pro", label: "Pro ($19.99/mo)", pricePerSeat: 199.99 },
       { value: "ultra", label: "Ultra ($249.99/mo)", pricePerSeat: 249.99 },
       { value: "api_pro", label: "Gemini 3.1 Pro ($2/$12 per 1M tokens)", pricePerSeat: null },
       { value: "api_flash", label: "Gemini 3.1 Flash ($0.25/$1.50 per 1M tokens)", pricePerSeat: null },
@@ -148,6 +155,7 @@ export const TOOLS_CONFIG: ToolConfig[] = [
       }
     }
   },
+  // windsurf
   {
     id: "windsurf",
     name: "Windsurf",

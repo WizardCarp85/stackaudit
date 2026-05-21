@@ -32,17 +32,61 @@ export default function AuditResultPage({ id }: Props) {
   const savedToCloud = useRef(false);
 
   useEffect(() => {
-    const audit = getAuditById(id);
-    if (audit) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setResult(audit);
-      // If it doesn't have a cached AI summary yet, start loading immediately
-      if ((audit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
+    // 1. Try local storage first for instant load
+    const localAudit = getAuditById(id);
+    if (localAudit) {
+      setResult(localAudit);
+      if ((localAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
         setSummaryLoading(true);
       }
     } else {
-      setNotFound(true);
+      setSummaryLoading(true); // Need to wait for DB fetch
     }
+
+    // 2. Fetch from DB to sync state (especially pricingOutdated)
+    fetch(`/api/audits?id=${id}`)
+      .then((res) => {
+        if (!res.ok) return null;
+        return res.json();
+      })
+      .then((dbAudit) => {
+        if (!dbAudit) {
+          if (!localAudit) {
+            setNotFound(true);
+            setSummaryLoading(false);
+          } else {
+            // Not in DB yet (first time viewing), so save it to cloud
+            fetch("/api/audits", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(localAudit),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.id) setShareId(data.id);
+              })
+              .catch(console.error);
+          }
+          return;
+        }
+        
+        setShareId(dbAudit.id);
+        setResult(dbAudit);
+        saveAuditToHistory(dbAudit); // Sync local storage with DB state
+        if ((dbAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
+          setSummaryLoading(true);
+        } else {
+          setSummaryLoading(false);
+        }
+        setNotFound(false);
+      })
+      .catch((err) => {
+        console.error("[AuditResultPage] Failed to fetch from DB:", err);
+        if (!localAudit) {
+          setNotFound(true);
+          setSummaryLoading(false);
+        }
+      });
   }, [id]);
 
   // Load old recommendations for diff view
@@ -92,18 +136,21 @@ export default function AuditResultPage({ id }: Props) {
       })
       .then((data: { summary: string; source: "ai" | "template" }) => {
         if (data.summary) {
-          const updated = {
-            ...result,
-            aiSummary: data.summary,
-            aiSummarySource: data.source, // 'ai' or 'template'
-          };
-          setResult(updated);
-          
-          // Only persist to history if it's a real AI summary
-          // This allows users to "retry" by refreshing if their key was broken
-          if (data.source === "ai") {
-            saveAuditToHistory(updated);
-          }
+          setResult((prev) => {
+            if (!prev) return prev;
+            const updated = {
+              ...prev,
+              aiSummary: data.summary,
+              aiSummarySource: data.source, // 'ai' or 'template'
+            };
+            
+            // Only persist to history if it's a real AI summary
+            // This allows users to "retry" by refreshing if their key was broken
+            if (data.source === "ai") {
+              saveAuditToHistory(updated);
+            }
+            return updated;
+          });
         }
       })
       .catch((err) => {
@@ -115,22 +162,7 @@ export default function AuditResultPage({ id }: Props) {
       });
   }, [result]);
 
-  // Save anonymous version to Supabase for public sharing
-  useEffect(() => {
-    if (!result || savedToCloud.current) return;
-    savedToCloud.current = true;
-
-    fetch("/api/audits", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(result),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.id) setShareId(data.id);
-      })
-      .catch((err) => console.error("[AuditResultPage] Failed to save for sharing:", err));
-  }, [result]);
+  // The cloud saving logic is now handled in the first useEffect to avoid race conditions.
 
   function handleShare() {
     const baseUrl = window.location.origin;

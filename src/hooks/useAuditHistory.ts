@@ -24,8 +24,14 @@ export function useAuditHistory() {
   }, []);
 
   const deleteAudit = useCallback((id: string) => {
+    // Optimistically update local storage
     const updated = deleteAuditFromHistory(id);
     setHistory(updated);
+    
+    // Also delete from Supabase database
+    fetch(`/api/audits?id=${id}`, { method: "DELETE" }).catch((err) => {
+      console.error("[useAuditHistory] Failed to delete from database:", err);
+    });
   }, []);
 
   return { history, hydrated, saveAudit, deleteAudit };
