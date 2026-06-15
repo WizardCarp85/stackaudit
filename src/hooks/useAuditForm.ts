@@ -4,27 +4,20 @@ import { useState, useEffect, useCallback } from "react";
 import type { AuditFormState, ToolEntry, ToolId } from "@/lib/types";
 import { TOOLS_CONFIG } from "@/lib/tools-config";
 
-const STORAGE_KEY = "stackaudit_form_v1";
+const STORAGE_KEY = "stackaudit_form_v2";
+
+function generateInstanceId() {
+  return typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2, 9);
+}
 
 function buildDefaultState(): AuditFormState {
-  const tools = Object.fromEntries(
-    TOOLS_CONFIG.map((t) => [
-      t.id,
-      {
-        toolId: t.id,
-        enabled: false,
-        plan: t.plans[0]?.value ?? "",
-        monthlySpend: "",
-        seats: "",
-        useCase: "",
-      } satisfies ToolEntry,
-    ])
-  ) as Record<ToolId, ToolEntry>;
-
   return {
-    tools,
+    tools: [],
     teamSize: "",
     companyName: "",
+    auditName: "",
     email: "",
   };
 }
@@ -35,12 +28,15 @@ function loadFromStorage(): AuditFormState {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return buildDefaultState();
     const parsed = JSON.parse(raw) as AuditFormState;
-    // Merge with defaults so new tools added later still appear
+    // Basic validation to ensure we have the right shape
+    if (!Array.isArray(parsed.tools)) {
+      return buildDefaultState();
+    }
     const defaults = buildDefaultState();
     return {
       ...defaults,
       ...parsed,
-      tools: { ...defaults.tools, ...parsed.tools },
+      tools: parsed.tools,
     };
   } catch {
     return buildDefaultState();
@@ -49,21 +45,25 @@ function loadFromStorage(): AuditFormState {
 
 export function useAuditForm() {
   const [form, setForm] = useState<AuditFormState>(buildDefaultState);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // Hydrate from localStorage on mount (client only)
   useEffect(() => {
+    const loaded = loadFromStorage();
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setForm(loadFromStorage());
+    setForm(loaded);
+    setIsHydrated(true);
   }, []);
 
-  // Persist to localStorage on every change
+  // Persist to localStorage on every change AFTER hydration
   useEffect(() => {
+    if (!isHydrated) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
     } catch {
       // storage quota exceeded — silently ignore
     }
-  }, [form]);
+  }, [form, isHydrated]);
 
   // ── helpers ────────────────────────────────────────────────────────────────
 
@@ -78,28 +78,41 @@ export function useAuditForm() {
   );
 
   const setToolField = useCallback(
-    <K extends keyof ToolEntry>(toolId: ToolId, key: K, value: ToolEntry[K]) => {
+    <K extends keyof ToolEntry>(instanceId: string, key: K, value: ToolEntry[K]) => {
       setForm((prev) => ({
         ...prev,
-        tools: {
-          ...prev.tools,
-          [toolId]: { ...prev.tools[toolId], [key]: value },
-        },
+        tools: prev.tools.map((entry) =>
+          entry.instanceId === instanceId ? { ...entry, [key]: value } : entry
+        ),
       }));
     },
     []
   );
 
-  const toggleTool = useCallback((toolId: ToolId) => {
+  const addTool = useCallback((toolId: ToolId) => {
+    const config = TOOLS_CONFIG.find((t) => t.id === toolId);
+    if (!config) return;
+
     setForm((prev) => ({
       ...prev,
-      tools: {
+      tools: [
         ...prev.tools,
-        [toolId]: {
-          ...prev.tools[toolId],
-          enabled: !prev.tools[toolId].enabled,
+        {
+          instanceId: generateInstanceId(),
+          toolId,
+          plan: config.plans[0]?.value ?? "",
+          monthlySpend: "",
+          seats: "",
+          useCase: "",
         },
-      },
+      ],
+    }));
+  }, []);
+
+  const removeTool = useCallback((instanceId: string) => {
+    setForm((prev) => ({
+      ...prev,
+      tools: prev.tools.filter((t) => t.instanceId !== instanceId),
     }));
   }, []);
 
@@ -109,14 +122,12 @@ export function useAuditForm() {
     localStorage.removeItem(STORAGE_KEY);
   }, []);
 
-  const enabledTools = TOOLS_CONFIG.filter((t) => form.tools[t.id]?.enabled);
-
   return {
     form,
-    enabledTools,
     setTopLevel,
     setToolField,
-    toggleTool,
+    addTool,
+    removeTool,
     resetForm,
   };
 }

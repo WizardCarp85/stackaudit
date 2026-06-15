@@ -31,7 +31,7 @@ export default function HeroSavings({
           {isOptimised ? "Your stack looks good" : "Potential savings found"}
         </p>
 
-        <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
+        <div className="flex flex-col md:flex-row md:items-end flex-wrap gap-8 md:gap-16">
           {/* Monthly */}
           <div>
             <p className="text-gray-500 text-sm mb-1">Monthly savings</p>

@@ -1,0 +1,105 @@
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/app/api/detect-changes/route.ts
+   39:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   48:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   49:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:70  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  132:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  158:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/features/AuditResult/AuditResultPage.tsx
+   32:9   warning  'savedToCloud' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   38:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/features/AuditResult/AuditResultPage.tsx:38:7
+  36 |     const localAudit = getAuditById(id);
+  37 |     if (localAudit) {
+> 38 |       setResult(localAudit);
+     |       ^^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |       if ((localAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
+  40 |         setSummaryLoading(true);
+  41 |       }                                                                                               react-hooks/set-state-in-effect
+  135:11  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/features/AuditResult/AuditResultPage.tsx:135:11
+  133 |         const raw = localStorage.getItem(`stackaudit_diff_prev_${id}`);
+  134 |         if (raw) {
+> 135 |           setOldRecs(JSON.parse(raw));
+      |           ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  136 |           // Note: Deliberately not clearing this key here so it persists on reload.
+  137 |           // It will get overwritten the next time they update this specific audit.
+  138 |         }  react-hooks/set-state-in-effect
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/features/AuditResult/LeadCaptureSection.tsx
+  23:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/features/AuditResult/LeadCaptureSection.tsx:23:9
+  21 |     try {
+  22 |       if (localStorage.getItem("stackaudit_lead_submitted") === "true") {
+> 23 |         setSubmitted(true);
+     |         ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |       }
+  25 |     } catch {
+  26 |       // ignore storage errors  react-hooks/set-state-in-effect
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/hooks/useAuditForm.ts
+  53:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/hooks/useAuditForm.ts:53:5
+  51 |   useEffect(() => {
+  52 |     const loaded = loadFromStorage();
+> 53 |     setForm(loaded);
+     |     ^^^^^^^ Avoid calling setState() directly within an effect
+  54 |     setIsHydrated(true);
+  55 |   }, []);
+  56 |  react-hooks/set-state-in-effect
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/hooks/useAuditHistory.ts
+  18:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/set-state-in-effect')
+  20:5  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/hooks/useAuditHistory.ts:20:5
+  18 |     // eslint-disable-next-line react-hooks/set-state-in-effect
+  19 |     const localHistory = loadHistory();
+> 20 |     setHistory(localHistory);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |     setHydrated(true);
+  22 |
+  23 |     // Background sync: check if the cron job marked any of these audits as outdated  react-hooks/set-state-in-effect
+
+/Users/Wizard/Documents/Projects/Working/stackaudit/src/lib/types.ts
+  91:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 14 problems (12 errors, 2 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

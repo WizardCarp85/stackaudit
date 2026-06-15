@@ -38,12 +38,24 @@ function AuditCard({
         <div className="flex items-start justify-between gap-4">
           {/* Left: meta */}
           <div className="min-w-0">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <h2 className="text-base font-bold text-gray-900 dark:text-white truncate">
-                {audit.formState.companyName
+                {audit.formState.auditName
+                  ? audit.formState.auditName
+                  : audit.formState.companyName
                   ? `${audit.formState.companyName}'s audit`
                   : "Unnamed audit"}
               </h2>
+              {audit.isUpdated && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 shrink-0">
+                  Re-run
+                </span>
+              )}
+              {audit.pricingOutdated && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 shrink-0">
+                  Outdated Prices
+                </span>
+              )}
             </div>
             <p className="text-xs text-gray-400 mb-3">{date}</p>
             <p className="text-xs text-gray-500 truncate max-w-xs">
@@ -91,7 +103,7 @@ function AuditCard({
             </button>
             {/* View */}
             <Link
-              href={`/result/${audit.id}`}
+              href={`/result/${audit.id}${audit.isUpdated ? '?compare=true' : ''}`}
               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#20714b] hover:text-[#185e3e] transition-colors group/link"
             >
               View

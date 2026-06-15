@@ -2,15 +2,17 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSavings from "./HeroSavings";
 import ToolRecommendationCard from "./ToolRecommendationCard";
 import AiSummaryCard from "./AiSummaryCard";
 import LeadCaptureSection from "./LeadCaptureSection";
+import DiffView from "./DiffView";
 import { getAuditById, saveAuditToHistory } from "@/lib/audit-history";
-import type { AuditResult } from "@/lib/types";
-import { FaArrowLeft, FaShare, FaSearch, FaCheckCircle } from "react-icons/fa";
+import type { AuditResult, ToolRecommendation } from "@/lib/types";
+import { FaArrowLeft, FaShare, FaSearch, FaCheckCircle, FaRedo, FaEdit } from "react-icons/fa";
 
 interface Props {
   /** The audit ID from the URL — e.g. /result/[id] */
@@ -18,27 +20,131 @@ interface Props {
 }
 
 export default function AuditResultPage({ id }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [result, setResult] = useState<AuditResult | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareId, setShareId] = useState<string | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
+  const [oldRecs, setOldRecs] = useState<ToolRecommendation[] | null>(null);
   const summaryFetched = useRef(false);
   const savedToCloud = useRef(false);
 
   useEffect(() => {
-    const audit = getAuditById(id);
-    if (audit) {
+    // 1. Try local storage first — it is ALWAYS the source of truth
+    const localAudit = getAuditById(id);
+    if (localAudit) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setResult(audit);
-      // If it doesn't have a cached AI summary yet, start loading immediately
-      if ((audit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
+      setResult(localAudit);
+      if ((localAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource !== "ai") {
         setSummaryLoading(true);
       }
     } else {
-      setNotFound(true);
+      setSummaryLoading(true); // Need to wait for DB fetch
     }
+
+    // 2. Fetch from DB — but ONLY for:
+    //    a) Loading a shared/external link (no local data)
+    //    b) Syncing the pricingOutdated flag from the cron job
+    //    We NEVER overwrite local audit data with DB data.
+    fetch(`/api/audits?id=${id}`)
+      .then((res) => {
+        if (!res.ok) return null;
+        return res.json();
+      })
+      .then((dbAudit) => {
+        if (!dbAudit) {
+          if (!localAudit) {
+            setNotFound(true);
+            setSummaryLoading(false);
+          } else {
+            // Not in DB yet — push local version to cloud
+            fetch("/api/audits", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(localAudit),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.id) setShareId(data.id);
+              })
+              .catch(console.error);
+          }
+          return;
+        }
+
+        setShareId(dbAudit.id);
+
+        if (localAudit) {
+          // LOCAL AUDIT EXISTS — don't overwrite it!
+          // Only sync specific flags that the cron job may have updated
+          let needsUpdate = false;
+
+          // ONLY apply the cloud's outdated flag if the cloud version is explicitly NEWER than our local version.
+          // This prevents a race condition where we just re-ran the audit locally, but the DB fetch
+          // completes before our POST finishes, causing us to accidentally read the old stale DB flag!
+          const isDbNewer = new Date(dbAudit.auditedAt).getTime() > new Date(localAudit.auditedAt).getTime();
+
+          if (isDbNewer && dbAudit.pricingOutdated && !localAudit.pricingOutdated) {
+            localAudit.pricingOutdated = true;
+            needsUpdate = true;
+          }
+
+          if (needsUpdate) {
+            setResult({ ...localAudit });
+            saveAuditToHistory(localAudit);
+          }
+
+          // Push our local version to the cloud if it's newer
+          if (new Date(localAudit.auditedAt).getTime() > new Date(dbAudit.auditedAt).getTime()) {
+            fetch("/api/audits", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(localAudit),
+            }).catch(console.error);
+          }
+        } else {
+          // NO LOCAL AUDIT — this is a shared link, use DB data
+          setResult(dbAudit);
+          saveAuditToHistory(dbAudit);
+          if ((dbAudit as AuditResult & { aiSummarySource?: string }).aiSummarySource === "ai") {
+            setSummaryLoading(false);
+          }
+          setNotFound(false);
+        }
+      })
+      .catch((err) => {
+        console.error("[AuditResultPage] Failed to fetch from DB:", err);
+        if (!localAudit) {
+          setNotFound(true);
+          setSummaryLoading(false);
+        }
+      });
   }, [id]);
+
+  // Load old recommendations for diff view
+  useEffect(() => {
+    const compare = searchParams.get("compare");
+    const diffWith = searchParams.get("diffWith");
+
+    if (compare === "true") {
+      // "Update existing" path — read snapshot we saved before overwriting
+      try {
+        const raw = localStorage.getItem(`stackaudit_diff_prev_${id}`);
+        if (raw) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
+          setOldRecs(JSON.parse(raw));
+          // Note: Deliberately not clearing this key here so it persists on reload.
+          // It will get overwritten the next time they update this specific audit.
+        }
+      } catch { /* ignore */ }
+    } else if (diffWith) {
+      // "Create new" path — load the original audit from history
+      const original = getAuditById(diffWith);
+      if (original) setOldRecs(original.recommendations);
+    }
+  }, [id, searchParams]);
 
   // Fetch AI-generated summary asynchronously after audit loads
   useEffect(() => {
@@ -65,18 +171,21 @@ export default function AuditResultPage({ id }: Props) {
       })
       .then((data: { summary: string; source: "ai" | "template" }) => {
         if (data.summary) {
-          const updated = {
-            ...result,
-            aiSummary: data.summary,
-            aiSummarySource: data.source, // 'ai' or 'template'
-          };
-          setResult(updated);
-          
-          // Only persist to history if it's a real AI summary
-          // This allows users to "retry" by refreshing if their key was broken
-          if (data.source === "ai") {
-            saveAuditToHistory(updated);
-          }
+          setResult((prev) => {
+            if (!prev) return prev;
+            const updated = {
+              ...prev,
+              aiSummary: data.summary,
+              aiSummarySource: data.source, // 'ai' or 'template'
+            };
+            
+            // Only persist to history if it's a real AI summary
+            // This allows users to "retry" by refreshing if their key was broken
+            if (data.source === "ai") {
+              saveAuditToHistory(updated);
+            }
+            return updated;
+          });
         }
       })
       .catch((err) => {
@@ -88,22 +197,7 @@ export default function AuditResultPage({ id }: Props) {
       });
   }, [result]);
 
-  // Save anonymous version to Supabase for public sharing
-  useEffect(() => {
-    if (!result || savedToCloud.current) return;
-    savedToCloud.current = true;
-
-    fetch("/api/audits", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(result),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.id) setShareId(data.id);
-      })
-      .catch((err) => console.error("[AuditResultPage] Failed to save for sharing:", err));
-  }, [result]);
+  // The cloud saving logic is now handled in the first useEffect to avoid race conditions.
 
   function handleShare() {
     const baseUrl = window.location.origin;
@@ -115,6 +209,18 @@ export default function AuditResultPage({ id }: Props) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
+  }
+
+  function handleRerun() {
+    if (!result) return;
+    // Write old form state into the form's localStorage key so it pre-fills on mount
+    try {
+      const stateToSave = { ...result.formState, originalAuditId: result.id };
+      localStorage.setItem("stackaudit_form_v2", JSON.stringify(stateToSave));
+    } catch {
+      // ignore storage errors
+    }
+    router.push("/audit");
   }
 
   // ── Not found state ──
@@ -190,10 +296,16 @@ export default function AuditResultPage({ id }: Props) {
               Audit complete
             </span>
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
-              {result.formState.companyName
-                ? `${result.formState.companyName}'s`
-                : "Your"}{" "}
-              AI spend audit
+              {result.formState.auditName ? (
+                result.formState.auditName
+              ) : (
+                <>
+                  {result.formState.companyName
+                    ? `${result.formState.companyName}'s`
+                    : "Your"}{" "}
+                  AI spend audit
+                </>
+              )}
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
               {enabledCount} tool{enabledCount !== 1 ? "s" : ""} audited ·{" "}
@@ -203,7 +315,33 @@ export default function AuditResultPage({ id }: Props) {
                 year: "numeric",
               })}
             </p>
+            {/* ── Outdated Pricing Banner ── */}
+            {result.pricingOutdated && (
+              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-2xl px-6 py-4 mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <p className="text-amber-800 dark:text-amber-400 font-bold text-sm mb-1">
+                    ⚠️ Pricing data has changed
+                  </p>
+                  <p className="text-amber-700 dark:text-amber-500 text-sm">
+                    One or more tools in this stack have updated their prices or plans since this audit was run.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleRerun}
+                  className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 whitespace-nowrap shadow-sm hover:shadow-md flex-shrink-0"
+                >
+                  <FaRedo className="text-xs" />
+                  Re-run Audit
+                </button>
+              </div>
+            )}
           </div>
+
+          {/* ── Diff view (shown when coming from a re-run/edit) ── */}
+          {oldRecs && result.recommendations.length > 0 && (
+            <DiffView oldRecs={oldRecs} newRecs={result.recommendations} />
+          )}
 
           {/* ── Hero savings ── */}
           <HeroSavings
@@ -255,11 +393,20 @@ export default function AuditResultPage({ id }: Props) {
               ← All audits
             </Link>
             <span className="hidden sm:block text-gray-200">·</span>
+            <button
+              type="button"
+              onClick={handleRerun}
+              className="text-sm text-gray-400 hover:text-[#20714b] transition-colors font-medium inline-flex items-center gap-1.5"
+            >
+              <FaEdit className="text-xs" />
+              Edit this stack
+            </button>
+            <span className="hidden sm:block text-gray-200">·</span>
             <Link
               href="/audit"
               className="text-sm text-gray-400 hover:text-[#20714b] transition-colors font-medium"
             >
-              Run a new audit →
+              Start new audit →
             </Link>
           </div>
 

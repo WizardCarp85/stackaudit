@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaArrowRight, FaBell } from "react-icons/fa";
 
 interface Props {
@@ -15,6 +15,18 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
   const [teamSize, setTeamSize] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  // Load persisted submission state
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("stackaudit_lead_submitted") === "true") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setSubmitted(true);
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -43,6 +55,11 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
       }
 
       setSubmitted(true);
+      try {
+        localStorage.setItem("stackaudit_lead_submitted", "true");
+      } catch {
+        // ignore
+      }
     } catch (err) {
       console.error("[LeadCapture] Error:", err);
       setSubmitted(true);
@@ -153,7 +170,7 @@ export default function LeadCaptureSection({ showCredex, companyName }: Props) {
             <div className="flex items-end">
               <button
                 type="submit"
-                className={`w-full inline-flex items-center justify-center gap-2 font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 ${
+                className={`w-full inline-flex items-center justify-center gap-2 font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 cursor-pointer ${
                   showCredex
                     ? "bg-[#20714b] hover:bg-[#185e3e] text-white hover:scale-[1.02] active:scale-95"
                     : "bg-gray-950 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900"
